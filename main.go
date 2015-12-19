@@ -6,10 +6,13 @@ import (
 	"os"
 	"net/http"
 	"sparticus/controllers/rest"
+	"sparticus/repositories"
+	"sparticus/database"
 )
 
 func main() {
 
+	repositories.Init(database.Database())
 	router := httprouter.New()
 
 	//Initialize rest controlleØrs

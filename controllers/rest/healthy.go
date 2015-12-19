@@ -12,5 +12,5 @@ func (ctrl *HealthyController) Init(router *httprouter.Router) {
 }
 
 func (ctrl *HealthyController) GetHealthy(w http.ResponseWriter, req *http.Request, params httprouter.Params) (interface{}, httpStatus) {
-	return nil, StatusOk(http.StatusOK)
+	return nil, statusOk(http.StatusOK)
 }

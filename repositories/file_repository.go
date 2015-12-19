@@ -1,13 +1,11 @@
 package repositories
 import (
 	"database/sql"
-	"sparticus/domain/models"
 	"time"
 	"log"
 )
 
 type IFileRepository interface {
-	File()
 }
 
 type FileRepository struct {

@@ -12,11 +12,11 @@ type httpStatus struct {
 	status int
 }
 
-func ServerError(err error) httpStatus {
+func serverError(err error) httpStatus {
 	return httpStatus{err, http.StatusInternalServerError}
 }
 
-func StatusOk(status int) httpStatus {
+func statusOk(status int) httpStatus {
 	return httpStatus{nil, status}
 }
 
