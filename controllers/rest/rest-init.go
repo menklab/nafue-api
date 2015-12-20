@@ -8,4 +8,5 @@ func Init(router *httprouter.Router) {
 
 	//rest API controllers
 	new(HealthyController).Init(router)
+	new(FileController).Init(router)
 }

@@ -1,16 +1,18 @@
 package database
 
-import ("database/sql"
-		_ "github.com/lib/pq"
- 		"log"
+import (
+	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
+	"log"
 )
+
 var (
-	database			*sql.DB
-	databaseConfig		string
+	database       *sql.DB
+	databaseConfig string
 )
 
 func init() {
-	db, err := sql.Open("postgres", "user=sparticus dbname=sparticus password=sparticus sslmode=require")
+	db, err := sql.Open("mysql", "sparticus:password@/sparticus")
 	if err != nil {
 		log.Fatal("Database Error: ", err.Error())
 	}

@@ -1,25 +1,27 @@
 package repositories
+
 import (
 	"database/sql"
-	"time"
 	"log"
+	"time"
 )
 
 type IFileRepository interface {
+	AddFile() (int, error)
 }
 
 type FileRepository struct {
 	database *sql.DB
 }
 
-func NewItemRepository(d *sql.DB) *FileRepository {
+func NewFileRepository(d *sql.DB) *FileRepository {
 	return &FileRepository{d}
 }
 
-func (r *FileRepository) AddFile() ( int, error) {
-	result, err := r.database.Exec(`
+func (self *FileRepository) AddFile() (int, error) {
+	result, err := self.database.Exec(`
 	INSERT INTO files
-	(S3Path, TTL, ShortURL, Created) VALUES (?,?,?,?),
+	(s3Path, ttl, shortURL, created) VALUES (?,?,?,?)
 	`, "http://www.google.com", 2, "abcd", time.Now())
 	if err != nil {
 		log.Println("---ERROR---", err.Error())

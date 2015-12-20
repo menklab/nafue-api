@@ -3,16 +3,18 @@ package main
 import (
 	"github.com/julienschmidt/httprouter"
 	"log"
-	"os"
 	"net/http"
+	"os"
 	"sparticus/controllers/rest"
-	"sparticus/repositories"
 	"sparticus/database"
+	"sparticus/repositories"
+	"sparticus/services"
 )
 
 func main() {
 
 	repositories.Init(database.Database())
+	services.Init()
 	router := httprouter.New()
 
 	//Initialize rest controlleØrs

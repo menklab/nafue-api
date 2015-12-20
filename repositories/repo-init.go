@@ -1,20 +1,21 @@
 package repositories
+
 import (
 	"database/sql"
 	"errors"
 )
 
 var (
-	fileRepository	IFileRepository
+	fileRepository IFileRepository
 )
 
 func Init(database *sql.DB) {
-	fileRepository = NewItemRepository(database)
+	fileRepository = NewFileRepository(database)
 }
 
 // Public Getters
 func GetFileRepository() IFileRepository {
-	return fileRepository;
+	return fileRepository
 }
 
 //Helper Methods

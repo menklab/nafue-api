@@ -8,7 +8,7 @@ import (
 type HealthyController struct{}
 
 func (ctrl *HealthyController) Init(router *httprouter.Router) {
-		router.GET("/api/healthy", ResponseHandler(ctrl.GetHealthy))
+	router.GET("/api/healthy", ResponseHandler(ctrl.GetHealthy))
 }
 
 func (ctrl *HealthyController) GetHealthy(w http.ResponseWriter, req *http.Request, params httprouter.Params) (interface{}, httpStatus) {

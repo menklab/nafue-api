@@ -2,37 +2,47 @@ package rest
 
 import (
 	"github.com/julienschmidt/httprouter"
-	"net/http"
 	"io/ioutil"
+	"net/http"
 	"sparticus/domain/models"
 
 	"encoding/json"
-	"log"
 	"errors"
+	"log"
+	"sparticus/services"
 )
 
-type FileController struct{}
+type FileController struct {
+	fileService services.IFileService
+}
 
 func (self *FileController) Init(router *httprouter.Router) {
-		router.POST("/api/file", ResponseHandler(self.AddFile))
+	self.fileService = services.GetFileService()
+	router.POST("/api/file", ResponseHandler(self.AddFile))
 }
 
 func (self *FileController) AddFile(w http.ResponseWriter, req *http.Request, params httprouter.Params) (interface{}, httpStatus) {
+	// read req body
 	data, err := ioutil.ReadAll(req.Body)
 	if err != nil {
 		return "", serverError(err)
 	}
-
-	var file models.File
+	// set to json
+	file := models.File{}
 	err = json.Unmarshal(data, &file)
 	if err != nil {
 		log.Println(err.Error())
 		return "", serverError(errors.New("Invalid Request"))
 	}
 
-//	fileId, err :=
+	// add file to db
+	fileId, err := self.fileService.AddFile()
+	if err != nil {
+		log.Println(err.Error())
+		return "", serverError(errors.New("Error adding file."))
+	}
+	file.Id = fileId
 
-	return nil, statusOk(http.StatusOK)
+	// return ok
+	return file, statusOk(http.StatusOK)
 }
-
-
