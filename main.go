@@ -14,10 +14,11 @@ import (
 func main() {
 
 	repositories.Init(database.Database())
+	database.Migrate();
 	services.Init()
 	router := httprouter.New()
 
-	//Initialize rest controlleØrs
+	//Initialize rest controllers
 	rest.Init(router)
 	port := os.Getenv("PORT")
 	if port == "" {

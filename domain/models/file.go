@@ -7,5 +7,5 @@ type File struct {
 	S3Path   string    `json:"s3Path"`
 	TTL      int       `json:"ttl"`
 	ShortUrl string    `json:"shortUrl"`
-	Created  time.Time `json:"lastlogin"`
+	Created  time.Time `json:"created"`
 }
