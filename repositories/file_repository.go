@@ -4,10 +4,11 @@ import (
 	"database/sql"
 	"log"
 	"time"
+	"sparticus/models/domain"
 )
 
 type IFileRepository interface {
-	AddFile() (int, error)
+	AddFile(*models.File) (error)
 }
 
 type FileRepository struct {
@@ -18,18 +19,22 @@ func NewFileRepository(d *sql.DB) *FileRepository {
 	return &FileRepository{d}
 }
 
-func (self *FileRepository) AddFile() (int, error) {
+func (self *FileRepository) AddFile(file *models.File) (error) {
+	now := time.Now()
 	result, err := self.database.Exec(`
 	INSERT INTO files
 	(s3Path, ttl, shortURL, created) VALUES (?,?,?,?)
-	`, "http://www.google.com", 2, "abcd", time.Now())
+	`, file.S3Path, file.TTL, file.ShortUrl, now)
 	if err != nil {
 		log.Println("---ERROR---", err.Error())
-		return 0, err
+		return err
 	}
 	id, err := result.LastInsertId()
 	if err != nil {
-		return 0, err
+		return err
 	}
-	return int(id), nil
+
+	file.Id = int(id)
+
+	return nil
 }

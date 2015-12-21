@@ -2,10 +2,12 @@ package services
 
 import (
 	"sparticus/repositories"
+	"sparticus/models/display"
+	"sparticus/models/domain"
 )
 
 type IFileService interface {
-	AddFile() (int, error)
+	AddFile(*display.FileDisplay) (error)
 }
 
 type FileService struct {
@@ -16,11 +18,21 @@ func NewFileService(fileRepository repositories.IFileRepository) *FileService {
 	return &FileService{fileRepository}
 }
 
-func (self *FileService) AddFile() (int, error) {
-	id, err := self.fileRepository.AddFile()
-	if err != nil {
-		return 0, err
+func (self *FileService) AddFile(fileDisplay *display.FileDisplay) (error) {
+
+	// create domain model from display
+	 file := models.File{
+		S3Path: fileDisplay.S3Path,
+		ShortUrl: fileDisplay.ShortUrl,
+		TTL: fileDisplay.TTL,
 	}
 
-	return id, nil
+	err := self.fileRepository.AddFile(&file)
+	if err != nil {
+		return err
+	}
+
+	fileDisplay.Id = file.Id
+
+	return nil
 }

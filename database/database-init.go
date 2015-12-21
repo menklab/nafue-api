@@ -23,9 +23,9 @@ func init() {
 	database = db
 
 	// create migrator
-	m, _ := gomigrate.NewMigrator(database, gomigrate.Mysql{}, "./migrations")
+	m, _ := gomigrate.NewMigrator(database, gomigrate.Mysql{}, "database/migrations/")
 	tableExists, _ := m.MigrationTableExists()
-	if !tableExists{
+	if !tableExists {
 		err = m.CreateMigrationsTable()
 		if err != nil {
 			log.Fatal("Migrator Error: ", err.Error())
@@ -40,6 +40,8 @@ func Database() *sql.DB {
 }
 
 func Migrate() error {
+	log.Println("Starting db migrations")
+
 	err := migrator.Migrate()
 	if err != nil {
 		log.Println("Error migrating: ", err.Error())
@@ -51,5 +53,6 @@ func Migrate() error {
 			return err
 		}
 	}
+	log.Println("Migrations finished.")
 	return nil
 }
