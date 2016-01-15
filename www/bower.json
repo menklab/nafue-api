@@ -12,6 +12,9 @@
   ],
   "dependencies": {
     "font-awesome": "~4.2.0",
-    "underscore": "~1.8.2"
+    "underscore": "~1.8.2",
+    "sjcl": "~1.0.3",
+    "jszip": "~2.5.0",
+    "dropzone": "enyo/dropzone#4.2.0"
   }
 }

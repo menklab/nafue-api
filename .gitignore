@@ -27,3 +27,8 @@ _testmain.go
 # Created by .ignore support plugin (hsz.mobi)
 libraries
 www/bower_components
+www/app/app.min.js
+www/app/style.min.css
+www/app/vendor.min.js
+www/maps
+vendor.css
