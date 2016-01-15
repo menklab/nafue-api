@@ -11,7 +11,6 @@ var (
 
 func Init() {
 
-	//	gin.SetMode(gin.ReleaseMode)
 	r = gin.Default()
 
 	//rest API controllers

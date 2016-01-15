@@ -5,18 +5,12 @@ import (
 )
 
 var (
-	//path to media assets (typically in a s3 bucket)
-	//Database and Redis Connections
-	DBUrl              = ""
-	DBName             = os.Getenv("DBNAME")
-	RedisDb            = os.Getenv("REDIS_DB")
-	RedisAuth          = os.Getenv("REDIS_AUTH")
-	HubspotKey         = os.Getenv("HUBSPOT_KEY")
-	HubSpotContentApi  = os.Getenv("HUBSPOT_CONTENT_API")
-	HubSpotFormApi     = os.Getenv("HUBSPOT_FORM_API")
-	HubSpotPostDataApi = os.Getenv("HUBSPOT_POST_DATA_API")
-	RFQGuid            = os.Getenv("RFQ_GUID")
-	RQFPortal          = os.Getenv("RFQ_PORTAL")
+	S3Bucket		   = "menklab.com"
+	S3Key			   = "sfds"
+	S3PutTTL		   = 15
+//	S3Bucket		   = os.Getenv("S3_BUCKET")
+	S3Location		   = "us-east-1"
+//	S3Location		   = os.Getenv("S3_LOCATION")
 )
 
 const (

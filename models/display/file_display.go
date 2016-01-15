@@ -3,11 +3,11 @@ import "fmt"
 
 type FileDisplay struct {
 	Id       int    `json:"id"`
-	S3Path   string `json:"s3Path"`
 	TTL      int    `json:"ttl"`
 	ShortUrl string `json:"shortUrl"`
+	UploadUrl string `json:"uploadUrl"`
 }
 
 func (self *FileDisplay) ToString() string {
-	return fmt.Sprintf("{Id: %v, S3Path: %v, TTL: %v, ShortURL: %v", self.Id, self.S3Path, self.TTL, self.ShortUrl)
+	return fmt.Sprintf("{Id: %v, UploadUrl: %v, TTL: %v, ShortURL: %v", self.Id, self.UploadUrl, self.TTL, self.ShortUrl)
 }

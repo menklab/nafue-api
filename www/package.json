@@ -1,0 +1,24 @@
+{
+    "name": "Sparticus",
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "version": "0.0.1",
+    "description": "Sparticus",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Menklab LLC",
+    "license": "?",
+    "dependencies": {
+
+    },
+    "devDependencies": {
+        "bower": "~1.5.3",
+        "express": "~4.13.3",
+        "request": "~2.65.0",
+        "ejs": "~2.3.4"
+    }
+}
