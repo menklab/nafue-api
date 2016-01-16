@@ -1,0 +1,8 @@
+.text-center {
+    text-align: center;
+}
+#drop {
+    background: #ccc;
+    width: 400px;
+    height: 100px;
+}

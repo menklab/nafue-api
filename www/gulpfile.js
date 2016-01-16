@@ -36,24 +36,24 @@ var jshintOptions = {
 
 gulp.task('build:css', function () {
     return gulp.src([
-            'app/src/**/*.css'
+            'app/styles/**/*.css'
         ])
         .pipe(gulp_sourcemaps.init())
         .pipe(gulp_concat('style.min.css'))
-        .pipe(gulp_uglifycss())
+        //.pipe(gulp_uglifycss())
         .pipe(gulp_sourcemaps.write('../maps'))
         .pipe(gulp.dest('app/'))
         .pipe(livereload());
 });
 
 gulp.task('build:js', function () {
-    return gulp.src(['app/src/**/*.js'], {base: 'js'})
+    return gulp.src(['app/js/**/*.js'], {base: 'js'})
         .pipe(jshint(jshintOptions))
         .pipe(jshint.reporter(jshint_stylish))
         //.pipe(jshint.reporter('fail')) // only enable if build needs to fail on bad jshint
         .pipe(gulp_sourcemaps.init())
         .pipe(gulp_concat('app.min.js'))
-        .pipe(gulp_uglify())
+        //.pipe(gulp_uglify())
         .pipe(gulp_sourcemaps.write('../maps'))
         .pipe(gulp.dest('app/'))
         .pipe(livereload());
@@ -63,23 +63,20 @@ gulp.task('build:vendor:js', function () {
     return gulp.src([
             'bower_components/sjcl/sjcl.js',
             'bower_components/jszip/dist/jszip.js',
-            'bower_components/dropzone/dist/dropzone.js'
         ], {base: 'js'})
         .pipe(gulp_sourcemaps.init())
         .pipe(gulp_concat('vendor.min.js'))
-        .pipe(gulp_uglify())
+        //.pipe(gulp_uglify())
         .pipe(gulp_sourcemaps.write('../maps'))
         .pipe(gulp.dest('app/'));
 });
 
-gulp.task('build:vendor:css', function () {
-    gulp.src([
-        'bower_components/dropzone/dist/dropzone.css',
-        'bower_components/dropzone/dist/basic.css'
-    ])
-        .pipe(gulp_concat('vendor.css'))
-        .pipe(gulp.dest('app/src/styles/'));
-});
+//gulp.task('build:vendor:css', function () {
+//    gulp.src([
+//    ])
+//        .pipe(gulp_concat('vendor.css'))
+//        .pipe(gulp.dest('app/src/styles/'));
+//});
 
 gulp.task('open:dev', function () {
     gulp.src('')
@@ -88,7 +85,7 @@ gulp.task('open:dev', function () {
 
 gulp.task('dev', [], function () {
     run_sequence('build:vendor:js');
-    run_sequence('build:vendor:css');
+    //run_sequence('build:vendor:css');
     run_sequence('build:js');
     run_sequence('build:css');
     run_sequence('watch');
@@ -98,11 +95,14 @@ gulp.task('dev', [], function () {
 
 gulp.task('watch', [], function () {
     livereload.listen({port: 35729});
-    gulp_watch('app/src/**/*.css', function () {
+    gulp_watch('app/styles/**/*.css', function () {
         run_sequence('build:css');
     });
     gulp_watch('app/js/**/*.js', function () {
         run_sequence('build:js');
+    });
+    gulp.watch(['index.html', "app/src/**/*.html"]).on('change', function(file) {
+        livereload.changed(file.path);
     });
 });
 
