@@ -15,5 +15,7 @@
     "underscore": "~1.8.2",
     "sjcl": "~1.0.3",
     "jszip": "~2.5.0",
+    "jszip-utils": "latest",
+    "file-saver": "Teleborder/FileSaver.js#1.20150507.2"
   }
 }
