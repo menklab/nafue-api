@@ -45,58 +45,14 @@ function doEncrypt(password, d) {
         ts: s.tagSize,
         ks: s.keySize,
         iter: s.iterations,
-        iv: makeIv()
+        iv: makeIv(),
+        adata: s.adata
     };
     var rp = {};
     console.log('p for ct: ', p);
     var ct = sjcl.encrypt(password, d, p, rp); //.replace(/,/g, ",\n");
     console.log('rp: ', rp);
     return ct;
-}
-
-
-/* Encrypt a message */
-function doEncrypt1(p) {
-
-    if (p.key.length == 0) {
-        error("need a key!");
-        return;
-    }
-
-    p = {
-        adata: v.adata,
-        iter: v.iter,
-        mode: v.mode,
-        ts: parseInt(v.tag),
-        ks: parseInt(v.keysize)
-    };
-    if (!v.freshiv || !usedIvs[v.iv]) {
-        p.iv = v.iv;
-    }
-    if (!v.freshsalt || !usedSalts[v.salt]) {
-        p.salt = v.salt;
-    }
-    ct = sjcl.encrypt(password || key, plaintext, p, rp).replace(/,/g, ",\n");
-
-    v.iv = rp.iv;
-    usedIvs[rp.iv] = 1;
-    if (rp.salt) {
-        v.salt = rp.salt;
-        usedSalts[rp.salt] = 1;
-    }
-    v.key = rp.key;
-
-    if (v.json) {
-        v.ciphertext = ct;
-        v.adata = '';
-    } else {
-        v.ciphertext = ct.match(/"ct":"([^"]*)"/)[1]; //"
-    }
-
-    v.plaintext = '';
-
-    form.set(v);
-    form.ciphertext.el.select();
 }
 
 /* Decrypt a message */

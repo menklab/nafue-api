@@ -83,15 +83,15 @@ function shareFile() {
     encrypting.hidden = false;
 
     // do encryption
-    var ct = doEncrypt(password.value, binStr);
+    var ct = JSON.parse(doEncrypt(password.value, binStr));
 
     // make api request for saving file
-    console.log("ct: ", ct);
     var payload = {
         iv: ct.iv,
         salt: ct.salt,
-        aData: ct.aData
+        aData: ct.adata
     };
+    console.log('ct: ', ct);
     request = JSON.stringify(payload);
     http.post("/api/files", request)
         .success(function (res) {})

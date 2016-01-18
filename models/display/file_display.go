@@ -2,7 +2,6 @@ package display
 import "fmt"
 
 type FileDisplay struct {
-	Id        int    `json:"id,omitempty"`
 	TTL       int    `json:"ttl,omitempty"`
 	ShortUrl  string `json:"shortUrl,omitempty"`
 	UploadUrl string `json:"uploadUrl,omitempty"`
@@ -14,7 +13,6 @@ type FileDisplay struct {
 func (self *FileDisplay) ToString() string {
 	return fmt.Sprintf(
 		"{Id: %v, UploadUrl: %v, TTL: %v, ShortURL: %v, IV: %v, Salt: %v, AData: %v}",
-		self.Id,
 		self.UploadUrl,
 		self.TTL,
 		self.ShortUrl,
