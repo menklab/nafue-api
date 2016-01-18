@@ -1,12 +1,49 @@
-h2 {
-    font: 20pt bold 'Vollkorn';
+html {
+    font-family: Vollkorn;
 }
-
+h2 {
+    font: 20px bold inherit;
+}
+.input-text {
+    color: #000;
+    font-size: 20px;
+    padding: 8px 0;
+    border: 2px dashed #bbb;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    outline: none !important;
+    width: 100%;
+}
+input[placeholder]{
+    text-align:center;
+    color: #bbb;
+}
+.full-width {
+    width: 100%;
+}
+.btn {
+    color: #fff;
+    font-size: 20px;
+    padding: 8px 0;
+    border: 2px dashed #bbb;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    outline: none !important;
+}
+.btn:focus {
+    background-color: #ccc;
+}
+.clearfix {
+    clear: both;
+}
 .text-center {
     text-align: center;
 }
 
 .dropZone {
+    width: 100%;
     border: 2px dashed #bbb;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -39,7 +76,7 @@ h2 {
     color: white;
     background-color: #bbb;
     display: inline-block;
-    padding: 4px;
+    padding: 10px 15px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
@@ -55,5 +92,4 @@ h2 {
 }
 
 .inputfile:focus + label {
-    outline: 1px dotted #000;
 }

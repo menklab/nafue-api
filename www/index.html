@@ -21,7 +21,6 @@
     <br>
     <div class="row">
         <div class="col-md-6 col-md-push-3">
-            <div id="status"></div>
             <div id="drop" class="dropZone">
                 <div class="dropSelect">
                     <input class="inputfile" type="file" id="file" name="files[]" />
@@ -29,16 +28,14 @@
                 </div>
                 <h2>Drop file here</h2>
             </div>
-            <div id="passCont" hidden>
-                <input id="password" type="password" placeholder="enter password">
-                <button>save</button>
+            <div id="passCont" class="text-center" >
+                <input id="password" type="password" class="input-text" placeholder="Enter Password">
+                <br><br>
+                <button class="btn full-width" id="share" onclick="shareFile()" disabled>Share</button>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-md-push-3">
-            <div id="totalSize"></div>
-            <div id="list"></div>
+            <div id="encrypting" hidden>
+                <p>file is being encrypted... please wait</p>
+            </div>
         </div>
     </div>
 </div>

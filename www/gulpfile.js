@@ -5,12 +5,14 @@ var gulp = require('gulp'),
     gulp_concat = require('gulp-concat'),
     gulp_uglifycss = require('gulp-uglifycss'),
     gulp_uglify = require('gulp-uglify'),
+    gulp_rename = require("gulp-rename");
+    gulp_insert = require('gulp-insert');
+    gulp_open = require('gulp-open'),
+    gulp_sourcemaps = require('gulp-sourcemaps'),
     jshint = require('gulp-jshint'),
     jshint_stylish = require('jshint-stylish'),
     minimist = require('minimist'),
     run_sequence = require('run-sequence'),
-    gulp_open = require('gulp-open'),
-    gulp_sourcemaps = require('gulp-sourcemaps'),
     fs = require('fs'),
     livereload = require('gulp-livereload');
 
@@ -47,7 +49,7 @@ gulp.task('build:css', function () {
 });
 
 gulp.task('build:js', function () {
-    return gulp.src(['app/js/**/*.js'], {base: 'js'})
+        gulp.src(['app/js/**/*.js'], {base: 'js'})
         .pipe(jshint(jshintOptions))
         .pipe(jshint.reporter(jshint_stylish))
         //.pipe(jshint.reporter('fail')) // only enable if build needs to fail on bad jshint
@@ -60,9 +62,15 @@ gulp.task('build:js', function () {
 });
 
 gulp.task('build:vendor:js', function () {
-    return gulp.src([
-            'bower_components/sjcl/sjcl.js',
-            'bower_components/file-saver/FileSaver.js',
+    // pre build sjcl with needed wrapper
+    gulp.src('bower_components/sjcl/sjcl.js', {base: 'js'})
+        .pipe(gulp_insert.prepend('var sjcl =(function() {'))
+        .pipe(gulp_insert.append('return sjcl;})();'))
+        .pipe(gulp_rename('sjcl_wrapped.js'))
+        .pipe(gulp.dest('bower_components/sjcl/'));
+    gulp.src([
+            'bower_components/sjcl/sjcl_wrapped.js',
+            'bower_components/file-saver/FileSaver.js'
         ], {base: 'js'})
         .pipe(gulp_sourcemaps.init())
         .pipe(gulp_concat('vendor.min.js'))
@@ -101,7 +109,7 @@ gulp.task('watch', [], function () {
     gulp_watch('app/js/**/*.js', function () {
         run_sequence('build:js');
     });
-    gulp.watch(['index.html', "app/src/**/*.html"]).on('change', function(file) {
+    gulp.watch(['index.html', "app/src/**/*.html"]).on('change', function (file) {
         livereload.changed(file.path);
     });
 });
