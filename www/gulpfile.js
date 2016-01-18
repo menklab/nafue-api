@@ -63,8 +63,6 @@ gulp.task('build:vendor:js', function () {
     return gulp.src([
             'bower_components/sjcl/sjcl.js',
             'bower_components/file-saver/FileSaver.js',
-            'bower_components/jszip-utils/dist/jszip-utils.js',
-            'bower_components/jszip/dist/jszip.js'
         ], {base: 'js'})
         .pipe(gulp_sourcemaps.init())
         .pipe(gulp_concat('vendor.min.js'))
