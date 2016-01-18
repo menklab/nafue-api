@@ -8,7 +8,7 @@ h2 {
     color: #000;
     font-size: 20px;
     padding: 8px 0;
-    border: 2px dashed #bbb;
+    border: 2px dashed #999;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
@@ -17,7 +17,7 @@ h2 {
 }
 input[placeholder]{
     text-align:center;
-    color: #bbb;
+    color: #999;
 }
 .full-width {
     width: 100%;
@@ -26,14 +26,21 @@ input[placeholder]{
     color: #fff;
     font-size: 20px;
     padding: 8px 0;
-    border: 2px dashed #bbb;
+    border: none;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
     outline: none !important;
+    background: #999;
 }
-.btn:focus {
-    background-color: #ccc;
+.btn[disabled] {
+    background: #ccc;
+}
+.btn[disabled]:hover {
+    background: #ccc;
+}
+.btn:hover {
+    background-color: #777;
 }
 .clearfix {
     clear: both;
@@ -44,13 +51,13 @@ input[placeholder]{
 
 .dropZone {
     width: 100%;
-    border: 2px dashed #bbb;
+    border: 2px dashed #999;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
     padding: 25px;
     text-align: center;
-    color: #bbb;
+    color: #999;
 }
 .dropZone h2 {
     padding: 50px 0;
@@ -74,7 +81,7 @@ input[placeholder]{
     font-size: 1em;
     font-weight: 700;
     color: white;
-    background-color: #bbb;
+    background-color: #999;
     display: inline-block;
     padding: 10px 15px;
     -moz-border-radius: 5px;
@@ -84,7 +91,7 @@ input[placeholder]{
 
 .inputfile:focus + label,
 .inputfile + label:hover {
-    background-color: #ccc;
+    background-color: #777;
 }
 
 .inputfile + label {
@@ -93,3 +100,13 @@ input[placeholder]{
 
 .inputfile:focus + label {
 }
+.missing {
+    color: #999;
+}
+.present {
+    color: #00aa00;
+}
+.bold {
+    font-weight: bold;
+}
+
