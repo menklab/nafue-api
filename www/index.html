@@ -39,12 +39,16 @@
                         <span id="spc" class="missing">Special</span></p>
                 <button class="btn full-width" id="share" onclick="shareFile()" disabled>Share</button>
             </div>
-            <div id="encrypting" hidden>
+            <div id="busy" hidden>
                 <br><br>
                 <div class="loading">
-                    <span>encrypting</span>
+                    <span id="busyMessage"></span>
                 </div>
             </div>
+            <div id="showLink" hidden>
+                <h2>Link To Share:</h2>
+                <h3 id="linkToShare"></h3>
+                </div>
         </div>
     </div>
 </div>

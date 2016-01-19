@@ -49,9 +49,7 @@ function doEncrypt(password, d) {
         adata: s.adata
     };
     var rp = {};
-    console.log('p for ct: ', p);
     var ct = sjcl.encrypt(password, d, p, rp); //.replace(/,/g, ",\n");
-    console.log('rp: ', rp);
     return ct;
 }
 

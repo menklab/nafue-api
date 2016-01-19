@@ -11,7 +11,7 @@ import (
 func main() {
 
 	repositories.Init(database.Database())
-	//	database.Migrate();
+		database.Migrate();
 	services.Init()
 
 	//Initialize Server

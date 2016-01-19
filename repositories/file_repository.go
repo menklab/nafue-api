@@ -23,8 +23,8 @@ func (self *FileRepository) AddFile(file *models.File) (error) {
 	now := time.Now()
 	result, err := self.database.Exec(`
 	INSERT INTO files
-	(s3Path, ttl, shortURL, created) VALUES (?,?,?,?)
-	`, file.S3Path, file.TTL, file.ShortUrl, now)
+	(s3Path, ttl, shortURL, created, uploadUrl, iV, _salt, aData) VALUES (?,?,?,?,?,?,?,?)
+	`, file.S3Path, file.TTL, file.ShortUrl, now, file.UploadUrl, file.IV, file.Salt, file.AData)
 	if err != nil {
 		log.Println("---ERROR---", err.Error())
 		return err

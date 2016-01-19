@@ -3,7 +3,7 @@
  * methods:
  * http.get('url')
  */
-var server = "http://localhost:8080";
+var services = "http://localhost:8080";
 
 var http = (function () {
 
@@ -62,19 +62,19 @@ var http = (function () {
     return {
         get: function (url, data, config) {
             config = config || {};
-            return ajx('GET', server + url, data, config);
+            return ajx('GET', url, data, config);
         },
         post: function (url, data, config) {
             config = config || {};
-            return ajx('POST', server + url, data, config);
+            return ajx('POST', url, data, config);
         },
         put: function (url, data, config) {
             config = config || {};
-            return ajx('PUT', server + url, data, config);
+            return ajx('PUT', url, data, config);
         },
         'delete': function (url, data, config) {
             config = config || {};
-            return ajx('DELETE', server + url, data, config);
+            return ajx('DELETE', url, data, config);
         }
     }
 })();

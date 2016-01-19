@@ -9,6 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/aws"
 	"time"
+	"fmt"
 )
 
 type IFileService interface {
@@ -35,29 +36,35 @@ func (self *FileService) AddFile(fileDisplay *display.FileDisplay) (error) {
 		return err
 	}
 
+	// create put request on s3
+	req, _ := GetS3Service().PutObjectRequest(&s3.PutObjectInput{
+		Bucket: aws.String(config.S3Bucket),
+		Key: aws.String(config.S3Key + "/" + s3u.String()),
+		ContentType: aws.String("text/plain;charset=UTF-8"),
+	})
+	url, err := req.Presign(15 * time.Minute)
+	fmt.Println("url: " + url);
+
 	// create domain model from display
-	 file := models.File{
+	file := models.File{
 		S3Path: config.S3Key + "/" + s3u.String(),
 		ShortUrl: shortUrl.String(),
 		TTL: fileDisplay.TTL,
+		IV: fileDisplay.IV,
+		Salt: fileDisplay.Salt,
+		AData: fileDisplay.AData,
+		UploadUrl: url,
 	}
+
+	// add upload url to display
+	fileDisplay.UploadUrl = file.UploadUrl
+	fileDisplay.ShortUrl = file.ShortUrl
 
 	// add file to db
 	err = self.fileRepository.AddFile(&file)
 	if err != nil {
 		return err
 	}
-	fileDisplay.Id = file.Id
-
-
-	// create put request on s3
-	req, _ := GetS3Service().PutObjectRequest(&s3.PutObjectInput{
-		Bucket: aws.String(config.S3Bucket),
-		Key: aws.String(config.S3Key + "/" + s3u.String()),
-
-	})
-	url, err := req.Presign(15 * time.Minute)
-	fileDisplay.UploadUrl = url
 
 	return nil
 }

@@ -5,8 +5,8 @@ import (
 )
 
 var (
-	S3Bucket		   = "menklab.com"
-	S3Key			   = "sfds"
+	S3Bucket		   = "sfds.menklab.com"
+	S3Key			   = "files"
 	S3PutTTL		   = 15
 //	S3Bucket		   = os.Getenv("S3_BUCKET")
 	S3Location		   = "us-east-1"
