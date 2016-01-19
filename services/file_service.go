@@ -13,6 +13,7 @@ import (
 )
 
 type IFileService interface {
+	GetFile(*display.FileDisplay) (error)
 	AddFile(*display.FileDisplay) (error)
 }
 
@@ -22,6 +23,10 @@ type FileService struct {
 
 func NewFileService(fileRepository repositories.IFileRepository) *FileService {
 	return &FileService{fileRepository}
+}
+
+func (self *FileService) GetFile(fileKey *display.FileDisplay) (error) {
+
 }
 
 func (self *FileService) AddFile(fileDisplay *display.FileDisplay) (error) {

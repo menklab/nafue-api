@@ -16,6 +16,8 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     var num = document.getElementById("num");
     var spc = document.getElementById("spc");
     var reset = document.getElementById("reset");
+    var upload = document.getElementById("upload");
+    var download = document.getElementById("download");
 
     var binStr;
 
@@ -23,6 +25,12 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     dropZone.addEventListener('drop', handleFileSelect, false);
     document.getElementById('file').addEventListener('change', handleFileSelect, false);
 
+    // check for decryption file
+    var dFile = getParameterByName("file");
+    if (!!dFile) {
+        window.history.pushState('','','/');
+        downloadFile(dFile);
+    }
 
 } else {
     document.getElementById('status').innerHTML = 'Your browser does not support the HTML5 FileReader.';

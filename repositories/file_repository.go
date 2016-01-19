@@ -8,6 +8,7 @@ import (
 )
 
 type IFileRepository interface {
+	GetFile(*models.File) (error)
 	AddFile(*models.File) (error)
 }
 
@@ -17,6 +18,26 @@ type FileRepository struct {
 
 func NewFileRepository(d *sql.DB) *FileRepository {
 	return &FileRepository{d}
+}
+
+func (self *FileRepository) GetFile(file *models.File) (error) {
+	row, err := self.database.QueryRow(`
+	SELECT * FROM files WHERE shortUrl = ?) VALUES(?)`,
+	file.ShortUrl)
+	if err != nil {
+		log.Println("---ERROR---", err.Error())
+		return err
+	}
+	var salt string
+	var iv string
+	var adata string
+	err = row.Scan(&salt, &iv, &adata, )
+	if (err) {
+		log.Println("---ERROR---", err.Error())
+		return err
+	}
+
+	return nil
 }
 
 func (self *FileRepository) AddFile(file *models.File) (error) {
