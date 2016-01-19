@@ -21,16 +21,15 @@ function shareFile() {
                 // do upload to aws s3
                 http.put(fileData.uploadUrl, ct.ct, {contentType: "text/plain;charset=UTF-8"})
                     .success(function (res) {
-                        setTimeout(function () {
-                            busy.hidden = true;
-                            showLink.hidden = false;
-                            linkToShare.innerHTML = services + "/api/getFile/" + fileData.shortUrl;
-                        }, 1000);
+                        busy.hidden = true;
+                        showLink.hidden = false;
+                        linkToShare.innerHTML = services + "/api/getFile/" + fileData.shortUrl;
+                        reset.focus();
                     })
                     .error(function (err) {
                         console.log("fail!");
                     });
-            }, 1000);
+            }, 500);
 
         })
         .error(function (err) {

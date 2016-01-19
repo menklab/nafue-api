@@ -2,12 +2,12 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
 
     var dropZone = document.getElementById('drop');
     var list = document.getElementById('list');
+    var file = document.getElementById('file');
     var password = document.getElementById('password');
     var passCont = document.getElementById('passCont');
     var busy = document.getElementById('busy');
     var showLink = document.getElementById('showLink');
     var linkToShare = document.getElementById('linkToShare');
-    var fileSize = document.getElementById('totalSize');
     var busyMessage = document.getElementById('busyMessage');
     var share = document.getElementById("share");
     var len = document.getElementById("len");
@@ -15,6 +15,7 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     var upp = document.getElementById("upp");
     var num = document.getElementById("num");
     var spc = document.getElementById("spc");
+    var reset = document.getElementById("reset");
 
     var binStr;
 

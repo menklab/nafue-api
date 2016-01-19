@@ -11,8 +11,6 @@
     "tests"
   ],
   "dependencies": {
-    "font-awesome": "~4.2.0",
-    "underscore": "~1.8.2",
     "sjcl": "~1.0.3",
     "file-saver": "Teleborder/FileSaver.js#1.20150507.2"
   }

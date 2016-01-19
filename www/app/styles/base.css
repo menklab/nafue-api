@@ -1,8 +1,20 @@
 html {
     font-family: Vollkorn;
+    color: #999;
 }
 h2 {
     font: 20px bold inherit;
+}
+h3 {
+    font: 15px bold inherit;
+}
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .input-text {
     color: #000;
@@ -24,8 +36,8 @@ input[placeholder]{
 }
 .btn {
     color: #fff;
-    font-size: 20px;
-    padding: 8px 0;
+    font-size: 1em;
+    padding: 8px 8px;
     border: none;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -108,5 +120,15 @@ input[placeholder]{
 }
 .bold {
     font-weight: bold;
+}
+#linkToShare {
+    width: 100%;
+    border: 2px dashed #999;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 25px;
+    text-align: center;
+    color: #999;
 }
 

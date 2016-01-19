@@ -1,3 +1,5 @@
+file.focus();
+
 function handleFileSelect(e) {
     e.stopPropagation();
     e.preventDefault();
