@@ -29,17 +29,6 @@
                     </div>
                     <h2>Drop file here</h2>
                 </div>
-                <div id="passCont" class="text-center no-select" hidden>
-                    <input id="password" type="password" class="input-text" placeholder="Enter Password">
-                    <p class="passwordReqs">
-                        <span class="bold">Length 8+ and (3 of 4):</span>
-                        <span id="len" class="missing">Length</span>
-                        <span id="low" class="missing">Lowercase</span>,
-                        <span id="upp" class="missing">Uppercase</span>,
-                        <span id="num" class="missing">Number</span>,
-                        <span id="spc" class="missing">Special</span></p>
-                    <button class="btn full-width" id="share" onclick="shareFile()" disabled>Share</button>
-                </div>
                 <div id="showLink" hidden>
                     <p class="no-select text-center">Link and file will be destroyed after first use or after 24 hours,
                         whichever comes first.</p>
@@ -47,8 +36,19 @@
                     <button id="reset" class="btn full-width no-select" onclick="reset_ui()">Reset</button>
                 </div>
             </div>
-            <div id="download" hidden>
-
+            <div id="passCont" class="text-center no-select" hidden>
+                <input id="password" type="password" class="input-text" placeholder="Enter Password">
+                <p class="passwordReqs" id="passwordReqs">
+                    <span class="bold">Length 8+ and (3 of 4):</span>
+                    <span id="len" class="missing">Length</span>
+                    <span id="low" class="missing">Lowercase</span>,
+                    <span id="upp" class="missing">Uppercase</span>,
+                    <span id="num" class="missing">Number</span>,
+                    <span id="spc" class="missing">Special</span></p>
+                <button class="btn full-width" id="share" onclick="shareFile()" disabled>Share</button>
+                <br>
+                <br>
+                <button class="btn full-width" id="downloadBtn" onclick="decrypt()" hidden>Download</button>
             </div>
             <div id="busy" class="no-select" hidden>
                 <br><br>

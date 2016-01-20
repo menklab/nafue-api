@@ -16,7 +16,7 @@ var (
 func init() {
 
 	// create db connection
-	db, err := sql.Open("mysql", "sparticus:password@/sparticus")
+	db, err := sql.Open("mysql", "sparticus:password@/sparticus?parseTime=true")
 	if err != nil {
 		log.Fatal("Database Error: ", err.Error())
 	}

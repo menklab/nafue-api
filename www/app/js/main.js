@@ -4,12 +4,14 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     var list = document.getElementById('list');
     var file = document.getElementById('file');
     var password = document.getElementById('password');
+    var passwordReqs = document.getElementById('passwordReqs');
     var passCont = document.getElementById('passCont');
     var busy = document.getElementById('busy');
     var showLink = document.getElementById('showLink');
     var linkToShare = document.getElementById('linkToShare');
     var busyMessage = document.getElementById('busyMessage');
     var share = document.getElementById("share");
+    var downloadBtn = document.getElementById("downloadBtn");
     var len = document.getElementById("len");
     var low = document.getElementById("low");
     var upp = document.getElementById("upp");
@@ -17,8 +19,8 @@ if (window.File && window.FileReader && window.FileList && window.Blob) {
     var spc = document.getElementById("spc");
     var reset = document.getElementById("reset");
     var upload = document.getElementById("upload");
-    var download = document.getElementById("download");
 
+    var skipCheck = false;
     var binStr;
 
     dropZone.addEventListener('dragover', handleDragOver, false);

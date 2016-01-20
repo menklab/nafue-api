@@ -1,4 +1,8 @@
 function checkPassword(e) {
+    if (skipCheck) {
+        console.log("skip pass check");
+        return;
+    }
     if (e.keyCode == 13) {
         share.click();
         return;

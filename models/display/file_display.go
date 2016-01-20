@@ -2,12 +2,13 @@ package display
 import "fmt"
 
 type FileDisplay struct {
-	TTL       int    `json:"ttl,omitempty"`
-	ShortUrl  string `json:"shortUrl,omitempty"`
-	UploadUrl string `json:"uploadUrl,omitempty"`
-	IV        string `json:"iv" binding:"required"`
-	Salt      string `json:"salt" binding:"required"`
-	AData     string `json:"aData" binding:"required"`
+	TTL         int    `json:"ttl,omitempty"`
+	ShortUrl    string `json:"shortUrl,omitempty"`
+	UploadUrl   string `json:"uploadUrl,omitempty"`
+	DownloadUrl string `json:"downloadUrl,omitempty"`
+	IV          string `json:"iv" binding:"required"`
+	Salt        string `json:"salt" binding:"required"`
+	AData       string `json:"aData" binding:"required"`
 }
 
 func (self *FileDisplay) ToString() string {

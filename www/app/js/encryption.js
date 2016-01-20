@@ -2,6 +2,7 @@
 var s = {
     adata: 'sparticus',
     mode: 'ccm',
+    cipher: 'aes',
     tagSize: 128,
     keySize: 256,
     iterations: 1000
@@ -12,18 +13,13 @@ function loaded() {
 }
 
 /* compute PBKDF2 on the password. */
-function doPbkdf2(password, decrypting) {
-    var salt = !!decrypting ? decrypting.salt : makeSalt();
+function doPbkdf2(password, salt) {
+    var salt = !!salt ? salt : makeSalt();
 
     if (password.length == 0) {
-        if (decrypting) {
+        if (salt) { // we are decrypting
             error("Can't decrypt: need a password!");
         }
-        return;
-    }
-
-    if (salt.length === 0 && decrypting) {
-        error("Can't decrypt: need a salt for PBKDF2!");
         return;
     }
 
@@ -40,21 +36,58 @@ function doPbkdf2(password, decrypting) {
 
 /* Encrypt a message */
 function doEncrypt(password, d) {
+    var ct = {};
     var p = {
         mode: s.mode,
         ts: s.tagSize,
         ks: s.keySize,
         iter: s.iterations,
         iv: makeIv(),
-        adata: s.adata
+        adata: s.adata,
+        cipher: s.cipher
     };
-    var rp = {};
-    var ct = sjcl.encrypt(password, d, p, rp); //.replace(/,/g, ",\n");
+    ct.p = p;
+
+    // setup password as key
+    var tmp = doPbkdf2(password);
+    password = tmp.key.slice(0, p.ks / 32);
+    var prp = new sjcl.cipher[p.cipher](password);
+    p.salt = tmp.salt;
+
+    // setup data as array
+    d = sjcl.codec.utf8String.toBits(d);
+
+    // encrypt
+    ct.ct = sjcl.mode[p.mode].encrypt(prp, d, p.iv, p.adata, p.ts);
     return ct;
 }
 
+function doDecrypt(password, ct) {
+    var p = {
+        mode: s.mode,
+        ts: s.tagSize,
+        ks: s.keySize,
+        iter: s.iterations,
+        iv: sjcl.codec.base64.toBits(ct.iv),
+        adata: atob(ct.aData)
+    };
+
+    console.log("p ds: ", p);
+
+    var data;
+    try {
+        data = new sjcl.decrypt(password, ct, p);
+    }
+    catch (e) {
+        console.log("error: ", e);
+        return;
+    }
+
+    return data;
+}
+
 /* Decrypt a message */
-function doDecrypt() {
+function doDecrypt1() {
     var v = form.get(), iv = v.iv, key = v.key, adata = v.adata, aes, ciphertext = v.ciphertext, rp = {};
 
     if (ciphertext.length === 0) {

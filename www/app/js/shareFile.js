@@ -3,13 +3,13 @@ function shareFile() {
     busy.hidden = false;
 
     // do encryption
-    var ct = JSON.parse(doEncrypt(password.value, binStr));
-
+    var ct = doEncrypt(password.value, binStr);
+    console.log("ct: ", ct);
     // make api request for saving file
     var payload = {
-        iv: ct.iv,
-        salt: ct.salt,
-        aData: ct.adata
+        iv: sjcl.codec.base64.fromBits(ct.p.iv),
+        salt: sjcl.codec.base64.fromBits(ct.p.salt),
+        aData: ct.p.adata
     };
     // make upload request
     request = JSON.stringify(payload);
@@ -19,11 +19,11 @@ function shareFile() {
             setTimeout(function () {
                 busyMessage.innerHTML = "Uploading";
                 // do upload to aws s3
-                http.put(fileData.uploadUrl, ct.ct, {contentType: "text/plain;charset=UTF-8"})
+                http.put(fileData.uploadUrl, sjcl.codec.base64.fromBits(ct.ct), {contentType: "text/plain;charset=UTF-8"})
                     .success(function (res) {
                         busy.hidden = true;
                         showLink.hidden = false;
-                        linkToShare.innerHTML = services + "/api/getFile/" + fileData.shortUrl;
+                        linkToShare.innerHTML = services + "?file=" + fileData.shortUrl;
                         reset.focus();
                     })
                     .error(function (err) {

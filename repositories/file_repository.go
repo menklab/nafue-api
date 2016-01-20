@@ -1,15 +1,14 @@
 package repositories
-
 import (
 	"database/sql"
 	"log"
 	"time"
 	"sparticus/models/domain"
 )
-
 type IFileRepository interface {
 	GetFile(*models.File) (error)
 	AddFile(*models.File) (error)
+	DeleteFile(*models.File) (error)
 }
 
 type FileRepository struct {
@@ -20,19 +19,12 @@ func NewFileRepository(d *sql.DB) *FileRepository {
 	return &FileRepository{d}
 }
 
+
 func (self *FileRepository) GetFile(file *models.File) (error) {
-	row, err := self.database.QueryRow(`
-	SELECT * FROM files WHERE shortUrl = ?) VALUES(?)`,
-	file.ShortUrl)
+	err := self.database.QueryRow(`
+	SELECT id, _salt, iv, aData, s3Path, ttl, created FROM files WHERE shortUrl = ?
+	`, file.ShortUrl).Scan(&file.Id, &file.Salt, &file.IV, &file.AData, &file.S3Path, &file.TTL, &file.Created)
 	if err != nil {
-		log.Println("---ERROR---", err.Error())
-		return err
-	}
-	var salt string
-	var iv string
-	var adata string
-	err = row.Scan(&salt, &iv, &adata, )
-	if (err) {
 		log.Println("---ERROR---", err.Error())
 		return err
 	}
@@ -56,6 +48,19 @@ func (self *FileRepository) AddFile(file *models.File) (error) {
 	}
 
 	file.Id = int(id)
+
+	return nil
+}
+
+
+func (self *FileRepository) DeleteFile(file *models.File) (error) {
+	_, err := self.database.Exec(`
+	DELETE FROM files WHERE id = ?
+	`, file.Id)
+	if err != nil {
+		log.Println("---ERROR---", err.Error())
+		return err
+	}
 
 	return nil
 }

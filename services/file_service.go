@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"time"
 	"fmt"
+	"errors"
 )
 
 type IFileService interface {
@@ -25,8 +26,52 @@ func NewFileService(fileRepository repositories.IFileRepository) *FileService {
 	return &FileService{fileRepository}
 }
 
-func (self *FileService) GetFile(fileKey *display.FileDisplay) (error) {
+func (self *FileService) GetFile(fileDisplay *display.FileDisplay) (error) {
 
+	// make model from display
+	file:= models.File{
+		ShortUrl: fileDisplay.ShortUrl,
+	}
+
+	// get file from db
+	err := self.fileRepository.GetFile(&file)
+	if err != nil {
+		return err
+	}
+
+	// now that we have file delete it from db
+	self.fileRepository.DeleteFile(&file)
+
+	// verify that file isn't to old
+	elapsed := int(time.Now().Sub(file.Created).Seconds())
+	if elapsed > file.TTL {
+		// to old delete file
+		fmt.Println("file to old, delete from s3!");
+		_, err := GetS3Service().DeleteObject(&s3.DeleteObjectInput{
+			Bucket: aws.String(config.S3Bucket),
+			Key: aws.String(config.S3Key + "/" + file.S3Path),
+		})
+		if err != nil {
+			fmt.Println("---ERROR---", err.Error())
+		}
+		return errors.New("File has expired")
+	}
+
+	// create get request
+	req, _ := GetS3Service().GetObjectRequest(&s3.GetObjectInput{
+		Bucket: aws.String(config.S3Bucket),
+		Key: aws.String(config.S3Key + "/" + file.S3Path),
+	})
+	url, err := req.Presign(15 * time.Minute)
+	fmt.Println("url: " + url);
+
+	// add needed data to display
+	fileDisplay.DownloadUrl = url
+	fileDisplay.Salt = file.Salt
+	fileDisplay.IV = file.IV
+	fileDisplay.AData = file.AData
+
+	return nil
 }
 
 func (self *FileService) AddFile(fileDisplay *display.FileDisplay) (error) {
@@ -52,9 +97,9 @@ func (self *FileService) AddFile(fileDisplay *display.FileDisplay) (error) {
 
 	// create domain model from display
 	file := models.File{
-		S3Path: config.S3Key + "/" + s3u.String(),
+		S3Path: s3u.String(),
 		ShortUrl: shortUrl.String(),
-		TTL: fileDisplay.TTL,
+		TTL: (1 * 60 * 60 * 24), // 24h in seconds
 		IV: fileDisplay.IV,
 		Salt: fileDisplay.Salt,
 		AData: fileDisplay.AData,

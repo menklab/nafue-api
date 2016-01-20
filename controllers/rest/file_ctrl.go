@@ -14,8 +14,26 @@ type FileController struct {
 
 func (self *FileController) Init(r *gin.Engine) {
 	self.fileService = services.GetFileService()
-	r.POST("/api/files", self.addFile)
 	r.GET("/api/files/:file", self.getFile)
+	r.POST("/api/files", self.addFile)
+}
+
+func (self *FileController) getFile(c *gin.Context) {
+
+	fileKey := c.Param("file")
+
+	fileDisplay := display.FileDisplay{
+		ShortUrl: fileKey,
+	}
+
+	err := self.fileService.GetFile(&fileDisplay)
+	if err != nil {
+		log.Println(err.Error())
+		c.JSON(http.StatusNotFound, gin.H{"message": "Files doesn't exist."})
+		return;
+	}
+
+	c.JSON(http.StatusOK, fileDisplay)
 }
 
 func (self *FileController) addFile(c *gin.Context) {
@@ -42,21 +60,3 @@ func (self *FileController) addFile(c *gin.Context) {
 	c.JSON(http.StatusOK, fileDisplay)
 }
 
-
-func (self *FileController) getFile(c *gin.Context) {
-
-	fileKey := c.Param("file")
-
-	fileDisplay := display.FileDisplay{
-		ShortUrl: fileKey,
-	}
-
-	err := self.fileService.GetFile(&fileDisplay)
-	if err != nil {
-		log.Println(err.Error())
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error retrieving file"})
-		return;
-	}
-
-	c.JSON(http.StatusOK, fileDisplay)
-}
