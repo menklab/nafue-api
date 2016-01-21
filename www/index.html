@@ -14,11 +14,20 @@
 </head>
 <header>
 
-</header>
+</header>`
 <body>
 <div class="container">
     <br>
     <br>
+    <br>
+    <div class="row">
+        <div class="col-md-8 col-md-push-2">
+            <div class="text-center">
+                <a href="/"><img src="img/logo.jpg" alt="NsAFU.com" align="center" height="100px"></a>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
     <br>
     <div class="row">
         <div class="col-md-8 col-md-push-2">
@@ -33,7 +42,6 @@
                 <p class="no-select text-center">Link and file will be destroyed after first use or after 24 hours,
                     whichever comes first.</p>
                 <h3 id="linkToShare"></h3>
-                <button id="reset" class="btn full-width no-select" onclick="reset_ui()">Reset</button>
             </div>
             <div id="passCont" class="text-center no-select" hidden>
                 <input id="password" type="password" class="input-text" placeholder="Enter Password">
@@ -44,7 +52,7 @@
                     <span id="upp" class="missing">Uppercase</span>,
                     <span id="num" class="missing">Number</span>,
                     <span id="spc" class="missing">Special</span></p>
-                <button class="btn full-width" id="share" onclick="shareFile()" disabled>Share</button>
+                <button class="btn full-width" id="share" onclick="shareFile()" disabled>Share File</button>
                 <br>
                 <br>
                 <button class="btn full-width" id="downloadBtn" onclick="decryptFile()" hidden>Access File</button>
@@ -68,8 +76,9 @@
     </div>
 </div>
 </body>
+<hr>
 <footer>
-
+<p class="text-center">&copy;&nbsp;2015 NsAFU.com</p>
 </footer>
 <script type="text/javascript" src="/app/vendor.min.js"></script>
 <script type="text/javascript" src="/app/app.min.js"></script>

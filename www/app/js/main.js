@@ -16,7 +16,6 @@ function init() {
     };
 
     if (window.File && window.FileReader && window.FileList && window.Blob) {
-
         // check for decryption file
         var dFile = getParameterByName("file");
         if (!!dFile) {
@@ -35,8 +34,8 @@ function init() {
         };
     }
     else {
-        dom.upload.hidden = true;
-        dom.unsupported.hidden = false;
+        hide(dom.dropZone);
+        show(dom.unsupported);
     }
 }
 

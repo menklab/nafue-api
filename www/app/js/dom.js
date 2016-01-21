@@ -18,20 +18,23 @@ function domInit() {
         num: document.getElementById("num"),
         spc: document.getElementById("spc"),
         reset: document.getElementById("reset"),
-        upload: document.getElementById("upload"),
         doneDownloading: document.getElementById("doneDownloading"),
-        unsupported: document.getElementById("unsupported")
+        unsupported: document.getElementById("unsupported"),
     }
 }
 
 function reset_ui() {
-    dom.showLink.hidden = true;
-    dom.dropZone.hidden = false;
-    dom.downloadBtn.hidden = true;
-    dom.share.hidden = false;
-    dom.passwordReqs.hidden = false;
-    dom.file.focus();
     g.mode = "upload";
+    dom.file.value = "";
+    show(dom.dropZone);
+    hide(dom.showLink);
+    hide(dom.passCont);
+    hide(dom.doneDownloading);
+    hide(dom.busy);
+    hide(dom.unsupported);
+    resetPassword();
+    g.binData = null;
+    dom.file.focus();
 }
 
 function hide(e) {
@@ -41,5 +44,5 @@ function show(e) {
     e.hidden = false;
 }
 function setContent(e, c) {
-    e.innerHtml = c;
+    e.innerHTML = c;
 }

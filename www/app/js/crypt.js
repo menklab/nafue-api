@@ -61,62 +61,62 @@ function makeIv() {
 
 function checkPassword(e) {
     if (e.keyCode == 13) {
-        if (mode == "upload"){
-            share.click();
+        if (g.mode == "upload"){
+            dom.share.click();
         }
         else {
-            downloadBtn.click();
+            dom.downloadBtn.click();
             return;
         }
     }
 
-    var pass = password.value;
+    var pass = dom.password.value;
 
     var p = {};
 
     if (pass.length > 7) {
         p.length = true;
-        len.className = "present";
+        dom.len.className = "present";
     }
     else {
         p.length = false;
-        len.className = "missing";
+        dom.len.className = "missing";
     }
 
     if (!!pass.match(/[0-9]/)) {
         p.num = true;
-        num.className = "present"
+        dom.num.className = "present"
     }
     else {
         p.num = false;
-        num.className = "missing"
+        dom.num.className = "missing"
     }
 
     if (!!pass.match("[a-z]")) {
         p.lower = true;
-        low.className = "present";
+        dom.low.className = "present";
     }
     else {
         p.lower = false;
-        low.className = "missing";
+        dom.low.className = "missing";
     }
 
     if (!!pass.match("[A-Z]")) {
         p.upper = true;
-        upp.className = "present";
+        dom.upp.className = "present";
     }
     else {
         p.upper = false;
-        upp.className = "missing";
+        dom.upp.className = "missing";
     }
 
     if (!!pass.match(/[!,@,#,$,%,^,&,*,?,_,~,-,(,),\s]/)) {
         p.special = true;
-        spc.className = "present";
+        dom.spc.className = "present";
     }
     else {
         p.special = false;
-        spc.className = "missing";
+        dom.spc.className = "missing";
     }
 
 
@@ -127,9 +127,19 @@ function checkPassword(e) {
     strength += 1 ? p.upper : 0;
     strength += 1 ? p.special : 0;
     if (strength >= 3 && p.length) {
-        share.disabled = false;
+        dom.share.disabled = false;
     }
     else {
-        share.disabled = true;
+        dom.share.disabled = true;
     }
+}
+
+function resetPassword() {
+    dom.password.value = "";
+    dom.spc.className = "missing";
+    dom.upp.className = "missing";
+    dom.low.className = "missing";
+    dom.num.className = "missing";
+    dom.len.className = "missing";
+
 }

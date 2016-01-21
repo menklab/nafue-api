@@ -33,9 +33,8 @@ function handleFileSelect(e) {
                 type: type,
                 name: name
             }));
-            console.log(g.binData);
-            hide(dom.dropZone.hidden);
-            show(dom.passCont.hidden);
+            hide(dom.busy);
+            show(dom.passCont);
             dom.password.focus();
         };
     })(file);
@@ -83,8 +82,8 @@ function downloadFile(file, cb) {
 }
 
 function shareFile() {
-    hide(dom.passCont.hidden);
-    show(busy.hidden);
+    hide(dom.passCont);
+    show(dom.busy);
 
     // do encryption
     setContent(dom.busyMessage, "Encrypting");
@@ -121,15 +120,15 @@ function shareFile() {
         });
 }
 
-function tryPasswordToDecrpyt() {
-    g.mode = "download";
-    hide(dom.busy);
-    show(dom.passCont);
-    hide(dom.passwordReqs);
-    hide(dom.hidden);
-    show(dom.downloadBtn);
-    dom.password.focus();
-}
+//function tryPasswordToDecrpyt() {
+//    g.mode = "download";
+//    hide(dom.busy);
+//    show(dom.passCont);
+//    hide(dom.passwordReqs);
+//    hide(dom.hidden);
+//    show(dom.downloadBtn);
+//    dom.password.focus();
+//}
 
 function decryptFile() {
     var data = JSON.parse(atob(sjcl.codec.base64.fromBits(doDecrypt(dom.password.value, g.ct))));
