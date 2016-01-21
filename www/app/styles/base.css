@@ -8,6 +8,12 @@ h2 {
 h3 {
     font: 15px bold inherit;
 }
+a {
+    color: #999;
+}
+a:hover {
+    color: #777;
+}
 .no-select {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

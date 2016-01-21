@@ -3,9 +3,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <link rel="canonical" href="http://www.menklab.com" itemprop="url">
-    <title>SFDP</title>
-    <meta name="description" content="Secure File Drop Protocol">
-    <meta name="keywords" content="Secure File Drop Protocol">
+    <title>NsAFU</title>
+    <meta name="description" content="NsAFU Secure Services">
+    <meta name="keywords"
+          content="Secure File Drop, Encrypted File Transfer, Secure File Transfer, Secure, File, Sharing, Secure File Sharing, Encrypted File Sharing">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="icon" type="image/png" href="img/favicon.ico" sizes="64x64"/>
     <link rel="stylesheet" type="text/css" href="/app/style.min.css">
@@ -21,20 +22,18 @@
     <br>
     <div class="row">
         <div class="col-md-8 col-md-push-2">
-            <div id="upload">
-                <div id="drop" class="dropZone no-select">
-                    <div class="dropSelect">
-                        <input class="inputfile" type="file" id="file" name="files[]"/>
-                        <label for="file">Choose a file...</label>
-                    </div>
-                    <h2>Drop file here</h2>
+            <div id="dropZone" class="dropZone no-select">
+                <div class="dropSelect">
+                    <input class="inputfile" type="file" id="file" name="files[]"/>
+                    <label for="file">Choose a file...</label>
                 </div>
-                <div id="showLink" hidden>
-                    <p class="no-select text-center">Link and file will be destroyed after first use or after 24 hours,
-                        whichever comes first.</p>
-                    <h3 id="linkToShare"></h3>
-                    <button id="reset" class="btn full-width no-select" onclick="reset_ui()">Reset</button>
-                </div>
+                <h2>Drop file here</h2>
+            </div>
+            <div id="showLink" hidden>
+                <p class="no-select text-center">Link and file will be destroyed after first use or after 24 hours,
+                    whichever comes first.</p>
+                <h3 id="linkToShare"></h3>
+                <button id="reset" class="btn full-width no-select" onclick="reset_ui()">Reset</button>
             </div>
             <div id="passCont" class="text-center no-select" hidden>
                 <input id="password" type="password" class="input-text" placeholder="Enter Password">
@@ -48,13 +47,22 @@
                 <button class="btn full-width" id="share" onclick="shareFile()" disabled>Share</button>
                 <br>
                 <br>
-                <button class="btn full-width" id="downloadBtn" onclick="decrypt()" hidden>Download</button>
+                <button class="btn full-width" id="downloadBtn" onclick="decryptFile()" hidden>Access File</button>
+            </div>
+            <div id="doneDownloading" class="text-center" hidden>
+                <h2>Download will begin shortly...</h2>
+                <p>You will be redirected in a few moments back to the homepage.</p>
             </div>
             <div id="busy" class="no-select" hidden>
                 <br><br>
                 <div class="loading">
                     <span id="busyMessage"></span>
                 </div>
+            </div>
+            <div id="unsupported" class="text-center" hidden>
+                <h1>Unsupported Browser.</h1>
+                <p>It looks like your browser isn't supported. Try something from this decade or go <a
+                        href="">mobile</a>.</p>
             </div>
         </div>
     </div>

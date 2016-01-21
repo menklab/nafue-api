@@ -1,47 +1,53 @@
-if (window.File && window.FileReader && window.FileList && window.Blob) {
+var dom, g, s = {
+    adata: sjcl.codec.base64.toBits(btoa('Sparticus')),
+    mode: 'ccm',
+    cipher: 'aes',
+    tagSize: 128,
+    keySize: 256,
+    iterations: 1000
+};
 
-    var dropZone = document.getElementById('drop');
-    var list = document.getElementById('list');
-    var file = document.getElementById('file');
-    var password = document.getElementById('password');
-    var passwordReqs = document.getElementById('passwordReqs');
-    var passCont = document.getElementById('passCont');
-    var busy = document.getElementById('busy');
-    var showLink = document.getElementById('showLink');
-    var linkToShare = document.getElementById('linkToShare');
-    var busyMessage = document.getElementById('busyMessage');
-    var share = document.getElementById("share");
-    var downloadBtn = document.getElementById("downloadBtn");
-    var len = document.getElementById("len");
-    var low = document.getElementById("low");
-    var upp = document.getElementById("upp");
-    var num = document.getElementById("num");
-    var spc = document.getElementById("spc");
-    var reset = document.getElementById("reset");
-    var upload = document.getElementById("upload");
 
-    var skipCheck = false;
-    var binStr;
+function init() {
+    dom = domInit();
+    g = {
+        mode: "upload",
+        binData: null
+    };
 
-    dropZone.addEventListener('dragover', handleDragOver, false);
-    dropZone.addEventListener('drop', handleFileSelect, false);
-    document.getElementById('file').addEventListener('change', handleFileSelect, false);
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
 
-    // check for decryption file
-    var dFile = getParameterByName("file");
-    if (!!dFile) {
-        window.history.pushState('','','/');
-        downloadFile(dFile);
+        // check for decryption file
+        var dFile = getParameterByName("file");
+        if (!!dFile) {
+            window.history.pushState('', '', '/');
+            downloadFile(dFile);
+        }
+
+        dom.dropZone.addEventListener('dragover', handleDragOver, false);
+        dom.dropZone.addEventListener('drop', handleFileSelect, false);
+        dom.file.addEventListener('change', handleFileSelect, false);
+        dom.file.focus();
+
+        // setup password check listener
+        window.onload = function () {
+            dom.password.onkeyup = checkPassword;
+        };
     }
-
-} else {
-    document.getElementById('status').innerHTML = 'Your browser does not support the HTML5 FileReader.';
+    else {
+        dom.upload.hidden = true;
+        dom.unsupported.hidden = false;
+    }
 }
 
-// on load
-window.onload = function () {
-    password.onkeyup = checkPassword;
-};
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+init();
 
 
 
