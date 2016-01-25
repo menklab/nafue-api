@@ -22,7 +22,7 @@ func (self *CORSController) corsMiddleware(c *gin.Context) {
 
 	if c.Request.Method == "OPTIONS" {
 		log.Println("OPTIONS")
-		c.AbortWithStatus(200)
+		c.AbortWithStatus(204)
 	} else {
 		c.Next()
 	}
