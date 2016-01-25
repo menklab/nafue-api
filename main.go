@@ -19,7 +19,7 @@ func main() {
 	//Initialize Server
 	rest.Init()
 
-	port := config.PORT
+	port := config.Port
 
 	if  port == "" {
 		port = "9090"

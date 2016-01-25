@@ -13,6 +13,9 @@ func Init() {
 
 	r = gin.Default()
 
+	// CORS Requests
+	new(CORSController).Init(r)
+
 	//rest API controllers
 	new(HealthyController).Init(r)
 	new(FileController).Init(r)

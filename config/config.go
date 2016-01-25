@@ -9,7 +9,8 @@ var (
 	S3PutTTL = os.Getenv("S3_PUT_TTL")
 	S3Bucket = os.Getenv("S3_BUCKET")
 	S3Location = os.Getenv("S3_LOCATION")
-	PORT = os.Getenv("PORT")
+	Port = os.Getenv("PORT")
+	CorsHost = os.Getenv("CORS_HOST")
 )
 
 const (
