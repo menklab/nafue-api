@@ -16,7 +16,7 @@ function handleFileSelect(e) {
 
     // only 1 file at a time
     if (files.length > 1) {
-        console.log("only 1 file at a time!");
+        error("Only 1 file at a time.");
         return;
     }
     var file = files[0];
@@ -28,11 +28,16 @@ function handleFileSelect(e) {
     reader.onload = (function (f) {
         return function (e) {
             // Render thumbnail.
-            g.binData = btoa(JSON.stringify({
-                content: e.target.result,
+            var data = {
+                content: encodeAb(e.target.result),
                 type: type,
                 name: name
-            }));
+            };
+
+            //var blob = new Blob([decodeAb(data.content)]); //new Blob([btoa(data.content)], {type: data.type});
+            //saveAs(blob, data.name);
+
+            g.binData = btoa(JSON.stringify(data));
             hide(dom.busy);
             show(dom.passCont);
             dom.password.focus();
@@ -41,7 +46,7 @@ function handleFileSelect(e) {
 
     // Read in the image file as a data URL.
 
-    reader.readAsBinaryString(file);
+    reader.readAsArrayBuffer(file);
 
 }
 
@@ -51,18 +56,18 @@ function handleDragOver(e) {
     e.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
 }
 
-function downloadFile(file, cb) {
-    hide(dom.upload.hidden);
-    show(dom.downloadBtn.hidden);
+function downloadFile(file) {
+    hide(dom.dropZone);
+    show(dom.downloadBtn);
     setContent(dom.busyMessage, "Downloading");
-    show(dom.busy.hidden);
+    show(dom.busy);
 
     http.get(services + "/api/files/" + file)
         .success(function (res) {
             http.get(res.downloadUrl)
                 .success(function (eData) {
                     res.ct = eData;
-                    var ct = {
+                    g.ct = {
                         ct: sjcl.codec.base64.toBits(eData),
                         p: {
                             adata: sjcl.codec.base64.toBits(res.aData),
@@ -70,14 +75,16 @@ function downloadFile(file, cb) {
                             salt: sjcl.codec.base64.toBits(res.salt)
                         }
                     };
-                    cb(ct);
+
+                    // move to decrypt
+                    decryptScreen();
                 })
                 .error(function (err) {
-                    console.log("error");
+                    error("The file couldn't be access or no longer exists.");
                 })
         })
         .error(function (err) {
-            console.log("error");
+            error("The file couldn't be access or no longer exists.");
         });
 }
 
@@ -106,39 +113,39 @@ function shareFile() {
                     .success(function (res) {
                         hide(dom.busy);
                         show(dom.showLink);
-                        setContent(dom.linkToShare,services + "?file=" + fileData.shortUrl);
-                        dom.reset.focus();
+                        setContent(dom.linkToShare, services + "?file=" + fileData.shortUrl);
                     })
                     .error(function (err) {
-                        console.log("fail!");
+                       error(err.message);
                     });
             }, 500);
 
         })
         .error(function (err) {
-
+            error(err.message);
         });
 }
 
-//function tryPasswordToDecrpyt() {
-//    g.mode = "download";
-//    hide(dom.busy);
-//    show(dom.passCont);
-//    hide(dom.passwordReqs);
-//    hide(dom.hidden);
-//    show(dom.downloadBtn);
-//    dom.password.focus();
-//}
+function decryptScreen() {
+    g.mode = "download";
+    hide(dom.busy);
+    show(dom.passCont);
+    hide(dom.passwordReqs);
+    hide(dom.share);
+    show(dom.downloadBtn);
+    dom.password.focus();
+}
 
 function decryptFile() {
     var data = JSON.parse(atob(sjcl.codec.base64.fromBits(doDecrypt(dom.password.value, g.ct))));
-    var blob = new Blob([data.content], {type: data.type});
+    var blob = new Blob([decodeAb(data.content)], {type: data.type});
+
     saveAs(blob, data.name);
+
     show(dom.doneDownloading);
     hide(dom.passCont);
-    timeout(function() {
+    setTimeout(function () {
         hide(dom.doneDownloading);
-        hide(dom.upload);
         reset_ui();
-    },1000 * 10);
+    }, 1000 * 10);
 }

@@ -44,6 +44,7 @@
                 <h3 id="linkToShare"></h3>
             </div>
             <div id="passCont" class="text-center no-select" hidden>
+                <p id="badPass" class="text-center text-red" hidden>Bad Password, Try Again.</p>
                 <input id="password" type="password" class="input-text" placeholder="Enter Password">
                 <p class="passwordReqs" id="passwordReqs">
                     <span class="bold">Length 8+ and (3 of 4):</span>
@@ -55,7 +56,7 @@
                 <button class="btn full-width" id="share" onclick="shareFile()" disabled>Share File</button>
                 <br>
                 <br>
-                <button class="btn full-width" id="downloadBtn" onclick="decryptFile()" hidden>Access File</button>
+                <button class="btn full-width" id="downloadBtn" onclick="decryptFile()" hidden>Unlock File</button>
             </div>
             <div id="doneDownloading" class="text-center" hidden>
                 <h2>Download will begin shortly...</h2>
@@ -69,8 +70,12 @@
             </div>
             <div id="unsupported" class="text-center" hidden>
                 <h1>Unsupported Browser.</h1>
-                <p>It looks like your browser isn't supported. Try something from this decade or go <a
+                <p class="text-red">It looks like your browser isn't supported. Try something from this decade or go <a
                         href="">mobile</a>.</p>
+            </div>
+            <div id="error" class="text-center" hidden>
+                <h1>There Was An Error</h1>
+                <p id="errMsg" class="text-red">This is the message</p>
             </div>
         </div>
     </div>

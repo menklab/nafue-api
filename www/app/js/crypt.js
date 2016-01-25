@@ -1,4 +1,3 @@
-
 function loaded() {
     sjcl.random.startCollectors();
 }
@@ -49,7 +48,7 @@ function doDecrypt(password, ct) {
         data = sjcl.mode[p.mode].decrypt(prp, ct.ct, p.iv, p.adata, p.ts);
     }
     catch (e) {
-        console.log("error: ", e);
+        badPassword();
         return;
     }
     return data;
@@ -61,7 +60,7 @@ function makeIv() {
 
 function checkPassword(e) {
     if (e.keyCode == 13) {
-        if (g.mode == "upload"){
+        if (g.mode == "upload") {
             dom.share.click();
         }
         else {
