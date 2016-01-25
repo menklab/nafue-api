@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
-	"sparticus/services"
-	"sparticus/models/display"
+	"nafue/services"
+	"nafue/models/display"
 )
 
 type FileController struct {

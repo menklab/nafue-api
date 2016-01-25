@@ -31,7 +31,7 @@ function domInit() {
 function error(errMsg) {
     reset_ui();
     hide(dom.dropZone);
-
+    show(dom.homeLink);
     show(dom.error);
     resetPassword();
     g.binData = null;

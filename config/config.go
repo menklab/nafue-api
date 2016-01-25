@@ -5,12 +5,10 @@ import (
 )
 
 var (
-	S3Bucket		   = "sfds.menklab.com"
-	S3Key			   = "files"
-	S3PutTTL		   = 15
-//	S3Bucket		   = os.Getenv("S3_BUCKET")
-	S3Location		   = "us-east-1"
-//	S3Location		   = os.Getenv("S3_LOCATION")
+	S3Key			   = os.Getenv("S3_KEY")
+	S3PutTTL		   = os.Getenv("S3_PUT_TTL")
+	S3Bucket		   = os.Getenv("S3_BUCKET")
+	S3Location		   = os.Getenv("S3_LOCATION")
 )
 
 const (

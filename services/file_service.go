@@ -1,11 +1,11 @@
 package services
 
 import (
-	"sparticus/repositories"
-	"sparticus/models/display"
-	"sparticus/models/domain"
+	"nafue/repositories"
+	"nafue/models/display"
+	"nafue/models/domain"
 	"github.com/nu7hatch/gouuid"
-	"sparticus/config"
+	"nafue/config"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/aws"
 	"time"

@@ -1,11 +1,11 @@
 package services
 
 import (
-	"sparticus/repositories"
+	"nafue/repositories"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
-	"sparticus/config"
+	"nafue/config"
 )
 
 var (

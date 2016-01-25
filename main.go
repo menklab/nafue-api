@@ -2,10 +2,10 @@ package main
 
 import (
 	"os"
-	"sparticus/controllers/rest"
-	"sparticus/database"
-	"sparticus/repositories"
-	"sparticus/services"
+	"nafue/controllers/rest"
+	"nafue/database"
+	"nafue/repositories"
+	"nafue/services"
 )
 
 func main() {

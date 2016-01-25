@@ -3,7 +3,7 @@ import (
 	"database/sql"
 	"log"
 	"time"
-	"sparticus/models/domain"
+	"nafue/models/domain"
 )
 type IFileRepository interface {
 	GetFile(*models.File) (error)

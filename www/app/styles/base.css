@@ -60,6 +60,12 @@ input[placeholder]{
 .btn[disabled] {
     background: #ccc;
 }
+.float-left {
+    float: left;
+}
+.float-right {
+    float: right;
+}
 .btn[disabled]:hover {
     background: #ccc;
 }
