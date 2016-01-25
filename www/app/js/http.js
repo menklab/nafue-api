@@ -76,5 +76,5 @@ var http = (function () {
             config = config || {};
             return ajx('DELETE', url, data, config);
         }
-    }
+    };
 })();

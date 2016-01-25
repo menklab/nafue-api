@@ -84,11 +84,11 @@ function checkPassword(e) {
 
     if (!!pass.match(/[0-9]/)) {
         p.num = true;
-        dom.num.className = "present"
+        dom.num.className = "present";
     }
     else {
         p.num = false;
-        dom.num.className = "missing"
+        dom.num.className = "missing";
     }
 
     if (!!pass.match("[a-z]")) {

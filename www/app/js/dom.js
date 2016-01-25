@@ -25,7 +25,7 @@ function domInit() {
         badPass: document.getElementById("badPass"),
         error: document.getElementById("error"),
         errMsg: document.getElementById("errMsg")
-    }
+    };
 }
 
 function error(errMsg) {

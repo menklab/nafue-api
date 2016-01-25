@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     gulp_concat = require('gulp-concat'),
     gulp_uglifycss = require('gulp-uglifycss'),
     gulp_uglify = require('gulp-uglify'),
+    gulp_copy = require('gulp-copy'),
     gulp_rename = require("gulp-rename");
     gulp_insert = require('gulp-insert');
     gulp_open = require('gulp-open'),
@@ -52,7 +53,7 @@ gulp.task('build:js', function () {
         gulp.src(['app/js/**/*.js'], {base: 'js'})
         .pipe(jshint(jshintOptions))
         .pipe(jshint.reporter(jshint_stylish))
-        //.pipe(jshint.reporter('fail')) // only enable if build needs to fail on bad jshint
+        .pipe(jshint.reporter('fail')) // only enable if build needs to fail on bad jshint
         .pipe(gulp_sourcemaps.init())
         .pipe(gulp_concat('app.min.js'))
         //.pipe(gulp_uglify())
@@ -77,6 +78,12 @@ gulp.task('build:vendor:js', function () {
         //.pipe(gulp_uglify())
         .pipe(gulp_sourcemaps.write('../maps'))
         .pipe(gulp.dest('app/'));
+});
+
+gulp.task('package', function () {
+    gulp.src(['app/app.min.js'], {base: 'js'})
+        .pipe(gulp_uglify())
+        .pipe(gulp.dest('../prod/'));
 });
 
 //gulp.task('build:vendor:css', function () {

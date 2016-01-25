@@ -9,11 +9,11 @@ function handleFileSelect(e) {
 
     var files;
     if (!!e.dataTransfer && !!e.dataTransfer.files) {
-        files = e.dataTransfer.files
+        files = e.dataTransfer.files;
     }
 
     if (!!e.target && !!e.target.files) {
-        files = e.target.files
+        files = e.target.files;
     }
 
     // only 1 file at a time
@@ -94,7 +94,7 @@ function downloadFile(file) {
                 })
                 .error(function (err) {
                     error("The file could not be access or no longer exists.");
-                })
+                });
         })
         .error(function (err) {
             error("The file could not be access or no longer exists.");
