@@ -16,6 +16,8 @@ function init() {
     };
 
     if (window.File && window.FileReader && window.FileList && window.Blob) {
+        // handle history
+
         // check for decryption file
         var dFile = getParameterByName("file");
         if (!!dFile) {

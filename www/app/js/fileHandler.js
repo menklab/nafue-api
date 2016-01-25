@@ -19,28 +19,39 @@ function handleFileSelect(e) {
         error("Only 1 file at a time.");
         return;
     }
+
     var file = files[0];
     var type = file.type;
     var name = file.name;
     var reader = new FileReader();
 
+    // only 50 MB
+    if (file.size/1024/1024 > 50) {
+        reader.abort();
+        error('The uploaded file cannot be greater than 50MB');
+    }
+
     // closure to capture file
     reader.onload = (function (f) {
         return function (e) {
-            // Render thumbnail.
-            var data = {
-                content: encodeAb(e.target.result),
-                type: type,
-                name: name
-            };
+            if (file.size/1024/1024 <= 50) {
+                var data = {
+                    content: encodeAb(e.target.result),
+                    type: type,
+                    name: name
+                };
 
-            //var blob = new Blob([decodeAb(data.content)]); //new Blob([btoa(data.content)], {type: data.type});
-            //saveAs(blob, data.name);
+                //var blob = new Blob([decodeAb(data.content)]); //new Blob([btoa(data.content)], {type: data.type});
+                //saveAs(blob, data.name);
 
-            g.binData = btoa(JSON.stringify(data));
-            hide(dom.busy);
-            show(dom.passCont);
-            dom.password.focus();
+                g.binData = btoa(JSON.stringify(data));
+                hide(dom.busy);
+                show(dom.passCont);
+                dom.password.focus();
+            }
+            else {
+                e = null;
+            }
         };
     })(file);
 
@@ -80,11 +91,11 @@ function downloadFile(file) {
                     decryptScreen();
                 })
                 .error(function (err) {
-                    error("The file couldn't be access or no longer exists.");
+                    error("The file could not be access or no longer exists.");
                 })
         })
         .error(function (err) {
-            error("The file couldn't be access or no longer exists.");
+            error("The file could not be access or no longer exists.");
         });
 }
 

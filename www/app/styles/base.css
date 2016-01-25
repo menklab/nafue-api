@@ -70,6 +70,26 @@ input[placeholder]{
     text-align: center;
 }
 
+header {
+    top: 0;
+    height: 100px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+footer {
+    bottom: 0;
+    height: 40px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    background-color: #eee;
+}
+footer p {
+    color: #999;
+    font-size: 14px;
+}
+
 .dropZone {
     width: 100%;
     border: 2px dashed #999;
