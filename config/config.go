@@ -11,6 +11,8 @@ var (
 	S3Location = os.Getenv("S3_LOCATION")
 	Port = os.Getenv("PORT")
 	CorsHost = os.Getenv("CORS_HOST")
+	LetsEncryptPath = os.Getenv("LETS_ENCRYPT_PATH")
+	LetsEncryptContent= os.Getenv("LETS_ENCRYPT_CONTENT")
 )
 
 const (
