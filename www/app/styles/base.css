@@ -17,6 +17,9 @@ a:hover {
 .text-red {
     color: #c94343;
 }
+.no-underline{
+    text-decoration: none;
+}
 .no-select {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

@@ -21,6 +21,7 @@ function init() {
         // check for decryption file
         var dFile = getParameterByName("file");
         if (!!dFile) {
+            show(dom.homeLink);
             window.history.pushState('', '', '/');
             downloadFile(dFile);
         }
