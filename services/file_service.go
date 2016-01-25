@@ -11,6 +11,7 @@ import (
 	"time"
 	"fmt"
 	"errors"
+	"log"
 )
 
 type IFileService interface {
@@ -62,8 +63,12 @@ func (self *FileService) GetFile(fileDisplay *display.FileDisplay) (error) {
 		Bucket: aws.String(config.S3Bucket),
 		Key: aws.String(config.S3Key + "/" + file.S3Path),
 	})
+
 	url, err := req.Presign(15 * time.Minute)
-	fmt.Println("url: " + url);
+	if err != nil {
+		log.Println("--ERROR---", err.Error())
+		return err
+	}
 
 	// add needed data to display
 	fileDisplay.DownloadUrl = url
@@ -93,7 +98,10 @@ func (self *FileService) AddFile(fileDisplay *display.FileDisplay) (error) {
 		ContentType: aws.String("text/plain;charset=UTF-8"),
 	})
 	url, err := req.Presign(15 * time.Minute)
-	fmt.Println("url: " + url);
+	if err != nil {
+		log.Println("--ERROR---", err.Error())
+		return err
+	}
 
 	// create domain model from display
 	file := models.File{

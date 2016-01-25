@@ -1,11 +1,13 @@
 package main
 
 import (
-	"os"
+	 _ "github.com/joho/godotenv/autoload"
 	"nafue/controllers/rest"
 	"nafue/database"
 	"nafue/repositories"
 	"nafue/services"
+
+	"nafue/config"
 )
 
 func main() {
@@ -17,9 +19,9 @@ func main() {
 	//Initialize Server
 	rest.Init()
 
-	port := os.Getenv("PORT")
+	port := config.PORT
 
-	if port == "" {
+	if  port == "" {
 		port = "9090"
 	}
 
