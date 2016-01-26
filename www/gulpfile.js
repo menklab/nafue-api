@@ -82,9 +82,12 @@ gulp.task('build:vendor:js', function () {
 });
 
 gulp.task('package', function () {
+    run_sequence('build:vendor:js');
+    run_sequence('build:js');
+    run_sequence('build:css');
     gulp.src(['app/app.min.js'], {base: 'js'})
         .pipe(gulp_rename("app.min.js"))
-        .pipe(gulp_replace(/services=".*?"/, 'services="http://www.nafue.com"'))
+        .pipe(gulp_replace(/services=".*?"/, 'services="http://api.nafue.com"'))
         .pipe(gulp_uglify())
         .pipe(gulp.dest('dist/app/'));
     gulp.src(['app/vendor.min.js'], {base: 'js'})
