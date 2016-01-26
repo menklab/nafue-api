@@ -6,9 +6,10 @@ var gulp = require('gulp'),
     gulp_uglifycss = require('gulp-uglifycss'),
     gulp_uglify = require('gulp-uglify'),
     gulp_copy = require('gulp-copy'),
-    gulp_rename = require("gulp-rename");
-    gulp_insert = require('gulp-insert');
+    gulp_rename = require("gulp-rename"),
+    gulp_insert = require('gulp-insert'),
     gulp_open = require('gulp-open'),
+    gulp_replace = require('gulp-replace'),
     gulp_sourcemaps = require('gulp-sourcemaps'),
     jshint = require('gulp-jshint'),
     jshint_stylish = require('jshint-stylish'),
@@ -82,8 +83,20 @@ gulp.task('build:vendor:js', function () {
 
 gulp.task('package', function () {
     gulp.src(['app/app.min.js'], {base: 'js'})
+        .pipe(gulp_rename("app.min.js"))
+        .pipe(gulp_replace(/services=".*?"/, 'services="http://www.nafue.com"'))
         .pipe(gulp_uglify())
-        .pipe(gulp.dest('../prod/'));
+        .pipe(gulp.dest('dist/app/'));
+    gulp.src(['app/vendor.min.js'], {base: 'js'})
+        .pipe(gulp_uglify())
+        .pipe(gulp_rename("vendor.min.js"))
+        .pipe(gulp.dest('dist/app/'));
+    gulp.src(['app/style.min.css'])
+        .pipe(gulp_uglifycss())
+        .pipe(gulp_rename("style.min.css"))
+        .pipe(gulp.dest('dist/'));
+    gulp.src(['img/**/*', '*.html'])
+        .pipe(gulp_copy('dist/'));
 });
 
 //gulp.task('build:vendor:css', function () {
