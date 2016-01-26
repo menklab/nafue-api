@@ -97,7 +97,7 @@ gulp.task('package', function () {
     gulp.src(['app/style.min.css'])
         .pipe(gulp_uglifycss())
         .pipe(gulp_rename("style.min.css"))
-        .pipe(gulp.dest('dist/'));
+        .pipe(gulp.dest('dist/app'));
     gulp.src(['img/**/*', '*.html'])
         .pipe(gulp_copy('dist/'));
 });
