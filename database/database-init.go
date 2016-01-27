@@ -5,18 +5,18 @@ import (
 	"github.com/DavidHuie/gomigrate"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
+	"nafue/config"
 )
 
 var (
 	database       *sql.DB
-	databaseConfig string
 	migrator       *gomigrate.Migrator
 )
 
 func init() {
 
 	// create db connection
-	db, err := sql.Open("mysql", "sparticus:password@/sparticus?parseTime=true")
+	db, err := sql.Open("mysql", config.DbUser+":"+config.DbPassword+"@"+config.DbServer+"/"+config.DbName+"?parseTime=true")
 	if err != nil {
 		log.Fatal("Database Error: ", err.Error())
 	}

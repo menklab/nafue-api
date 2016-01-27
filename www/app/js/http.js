@@ -3,7 +3,8 @@
  * methods:
  * http.get('url')
  */
-var services = "http://localhost:9090";
+var api_services = "http://localhost:9090";
+var www_services = "http://localhost:8080";
 
 var http = (function () {
 

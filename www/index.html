@@ -34,11 +34,11 @@
 </head>
 <header>
     <div class="row">
-        <div class="col-md-1">
-            <p id="homeLink" hidden><a class="no-underline" href="/">&lt;&nbsp;</a><a href="/">Home</a></p>
+        <div class="col-xs-3 pull-left">
+            <p id="homeLink" ><a class="no-underline" href="/">&lt;&nbsp;</a><a href="/">Home</a></p>
         </div>
-        <div class="col-md-3 col-md-push-8">
-            <p><a href="/how_it_works">How It Works</a> | <a href="/mobile">Mobile App</a></p>
+        <div class="col-xs-9 pull-right">
+            <p class="text-right"><a href="/">How It Works</a> | <a href="/">Mobile App</a></p>
         </div>
     </div>
 </header>
@@ -99,7 +99,7 @@
             <div id="unsupported" class="text-center" hidden>
                 <h1>Unsupported Browser.</h1>
                 <p class="text-red">It looks like your browser isn't supported. Try something from this decade or go <a
-                        href="/mobile">mobile</a>.</p>
+                        href="/">mobile</a>.</p>
             </div>
             <div id="error" class="text-center" hidden>
                 <h1>There Was An Error</h1>
@@ -115,4 +115,15 @@
 </footer>
 <script type="text/javascript" src="/app/vendor.min.js"></script>
 <script type="text/javascript" src="/app/app.min.js"></script>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-72989200-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
 </html>

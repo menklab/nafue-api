@@ -5,12 +5,23 @@ import (
 )
 
 var (
+	// S3
 	S3Key = os.Getenv("S3_KEY")
 	S3PutTTL = os.Getenv("S3_PUT_TTL")
 	S3Bucket = os.Getenv("S3_BUCKET")
 	S3Location = os.Getenv("S3_LOCATION")
+
+	// DB
+	DbName = os.Getenv("DB_NAME")
+	DbUser = os.Getenv("DB_USER")
+	DbPassword = os.Getenv("DB_PASSWORD")
+	DbServer = os.Getenv("DB_SERVER")
+
+// App Config
 	Port = os.Getenv("PORT")
 	CorsHost = os.Getenv("CORS_HOST")
+
+	// Lets Encrypt
 	LetsEncryptPath = os.Getenv("LETS_ENCRYPT_PATH")
 	LetsEncryptContent= os.Getenv("LETS_ENCRYPT_CONTENT")
 )

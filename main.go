@@ -21,7 +21,7 @@ func main() {
 	port := config.Port
 
 	if  port == "" {
-		port = "9090"
+		port = "8080"
 	}
 
 	// Start Server

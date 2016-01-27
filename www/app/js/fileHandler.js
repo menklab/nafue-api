@@ -75,7 +75,7 @@ function downloadFile(file) {
     setContent(dom.busyMessage, "Downloading");
     show(dom.busy);
 
-    http.get(services + "/api/files/" + file)
+    http.get(api_services + "/api/files/" + file)
         .success(function (res) {
             http.get(res.downloadUrl)
                 .success(function (eData) {
@@ -116,7 +116,7 @@ function shareFile() {
     };
     // make upload request
     request = JSON.stringify(payload);
-    http.post(services + "/api/files", request)
+    http.post(api_services + "/api/files", request)
         .success(function (fileData) {
             setTimeout(function () {
                 setContent(dom.busyMessage.innerHTML, "Uploading");
@@ -126,7 +126,7 @@ function shareFile() {
                     .success(function (res) {
                         hide(dom.busy);
                         show(dom.showLink);
-                        setContent(dom.linkToShare, services + "?file=" + fileData.shortUrl);
+                        setContent(dom.linkToShare, www_services + "?file=" + fileData.shortUrl);
                     })
                     .error(function (err) {
                        error(err.message);
