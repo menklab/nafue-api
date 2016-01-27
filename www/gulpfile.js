@@ -88,8 +88,8 @@ gulp.task('package', function () {
     gulp.src(['app/app.min.js'], {base: 'js'})
         .pipe(gulp_rename("app.min.js"))
         .pipe(gulp_uglify())
-        .pipe(gulp_replace(/api_services=".*?"/, 'api_services="http://api.nafue.com"'))
-        .pipe(gulp_replace(/www_services=".*?"/, 'www_services="http://www.nafue.com"'))
+        .pipe(gulp_replace(/api_services=".*?"/, 'api_services="https://api.nafue.com"'))
+        .pipe(gulp_replace(/www_services=".*?"/, 'www_services="https://www.nafue.com"'))
         .pipe(gulp.dest('dist/app/'));
     gulp.src(['app/vendor.min.js'], {base: 'js'})
         .pipe(gulp_uglify())
