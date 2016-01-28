@@ -1,0 +1,17 @@
+{
+  "name": "Sparticus",
+  "version": "0.0.0",
+  "license": "None",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "sjcl": "~1.0.3",
+    "file-saver": "Teleborder/FileSaver.js#1.20150507.2"
+  }
+}
