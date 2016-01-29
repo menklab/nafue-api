@@ -6,7 +6,7 @@ var express = require('express'),
 var server = http.createServer(app);
 var request = require('request');
 
-app.set('views', __dirname + '/dist/app/');
+app.set('views', __dirname + '/app/');
 app.engine('html', require('ejs').renderFile);
 
 
@@ -15,7 +15,7 @@ var serviceBase = 'http://localhost:9090';
 // static routes for html
 app.use("/maps", express.static("./maps"));
 app.use("/docs", express.static("../docs"));
-app.use("/", express.static("./dist/app"));
+app.use("/", express.static("./app"));
 
 app.get('/api/*', function(req, res) {
     var url = serviceBase + req.url;
