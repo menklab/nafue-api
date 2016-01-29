@@ -54,7 +54,7 @@ gulp.task('build:js', function () {
         gulp.src(['app/js/**/*.js'], {base: 'js'})
         .pipe(jshint(jshintOptions))
         .pipe(jshint.reporter(jshint_stylish))
-        .pipe(jshint.reporter('fail')) // only enable if build needs to fail on bad jshint
+        //.pipe(jshint.reporter('fail')) // only enable if build needs to fail on bad jshint
         .pipe(gulp_sourcemaps.init())
         .pipe(gulp_concat('app.min.js'))
         //.pipe(gulp_uglify())
@@ -133,7 +133,7 @@ gulp.task('watch', [], function () {
     gulp_watch('app/js/**/*.js', function () {
         run_sequence('build:js');
     });
-    gulp.watch(['index.html', "app/src/**/*.html"]).on('change', function (file) {
+    gulp.watch(['app/index.html', "app/templates/**/*.html"]).on('change', function (file) {
         livereload.changed(file.path);
     });
 });
