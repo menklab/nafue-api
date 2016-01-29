@@ -133,7 +133,7 @@ gulp.task('watch', [], function () {
     gulp_watch('app/js/**/*.js', function () {
         run_sequence('build:js');
     });
-    gulp.watch(['app/index.html', "app/templates/**/*.html"]).on('change', function (file) {
+    gulp.watch(["app/**/*.html"]).on('change', function (file) {
         livereload.changed(file.path);
     });
 });
