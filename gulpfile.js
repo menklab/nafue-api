@@ -41,18 +41,18 @@ var jshintOptions = {
 
 gulp.task('build:css', function () {
     return gulp.src([
-            'app/styles/**/*.css'
+            'www/app/styles/**/*.css'
         ])
         .pipe(gulp_sourcemaps.init())
         .pipe(gulp_concat('style.min.css'))
         //.pipe(gulp_uglifycss())
         .pipe(gulp_sourcemaps.write('../maps'))
-        .pipe(gulp.dest('app/'))
+        .pipe(gulp.dest('www/app/'))
         .pipe(livereload());
 });
 
 gulp.task('build:js', function () {
-    gulp.src(['app/js/**/*.js'], {base: 'js'})
+    gulp.src(['www/app/js/**/*.js'], {base: 'js'})
         .pipe(jshint(jshintOptions))
         .pipe(jshint.reporter(jshint_stylish))
         //.pipe(jshint.reporter('fail')) // only enable if build needs to fail on bad jshint
@@ -60,26 +60,26 @@ gulp.task('build:js', function () {
         .pipe(gulp_concat('app.min.js'))
         //.pipe(gulp_uglify())
         .pipe(gulp_sourcemaps.write('../maps'))
-        .pipe(gulp.dest('app/'))
+        .pipe(gulp.dest('www/app/'))
         .pipe(livereload());
 });
 
 gulp.task('build:vendor:js', function () {
     // pre build sjcl with needed wrapper
-    gulp.src('bower_components/sjcl/sjcl.js', {base: 'js'})
+    gulp.src('www/bower_components/sjcl/sjcl.js', {base: 'js'})
         .pipe(gulp_insert.prepend('var sjcl =(function() {'))
         .pipe(gulp_insert.append('return sjcl;})();'))
         .pipe(gulp_rename('sjcl_wrapped.js'))
-        .pipe(gulp.dest('bower_components/sjcl/'));
+        .pipe(gulp.dest('www/bower_components/sjcl/'));
     gulp.src([
-            'bower_components/sjcl/sjcl_wrapped.js',
-            'bower_components/file-saver/FileSaver.js'
+            'www/bower_components/sjcl/sjcl_wrapped.js',
+            'www/bower_components/file-saver/FileSaver.js'
         ], {base: 'js'})
         .pipe(gulp_sourcemaps.init())
         .pipe(gulp_concat('vendor.min.js'))
         //.pipe(gulp_uglify())
         .pipe(gulp_sourcemaps.write('../maps'))
-        .pipe(gulp.dest('app/'));
+        .pipe(gulp.dest('www/app/'));
 });
 
 gulp.task('package', function () {
@@ -123,7 +123,6 @@ gulp.task('dev', [], function () {
     run_sequence('build:vendor:js');
     run_sequence('build:js');
     run_sequence('build:css');
-    run_sequence('copy:swagger');
     run_sequence('watch');
     run_sequence('open:dev');
 });

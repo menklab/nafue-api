@@ -80,7 +80,9 @@ input[placeholder] {
 .float-right {
     float: right;
 }
-
+.inline {
+    display: inline;
+}
 .btn[disabled]:hover {
     background: #ccc;
 }
@@ -224,4 +226,8 @@ footer p {
     text-align: center;
     padding: 0px 15px;
 }
-
+#canary {
+    display: inline;
+    float: right;
+    padding-right: 10px
+}
