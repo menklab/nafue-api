@@ -11,6 +11,7 @@ var gulp = require('gulp'),
     gulp_open = require('gulp-open'),
     gulp_replace = require('gulp-replace'),
     gulp_sourcemaps = require('gulp-sourcemaps'),
+    gulp_apidoc = require('gulp-apidoc'),
     jshint = require('gulp-jshint'),
     jshint_stylish = require('jshint-stylish'),
     minimist = require('minimist'),
@@ -51,7 +52,7 @@ gulp.task('build:css', function () {
 });
 
 gulp.task('build:js', function () {
-        gulp.src(['app/js/**/*.js'], {base: 'js'})
+    gulp.src(['app/js/**/*.js'], {base: 'js'})
         .pipe(jshint(jshintOptions))
         .pipe(jshint.reporter(jshint_stylish))
         //.pipe(jshint.reporter('fail')) // only enable if build needs to fail on bad jshint
@@ -81,7 +82,24 @@ gulp.task('build:vendor:js', function () {
         .pipe(gulp.dest('app/'));
 });
 
+gulp.task('copy:swagger:root', function () {
+    return gulp.src('bower_components/swagger-ui/dist/**/*')
+        .pipe(gulp_copy('app/docs/', {prefix: 3}));
+});
+gulp.task('copy:swagger:custom', function () {
+    return gulp.src('app/docs.html')
+        .pipe(gulp_rename('index.html'))
+        .pipe(gulp.dest('app/docs/'));
+});
+
+gulp.task('copy:swagger', function () {
+    run_sequence('copy:swagger:root', function () {
+        run_sequence('copy:swagger:custom');
+    });
+});
+
 gulp.task('package', function () {
+    run_sequence('apidoc');
     run_sequence('build:vendor:js');
     run_sequence('build:js');
     run_sequence('build:css');
@@ -95,20 +113,21 @@ gulp.task('package', function () {
         .pipe(gulp_uglify())
         .pipe(gulp_rename("vendor.min.js"))
         .pipe(gulp.dest('dist/app/'));
-    gulp.src(['app/style.min.css'])
+    gulp.src(['www/app/style.min.css'])
         .pipe(gulp_uglifycss())
         .pipe(gulp_rename("style.min.css"))
         .pipe(gulp.dest('dist/app'));
-    gulp.src(['app/img/**/*', 'app/**/*.html'])
+    gulp.src(['www/app/img/**/*', 'www/app/**/*.html'])
         .pipe(gulp_copy('dist/'));
 });
 
-//gulp.task('build:vendor:css', function () {
-//    gulp.src([
-//    ])
-//        .pipe(gulp_concat('vendor.css'))
-//        .pipe(gulp.dest('app/src/styles/'));
-//});
+gulp.task('apidoc',function(done){
+    gulp_apidoc({
+        src: "controllers/",
+        dest: "docs/",
+        includeFilters: [ ".*\\.go$" ]
+    },done);
+});
 
 gulp.task('open:dev', function () {
     gulp.src('')
@@ -117,9 +136,9 @@ gulp.task('open:dev', function () {
 
 gulp.task('dev', [], function () {
     run_sequence('build:vendor:js');
-    //run_sequence('build:vendor:css');
     run_sequence('build:js');
     run_sequence('build:css');
+    run_sequence('copy:swagger');
     run_sequence('watch');
     run_sequence('open:dev');
 });
@@ -127,13 +146,13 @@ gulp.task('dev', [], function () {
 
 gulp.task('watch', [], function () {
     livereload.listen({port: 35729});
-    gulp_watch('app/styles/**/*.css', function () {
+    gulp_watch('www/app/styles/**/*.css', function () {
         run_sequence('build:css');
     });
-    gulp_watch('app/js/**/*.js', function () {
+    gulp_watch('www/app/js/**/*.js', function () {
         run_sequence('build:js');
     });
-    gulp.watch(["app/**/*.html"]).on('change', function (file) {
+    gulp.watch(["www/app/**/*.html"]).on('change', function (file) {
         livereload.changed(file.path);
     });
 });

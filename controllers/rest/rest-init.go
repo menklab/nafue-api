@@ -1,9 +1,9 @@
+
 package rest
 
 import (
 	"github.com/gin-gonic/gin"
-	yaag_gin "github.com/betacraft/yaag/gin"
-	"github.com/betacraft/yaag/yaag"
+	"github.com/yvasiyarov/swagger/generator"
 	"log"
 )
 
@@ -12,16 +12,30 @@ var (
 )
 
 func Init() {
+	params := generator.Params{
+		ApiPackage:      "nafue",
+		MainApiFile:     "nafue/controllers/rest/rest-init.go",
+		OutputFormat:    "swagger",
+		OutputSpec:      "docs",
+		//ControllerClass: "(_ctrl)$",
+		Ignore:          "",
+	}
+
+	// generate api docs
+	err := generator.Run(params)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 
 	// start gin
 	r = gin.Default()
 
-	// generate api docs
-	yaag.Init(&yaag.Config{On: true, DocTitle: "Nafue", DocPath: "docs/index.html", BaseUrls: map[string]string{"Production": "https://api.nafue.com", "Local Dev": "http://localhost:9090"}})
-	r.Use(yaag_gin.Document())
+	// Setup Middleware
+	new(CORSMiddleware).Init(r)
 
-	// CORS Requests
-	new(CORSController).Init(r)
+	// Server docs
+	r.Static("/docs", "./docs")
+
 
 	//rest API controllers
 	new(HealthyController).Init(r)
