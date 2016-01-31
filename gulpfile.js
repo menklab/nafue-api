@@ -82,49 +82,34 @@ gulp.task('build:vendor:js', function () {
         .pipe(gulp.dest('app/'));
 });
 
-gulp.task('copy:swagger:root', function () {
-    return gulp.src('bower_components/swagger-ui/dist/**/*')
-        .pipe(gulp_copy('app/docs/', {prefix: 3}));
-});
-gulp.task('copy:swagger:custom', function () {
-    return gulp.src('app/docs.html')
-        .pipe(gulp_rename('index.html'))
-        .pipe(gulp.dest('app/docs/'));
-});
-
-gulp.task('copy:swagger', function () {
-    run_sequence('copy:swagger:root', function () {
-        run_sequence('copy:swagger:custom');
-    });
-});
-
 gulp.task('package', function () {
     run_sequence('apidoc');
     run_sequence('build:vendor:js');
     run_sequence('build:js');
     run_sequence('build:css');
-    gulp.src(['app/app.min.js'], {base: 'js'})
+    gulp.src(['www/app/app.min.js'], {base: 'js'})
         .pipe(gulp_rename("app.min.js"))
         .pipe(gulp_uglify())
         .pipe(gulp_replace(/api_services=".*?"/, 'api_services="https://api.nafue.com"'))
         .pipe(gulp_replace(/www_services=".*?"/, 'www_services="https://www.nafue.com"'))
-        .pipe(gulp.dest('dist/app/'));
-    gulp.src(['app/vendor.min.js'], {base: 'js'})
+        .pipe(gulp.dest('www/dist/'));
+    gulp.src(['www/app/vendor.min.js'], {base: 'js'})
         .pipe(gulp_uglify())
         .pipe(gulp_rename("vendor.min.js"))
-        .pipe(gulp.dest('dist/app/'));
+        .pipe(gulp.dest('www/dist/'));
     gulp.src(['www/app/style.min.css'])
         .pipe(gulp_uglifycss())
         .pipe(gulp_rename("style.min.css"))
-        .pipe(gulp.dest('dist/app'));
+        .pipe(gulp.dest('www/dist/'));
     gulp.src(['www/app/img/**/*', 'www/app/**/*.html'])
-        .pipe(gulp_copy('dist/'));
+        .pipe(gulp_copy('www/dist/', {prefix: 2}));
+
 });
 
 gulp.task('apidoc',function(done){
     gulp_apidoc({
         src: "controllers/",
-        dest: "docs/",
+        dest: "www/dist/docs",
         includeFilters: [ ".*\\.go$" ]
     },done);
 });
