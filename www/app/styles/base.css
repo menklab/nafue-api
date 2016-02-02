@@ -80,9 +80,11 @@ input[placeholder] {
 .float-right {
     float: right;
 }
+
 .inline {
     display: inline;
 }
+
 .btn[disabled]:hover {
     background: #ccc;
 }
@@ -226,8 +228,34 @@ footer p {
     text-align: center;
     padding: 0px 15px;
 }
+
 #canary {
     display: inline;
     float: right;
     padding-right: 10px
+}
+#modal-background .container-fluid {
+    margin-top: 8%;
+}
+
+#modal-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.75)
+}
+
+#modal-content {
+    background-color: #fff;
+    z-index: 1000;
+    border: 1px solid #777;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.header-modal {
+    background-color: #ccc;
 }

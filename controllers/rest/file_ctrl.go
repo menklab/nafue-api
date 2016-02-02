@@ -3,9 +3,9 @@ package rest
 import (
 	"github.com/gin-gonic/gin"
 	"log"
-	"net/http"
-	"nafue/services"
 	"nafue/models/display"
+	"nafue/services"
+	"net/http"
 )
 
 type FileController struct {
@@ -61,7 +61,7 @@ func (self *FileController) getFile(c *gin.Context) {
 	if err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusNotFound, gin.H{"message": "Files doesn't exist."})
-		return;
+		return
 	}
 
 	c.JSON(http.StatusOK, fileDisplay)
@@ -108,19 +108,16 @@ func (self *FileController) addFile(c *gin.Context) {
 	if err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Body is poorly formated"})
-		return;
+		return
 	}
-
-
 
 	// add file to db
 	err = self.fileService.AddFile(&fileDisplay)
 	if err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error saving file"})
-		return;
+		return
 	}
 
 	c.JSON(http.StatusOK, fileDisplay)
 }
-

@@ -24,7 +24,7 @@ function domInit() {
         unsupported: document.getElementById("unsupported"),
         badPass: document.getElementById("badPass"),
         error: document.getElementById("error"),
-        errMsg: document.getElementById("errMsg")
+        errMsg: document.getElementById("errMsg"),
     };
 }
 

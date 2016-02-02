@@ -22,5 +22,5 @@ func (self *HealthyController) Init(r *gin.Engine) {
  */
 func (self *HealthyController) healthy(c *gin.Context) {
 	c.String(http.StatusOK, "ok")
-	return;
+	return
 }

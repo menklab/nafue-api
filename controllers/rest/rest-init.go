@@ -1,4 +1,3 @@
-
 package rest
 
 import (
@@ -22,6 +21,7 @@ func Init() {
 	new(HealthyController).Init(r)
 	new(LetsEncryptController).Init(r)
 	new(FileController).Init(r)
+	new(PaymentController).Init(r)
 }
 
 func Listen(uri string) {

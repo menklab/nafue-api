@@ -1,4 +1,4 @@
-var dom, g, s = {
+var dom, modal, g, s = {
     adata: sjcl.codec.base64.toBits(btoa('Sparticus')),
     mode: 'ccm',
     cipher: 'aes',
@@ -10,6 +10,8 @@ var dom, g, s = {
 
 function init() {
     dom = domInit();
+    modal = modalInit();
+    modal.show();
     g = {
         mode: "upload",
         binData: null
