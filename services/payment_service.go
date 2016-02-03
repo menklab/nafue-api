@@ -45,19 +45,18 @@ func (self *PaymentService) ProcessNonce(paymentNonceDisplay *display.PaymentNon
 	}
 
 	result, err := self.bt.Transaction().Create(&braintree.Transaction{
-		Type: "sale",
+		Type:   "sale",
 		Amount: dAmount,
 
 		PaymentMethodNonce: paymentNonceDisplay.Nonce,
-
 	})
-	if (err != nil) {
+	if err != nil {
 		log.Println("ERROR: Processing Nonce: ", err.Error())
 		return err
 	}
 
 	log.Println("Nonce Result: ", result)
-	return nil;
+	return nil
 }
 
 func getEnv() braintree.Environment {

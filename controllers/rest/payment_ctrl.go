@@ -2,10 +2,10 @@ package rest
 
 import (
 	"github.com/gin-gonic/gin"
+	"log"
+	"nafue/models/display"
 	"nafue/services"
 	"net/http"
-	"nafue/models/display"
-	"log"
 )
 
 type PaymentController struct {
@@ -31,7 +31,7 @@ func (self *PaymentController) Init(r *gin.Engine) {
  *     	}
  */
 func (self *PaymentController) getClientToken(c *gin.Context) {
-	paymentTokenDisplay := display.PaymentTokenDisplay {}
+	paymentTokenDisplay := display.PaymentTokenDisplay{}
 
 	err := self.paymentService.GetClientToken(&paymentTokenDisplay)
 	if err != nil {
