@@ -102,7 +102,6 @@ func (self *FileController) getFile(c *gin.Context) {
  */
 func (self *FileController) addFile(c *gin.Context) {
 	// read req body
-
 	var fileDisplay display.FileDisplay
 	err := c.BindJSON(&fileDisplay)
 	if err != nil {

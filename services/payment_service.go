@@ -5,10 +5,12 @@ import (
 	"log"
 	"nafue/config"
 	"nafue/models/display"
+	"strconv"
 )
 
 type IPaymentService interface {
 	GetClientToken(*display.PaymentTokenDisplay) error
+	ProcessNonce(*display.PaymentNonceDisplay) error
 }
 
 type PaymentService struct {
@@ -33,6 +35,30 @@ func (self *PaymentService) GetClientToken(paymentTokenDisplay *display.PaymentT
 	}
 	paymentTokenDisplay.Token = token
 	return nil
+}
+
+func (self *PaymentService) ProcessNonce(paymentNonceDisplay *display.PaymentNonceDisplay) error {
+	// marshal decimal
+	i, err := strconv.Atoi(paymentNonceDisplay.Amount)
+	log.Println("intamount: ", i);
+	if err != nil {
+		log.Println("Error converting amount: ", err.Error())
+		return err
+	}
+
+	dAmount := braintree.NewDecimal(int64(i), 2)
+
+	result, err := self.bt.Transaction().Create(&braintree.Transaction{
+		Amount: dAmount,
+		PaymentMethodNonce: paymentNonceDisplay.Nonce,
+	})
+	if (err != nil) {
+		log.Println("ERROR: Processing Nonce: ", err.Error())
+		return err
+	}
+
+	log.Println("Nonce Result: ", result)
+	return nil;
 }
 
 func getEnv() braintree.Environment {

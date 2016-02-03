@@ -119,35 +119,45 @@
     <div id="modal-background">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-8 col-md-push-2 col-xs-12">
+                <div class="col-md-6 col-md-push-3 col-xs-12">
                     <div id="modal-wrapper">
-                        <form id="checkout" method="post" action="/checkout">
+                        <form id="checkout" method="post" action="/checkout" >
                             <div class="row modal-header">
-                                <div class="col-xs-6 col-xs-push-3">
+                                <div class="col-xs-4 col-xs-push-4">
                                     <h2 class="text-center grey">Donate</h2>
                                 </div>
-                                <div class="col-xs-1 pull-right text-right">
+                                <div class="col-xs-2 pull-right text-right">
                                     <button class="btn btn-light" onclick="modal.hide()">X</button>
                                 </div>
                             </div>
                             <div class="row modal-body">
                                 <div class="col-xs-12">
-                                    <h3 id="checkout_loading" class="text-center">Loading...</h3>
+                                    <div id="checkout_loading" class="no-select">
+                                        <br><br>
+                                        <br><br>
+                                        <div class="loading">
+                                            <span>Loading</span>
+                                        </div>
+                                    </div>
                                     <div id="checkout_error" hidden>
                                         <h3 class="text-center text-red">There was an error accessing the payment
                                             gateway.</h3>
                                         <p class="text-center">Please try back later.</p>
                                     </div>
-                                    <div id="payment-form" hidden>
+                                    <div id="payment-form">
                                     </div>
-                                    <input id="amount" class="" type="number" placeholder="Donation Amount"/>
+                                    <input id="amount" class="" type="number" placeholder="Donation Amount" hidden/>
+                                    <div id="thanks" hidden>
+                                        <h3 class="text-center green">Thank You!</h3>
+                                        <p class="text-center">Your donation has been received. You should get an email receipt shortly.</p>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row modal-footer">
                                 <div class="col-xs-12 pull-right text-right">
                                     <button class="btn btn-light" onclick="modal.hide()">Close</button>
                                     &nbsp;
-                                    <input type="submit" value="Donate" class="btn btn-donate" onclick=""/>
+                                    <input id="donate" type="submit" value="Donate" class="btn btn-donate" onclick="" hidden/>
                                 </div>
                             </div>
                         </form>

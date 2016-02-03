@@ -314,3 +314,7 @@ footer p {
     background: #eee;
     color: #7ac943;
 }
+#payment-form {
+    opacity: 0;
+    height: 0;
+}

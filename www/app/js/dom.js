@@ -27,7 +27,11 @@ function domInit() {
         errMsg: document.getElementById("errMsg"),
         paymentForm: document.getElementById("payment-form"),
         checkout_loading: document.getElementById("checkout_loading"),
-        checkout_error: document.getElementById("checkout_error")
+        checkout_error: document.getElementById("checkout_error"),
+        amount: document.getElementById("amount"),
+        donate: document.getElementById("donate"),
+        thanks: document.getElementById("thanks")
+
     };
 }
 
