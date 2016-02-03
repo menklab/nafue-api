@@ -29,10 +29,6 @@ var http = (function () {
         var XHR = window.XMLHttpRequest || ActiveXObject;
         var request = new XHR('MSXML2.XMLHTTP.3.0');
         request.open(method, url, true);
-        var auth = localStorage.getItem('ptau');
-        if (auth && typeof config.sendWithAuth !== 'undefined' && config.sendWithAuth) {
-            request.setRequestHeader('Authorization', auth);
-        }
         if (typeof config.contentType === 'undefined') {
             request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
         }

@@ -83,8 +83,6 @@
                     <span id="num" class="missing">Number</span>,
                     <span id="spc" class="missing">Special</span></p>
                 <button class="btn full-width" id="share" onclick="shareFile()" disabled>Share File</button>
-                <br>
-                <br>
                 <button class="btn full-width" id="downloadBtn" onclick="decryptFile()" hidden>Unlock File</button>
             </div>
             <div id="doneDownloading" class="text-center" hidden>
@@ -109,24 +107,50 @@
             </div>
         </div>
     </div>
+    <br>
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="text-center grey">Help keep Nafue free; <a href="#" class="bold" onclick="modal.show()">Donate</a>
+            </p>
+        </div>
+    </div>
 </div>
 <div id="modal" hidden>
     <div id="modal-background">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8 col-md-push-2 col-xs-12">
-                    <div id="modal-content">
-                        <div class="row">
-                            <div class="col-xs-6 col-xs-push-3">
-                                <h2 class="text-center grey">Donate</h2>
+                    <div id="modal-wrapper">
+                        <form id="checkout" method="post" action="/checkout">
+                            <div class="row modal-header">
+                                <div class="col-xs-6 col-xs-push-3">
+                                    <h2 class="text-center grey">Donate</h2>
+                                </div>
+                                <div class="col-xs-1 pull-right text-right">
+                                    <button class="btn btn-light" onclick="modal.hide()">X</button>
+                                </div>
                             </div>
-                            <div class="col-xs-1 pull-right">
-                                <p><button class="btn" onclick="modal.hide()">X</button></p>
+                            <div class="row modal-body">
+                                <div class="col-xs-12">
+                                    <h3 id="checkout_loading" class="text-center">Loading...</h3>
+                                    <div id="checkout_error" hidden>
+                                        <h3 class="text-center text-red">There was an error accessing the payment
+                                            gateway.</h3>
+                                        <p class="text-center">Please try back later.</p>
+                                    </div>
+                                    <div id="payment-form" hidden>
+                                    </div>
+                                    <input id="amount" class="" type="number" placeholder="Donation Amount"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-
-                        </div>
+                            <div class="row modal-footer">
+                                <div class="col-xs-12 pull-right text-right">
+                                    <button class="btn btn-light" onclick="modal.hide()">Close</button>
+                                    &nbsp;
+                                    <input type="submit" value="Donate" class="btn btn-donate" onclick=""/>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -141,6 +165,7 @@
         <img id="canary" src="/img/canary.png" alt="canary" height="15px">
     </p>
 </footer>
+<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
 <script type="text/javascript" src="/vendor.min.js"></script>
 <script type="text/javascript" src="/app.min.js"></script>
 

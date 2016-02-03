@@ -25,6 +25,9 @@ function domInit() {
         badPass: document.getElementById("badPass"),
         error: document.getElementById("error"),
         errMsg: document.getElementById("errMsg"),
+        paymentForm: document.getElementById("payment-form"),
+        checkout_loading: document.getElementById("checkout_loading"),
+        checkout_error: document.getElementById("checkout_error")
     };
 }
 

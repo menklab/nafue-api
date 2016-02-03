@@ -19,6 +19,11 @@ a:hover {
     color: #777;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
 .text-red {
     color: #c94343;
 }
@@ -69,8 +74,32 @@ input[placeholder] {
     background: #999;
 }
 
+.btn:hover {
+    background-color: #777;
+}
+
+.btn-light {
+    background: #fff;
+    color: #999;
+    border: 1px #eee solid;
+}
+
+.btn-light:hover {
+    background: #ddd;
+    color: #777;
+}
+
+.btn-donate {
+    background: #009CDE;
+    color: #fff;
+}
+
 .btn[disabled] {
     background: #ccc;
+}
+
+#modal .btn {
+    margin: 16px 0px;
 }
 
 .float-left {
@@ -87,10 +116,6 @@ input[placeholder] {
 
 .btn[disabled]:hover {
     background: #ccc;
-}
-
-.btn:hover {
-    background-color: #777;
 }
 
 .clearfix {
@@ -234,6 +259,7 @@ footer p {
     float: right;
     padding-right: 10px
 }
+
 #modal-background .container-fluid {
     margin-top: 8%;
 }
@@ -248,7 +274,7 @@ footer p {
     background-color: rgba(0, 0, 0, 0.75)
 }
 
-#modal-content {
+#modal-wrapper {
     background-color: #fff;
     z-index: 1000;
     border: 1px solid #777;
@@ -256,6 +282,35 @@ footer p {
     -webkit-border-radius: 5px;
     border-radius: 5px;
 }
-.header-modal {
-    background-color: #ccc;
+
+.modal-header {
+    background-color: #eee;
+    border-bottom: #ccc solid 1px;
+}
+
+.modal-body {
+    margin: 20px 0;
+}
+
+.modal-footer {
+    /*border-top: #ccc solid 1px;*/
+}
+
+#amount {
+    margin: 0;
+    padding: 20px 0 10px 15px;
+    font-size: 16px;
+    font-weight: 200;
+    color: #000 !important;
+    text-align: left;
+    width: 100%;
+    border: none;
+    border-bottom: 1px #ccc solid;
+
+}
+
+#amount:focus {
+    outline: none;
+    background: #eee;
+    color: #7ac943;
 }

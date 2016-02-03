@@ -11,7 +11,6 @@ var dom, modal, g, s = {
 function init() {
     dom = domInit();
     modal = modalInit();
-    modal.show();
     g = {
         mode: "upload",
         binData: null
@@ -42,6 +41,7 @@ function init() {
         hide(dom.dropZone);
         show(dom.unsupported);
     }
+
 }
 
 function getParameterByName(name) {
