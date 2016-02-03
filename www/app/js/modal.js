@@ -42,19 +42,14 @@ function modalInit() {
                             dom.paymentForm.style.height = "auto";
                             dom.paymentForm.style.opacity = "100";
                         },
-                        onPaymentMethodReceived: function (obj) {
-                            var payload = {
-                                amount: dom.amount.value,
-                                nonce: obj.nonce
-                            };
+                        onPaymentMethodReceived: function (payload) {
+                            payload.amount = dom.amount.value;
                             dom.amount.value = null;
                             hide(dom.amount);
                             hide(dom.donate);
                             dom.paymentForm.style.height = "0";
                             dom.paymentForm.style.opacity = "0";
 
-
-                            console.log("payload: ", payload);
                             http.post(api_services + "/api/payment", JSON.stringify(payload))
                                 .success(function (res) {
                                     show(dom.thanks);

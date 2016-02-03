@@ -5,7 +5,6 @@ import (
 	"log"
 	"nafue/config"
 	"nafue/models/display"
-	"strconv"
 )
 
 type IPaymentService interface {
@@ -39,18 +38,18 @@ func (self *PaymentService) GetClientToken(paymentTokenDisplay *display.PaymentT
 
 func (self *PaymentService) ProcessNonce(paymentNonceDisplay *display.PaymentNonceDisplay) error {
 	// marshal decimal
-	i, err := strconv.Atoi(paymentNonceDisplay.Amount)
-	log.Println("intamount: ", i);
+	dAmount := &braintree.Decimal{}
+	err := dAmount.UnmarshalText([]byte(paymentNonceDisplay.Amount))
 	if err != nil {
-		log.Println("Error converting amount: ", err.Error())
-		return err
+		log.Println("ERROR: failed to create decimal", err)
 	}
 
-	dAmount := braintree.NewDecimal(int64(i), 2)
-
 	result, err := self.bt.Transaction().Create(&braintree.Transaction{
+		Type: "sale",
 		Amount: dAmount,
+
 		PaymentMethodNonce: paymentNonceDisplay.Nonce,
+
 	})
 	if (err != nil) {
 		log.Println("ERROR: Processing Nonce: ", err.Error())
