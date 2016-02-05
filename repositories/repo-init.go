@@ -6,16 +6,22 @@ import (
 )
 
 var (
-	fileRepository IFileRepository
+	fileRepository           IFileRepository
+	basicAnalyticsRepository IBasicAnalyticsRepository
 )
 
 func Init(database *sql.DB) {
 	fileRepository = NewFileRepository(database)
+	basicAnalyticsRepository = NewBasicAnalyticsRepository(database)
 }
 
 // Public Getters
 func GetFileRepository() IFileRepository {
 	return fileRepository
+}
+
+func GetBasicAnalyticsRepository() IBasicAnalyticsRepository {
+	return basicAnalyticsRepository
 }
 
 //Helper Methods

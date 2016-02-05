@@ -22,6 +22,7 @@ func Init() {
 	new(LetsEncryptController).Init(r)
 	new(FileController).Init(r)
 	new(PaymentController).Init(r)
+	new(BasicAnalyticsController).Init(r)
 }
 
 func Listen(uri string) {

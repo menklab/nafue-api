@@ -21,10 +21,11 @@ type IFileService interface {
 
 type FileService struct {
 	fileRepository repositories.IFileRepository
+	basicAnalyticsRepository repositories.IBasicAnalyticsRepository
 }
 
-func NewFileService(fileRepository repositories.IFileRepository) *FileService {
-	return &FileService{fileRepository}
+func NewFileService(fileRepository repositories.IFileRepository, basicAnalyticsRepository repositories.IBasicAnalyticsRepository) *FileService {
+	return &FileService{fileRepository, basicAnalyticsRepository}
 }
 
 func (self *FileService) GetFile(fileDisplay *display.FileDisplay) error {
@@ -123,6 +124,8 @@ func (self *FileService) AddFile(fileDisplay *display.FileDisplay) error {
 	if err != nil {
 		return err
 	}
+
+	self.basicAnalyticsRepository.IncrementFileCount()
 
 	return nil
 }

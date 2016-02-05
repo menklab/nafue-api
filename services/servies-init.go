@@ -12,12 +12,14 @@ var (
 	fileService    IFileService
 	s3Service      *s3.S3
 	paymentService IPaymentService
+	basicAnalyticsService IBasicAnalyticsService
 )
 
 func Init() {
-	fileService = NewFileService(repositories.GetFileRepository())
+	fileService = NewFileService(repositories.GetFileRepository(), repositories.GetBasicAnalyticsRepository())
 	s3Service = s3.New(session.New(&aws.Config{Region: aws.String(config.S3Location)}))
 	paymentService = NewPaymentService()
+	basicAnalyticsService = NewBasicAnalyticsService(repositories.GetBasicAnalyticsRepository())
 }
 
 // Public Getter
@@ -29,4 +31,7 @@ func GetS3Service() *s3.S3 {
 }
 func GetPaymentService() IPaymentService {
 	return paymentService
+}
+func GetBasicAnalyticsService() IBasicAnalyticsService {
+	return basicAnalyticsService
 }
