@@ -9,9 +9,9 @@ import (
 )
 
 var (
-	fileService    IFileService
-	s3Service      *s3.S3
-	paymentService IPaymentService
+	fileService           IFileService
+	s3Service             *s3.S3
+	paymentService        IPaymentService
 	basicAnalyticsService IBasicAnalyticsService
 )
 

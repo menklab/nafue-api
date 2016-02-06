@@ -1,10 +1,10 @@
 package services
 
 import (
+	"log"
 	"nafue/models/display"
 	"nafue/models/domain"
 	"nafue/repositories"
-	"log"
 )
 
 type IBasicAnalyticsService interface {
@@ -33,7 +33,6 @@ func (self *BasicAnalyticsService) GetFileCount(basicAnalyticsDisplay *display.B
 
 	return nil
 }
-
 
 func (self *BasicAnalyticsService) IncrementFileCount(basicAnalyticsDisplay *display.BasicAnalyticsDisplay) error {
 

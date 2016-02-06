@@ -26,10 +26,11 @@ var (
 	LetsEncryptContent = os.Getenv("LETS_ENCRYPT_CONTENT")
 
 	// Braintree
-	BtEnv     = os.Getenv("BT_ENV")
-	BtMerchId = os.Getenv("BT_MERCH_ID")
-	BtPubKey  = os.Getenv("BT_PUB_KEY")
-	BtPrivKey = os.Getenv("BT_PRIV_KEY")
+	BtEnv        = os.Getenv("BT_ENV")
+	BtMerchId    = os.Getenv("BT_MERCH_ID")
+	BtMerchActId = os.Getenv("BT_MERCH_ACT_ID")
+	BtPubKey     = os.Getenv("BT_PUB_KEY")
+	BtPrivKey    = os.Getenv("BT_PRIV_KEY")
 )
 
 const (

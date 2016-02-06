@@ -20,7 +20,7 @@ type IFileService interface {
 }
 
 type FileService struct {
-	fileRepository repositories.IFileRepository
+	fileRepository           repositories.IFileRepository
 	basicAnalyticsRepository repositories.IBasicAnalyticsRepository
 }
 

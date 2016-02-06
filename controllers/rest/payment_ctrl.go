@@ -36,6 +36,7 @@ func (self *PaymentController) getClientToken(c *gin.Context) {
 	err := self.paymentService.GetClientToken(&paymentTokenDisplay)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
 	}
 
 	c.JSON(http.StatusOK, paymentTokenDisplay)
@@ -65,6 +66,7 @@ func (self *PaymentController) processNonce(c *gin.Context) {
 	err = self.paymentService.ProcessNonce(&paymentNonceDisplay)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
 	}
 
 	c.String(http.StatusOK, "ok")

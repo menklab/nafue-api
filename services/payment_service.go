@@ -1,7 +1,7 @@
 package services
 
 import (
-	"github.com/lionelbarrow/braintree-go"
+	"braintree-go"
 	"log"
 	"nafue/config"
 	"nafue/models/display"
@@ -23,11 +23,13 @@ func NewPaymentService() *PaymentService {
 		config.BtPubKey,
 		config.BtPrivKey,
 	)
+	bt.MerchantAccount()
 	return &PaymentService{bt}
 }
 
 func (self *PaymentService) GetClientToken(paymentTokenDisplay *display.PaymentTokenDisplay) error {
-	token, err := self.bt.ClientToken().Generate()
+	//token, err := self.bt.ClientToken().Generate()
+	token, err := self.bt.ClientToken().GenerateWithMerchantAccount(config.BtMerchActId)
 	if err != nil {
 		log.Println("ERROR getting token: ", err.Error())
 		return err
