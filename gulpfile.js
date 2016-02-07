@@ -101,7 +101,7 @@ gulp.task('package', function () {
         .pipe(gulp_uglifycss())
         .pipe(gulp_rename("style.min.css"))
         .pipe(gulp.dest('www/dist/'));
-    gulp.src(['www/app/img/**/*', 'www/app/**/*.html'])
+    gulp.src(['www/app/img/**/*', 'www/app/**/*.html', 'www/app/fonts/**/*'])
         .pipe(gulp_copy('www/dist/', {prefix: 2}));
 
 });

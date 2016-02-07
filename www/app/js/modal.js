@@ -47,11 +47,12 @@ function modalInit() {
                             dom.amount.value = null;
                             hide(dom.amount);
                             hide(dom.donate);
+                            show(dom.checkout_loading);
                             dom.paymentForm.style.height = "0";
                             dom.paymentForm.style.opacity = "0";
-
                             http.post(api_services + "/api/payment", JSON.stringify(payload))
                                 .success(function (res) {
+                                    hide(dom.checkout_loading);
                                     show(dom.thanks);
                                 })
                                 .error(function (err) {
