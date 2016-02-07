@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	database       *sql.DB
-	migrator       *gomigrate.Migrator
+	database *sql.DB
+	migrator *gomigrate.Migrator
 )
 
 func init() {

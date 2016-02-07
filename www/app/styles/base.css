@@ -2,24 +2,36 @@ html {
     font-family: Vollkorn;
     color: #999;
 }
+
 h2 {
     font: 20px bold inherit;
 }
+
 h3 {
     font: 15px bold inherit;
 }
+
 a {
     color: #999;
 }
+
 a:hover {
     color: #777;
 }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}
+
 .text-red {
     color: #c94343;
 }
-.no-underline{
+
+.no-underline {
     text-decoration: none;
 }
+
 .no-select {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -28,6 +40,7 @@ a:hover {
     -ms-user-select: none;
     user-select: none;
 }
+
 .input-text {
     color: #000;
     font-size: 20px;
@@ -39,13 +52,16 @@ a:hover {
     outline: none !important;
     width: 100%;
 }
-input[placeholder]{
-    text-align:center;
+
+input[placeholder] {
+    text-align: center;
     color: #999;
 }
+
 .full-width {
     width: 100%;
 }
+
 .btn {
     color: #fff;
     font-size: 1em;
@@ -57,36 +73,71 @@ input[placeholder]{
     outline: none !important;
     background: #999;
 }
-.btn[disabled] {
-    background: #ccc;
-}
-.float-left {
-    float: left;
-}
-.float-right {
-    float: right;
-}
-.btn[disabled]:hover {
-    background: #ccc;
-}
+
 .btn:hover {
     background-color: #777;
 }
+
+.btn-light {
+    background: #fff;
+    color: #999;
+    border: 1px #eee solid;
+}
+
+.btn-light:hover {
+    background: #ddd;
+    color: #777;
+}
+
+.btn-donate {
+    background: #009CDE;
+    color: #fff;
+}
+
+.btn[disabled] {
+    background: #ccc;
+}
+
+#modal .btn {
+    margin: 16px 0px;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.inline {
+    display: inline;
+}
+
+.btn[disabled]:hover {
+    background: #ccc;
+}
+
 .clearfix {
     clear: both;
 }
+
 .text-center {
     text-align: center;
 }
+
 .pull-right {
     float: right !important;
 }
+
 .pull-left {
     float: left !important;
 }
+
 .text-right {
     text-align: right;
 }
+
 header {
     top: 0;
     height: 100px;
@@ -94,6 +145,7 @@ header {
     position: absolute;
     width: 100%;
 }
+
 footer {
     bottom: 0;
     height: 40px;
@@ -102,6 +154,7 @@ footer {
     width: 100%;
     background-color: #eee;
 }
+
 footer p {
     color: #999;
     font-size: 14px;
@@ -117,6 +170,7 @@ footer p {
     text-align: center;
     color: #999;
 }
+
 .dropZone h2 {
     padding: 50px 0;
     clear: both;
@@ -158,15 +212,31 @@ footer p {
 
 .inputfile:focus + label {
 }
+
 .missing {
     color: #999;
 }
+
 .present {
     color: #7ac943;
 }
+
+.green {
+    color: #7ac943;
+}
+
+.grey {
+    color: #777777;
+}
+
+.grey-light {
+    color: #a7a9ac;
+}
+
 .bold {
     font-weight: bold;
 }
+
 #linkToShare {
     width: 100%;
     border: 2px dashed #999;
@@ -178,3 +248,73 @@ footer p {
     color: #999;
 }
 
+.mobile-status-img {
+    display: inline-block;
+    text-align: center;
+    padding: 0px 15px;
+}
+
+#canary {
+    display: inline;
+    float: right;
+    padding-right: 10px
+}
+
+#modal-background .container-fluid {
+    margin-top: 8%;
+}
+
+#modal-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.75)
+}
+
+#modal-wrapper {
+    background-color: #fff;
+    z-index: 1000;
+    border: 1px solid #777;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.modal-header {
+    background-color: #eee;
+    border-bottom: #ccc solid 1px;
+}
+
+.modal-body {
+    margin: 20px 0;
+}
+
+.modal-footer {
+    /*border-top: #ccc solid 1px;*/
+}
+
+#amount {
+    margin: 0;
+    padding: 20px 0 10px 15px;
+    font-size: 16px;
+    font-weight: 200;
+    color: #000 !important;
+    text-align: left;
+    width: 100%;
+    border: none;
+    border-bottom: 1px #ccc solid;
+
+}
+
+#amount:focus {
+    outline: none;
+    background: #eee;
+    color: #7ac943;
+}
+#payment-form {
+    opacity: 0;
+    height: 0;
+}

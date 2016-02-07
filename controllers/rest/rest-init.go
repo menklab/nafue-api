@@ -11,15 +11,18 @@ var (
 
 func Init() {
 
+	// start gin
 	r = gin.Default()
 
-	// CORS Requests
-	new(CORSController).Init(r)
+	// Setup Middleware
+	new(CORSMiddleware).Init(r)
 
 	//rest API controllers
 	new(HealthyController).Init(r)
 	new(LetsEncryptController).Init(r)
 	new(FileController).Init(r)
+	new(PaymentController).Init(r)
+	new(BasicAnalyticsController).Init(r)
 }
 
 func Listen(uri string) {

@@ -1,36 +1,37 @@
 package services
 
 import (
-	"nafue/repositories"
+	"errors"
+	"fmt"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/nu7hatch/gouuid"
+	"log"
+	"nafue/config"
 	"nafue/models/display"
 	"nafue/models/domain"
-	"github.com/nu7hatch/gouuid"
-	"nafue/config"
-	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/aws/aws-sdk-go/aws"
+	"nafue/repositories"
 	"time"
-	"fmt"
-	"errors"
-	"log"
 )
 
 type IFileService interface {
-	GetFile(*display.FileDisplay) (error)
-	AddFile(*display.FileDisplay) (error)
+	GetFile(*display.FileDisplay) error
+	AddFile(*display.FileDisplay) error
 }
 
 type FileService struct {
-	fileRepository repositories.IFileRepository
+	fileRepository           repositories.IFileRepository
+	basicAnalyticsRepository repositories.IBasicAnalyticsRepository
 }
 
-func NewFileService(fileRepository repositories.IFileRepository) *FileService {
-	return &FileService{fileRepository}
+func NewFileService(fileRepository repositories.IFileRepository, basicAnalyticsRepository repositories.IBasicAnalyticsRepository) *FileService {
+	return &FileService{fileRepository, basicAnalyticsRepository}
 }
 
-func (self *FileService) GetFile(fileDisplay *display.FileDisplay) (error) {
+func (self *FileService) GetFile(fileDisplay *display.FileDisplay) error {
 
 	// make model from display
-	file:= models.File{
+	file := models.File{
 		ShortUrl: fileDisplay.ShortUrl,
 	}
 
@@ -47,10 +48,10 @@ func (self *FileService) GetFile(fileDisplay *display.FileDisplay) (error) {
 	elapsed := int(time.Now().Sub(file.Created).Seconds())
 	if elapsed > file.TTL {
 		// to old delete file
-		fmt.Println("file to old, delete from s3!");
+		fmt.Println("file to old, delete from s3!")
 		_, err := GetS3Service().DeleteObject(&s3.DeleteObjectInput{
 			Bucket: aws.String(config.S3Bucket),
-			Key: aws.String(config.S3Key + "/" + file.S3Path),
+			Key:    aws.String(config.S3Key + "/" + file.S3Path),
 		})
 		if err != nil {
 			fmt.Println("---ERROR---", err.Error())
@@ -61,7 +62,7 @@ func (self *FileService) GetFile(fileDisplay *display.FileDisplay) (error) {
 	// create get request
 	req, _ := GetS3Service().GetObjectRequest(&s3.GetObjectInput{
 		Bucket: aws.String(config.S3Bucket),
-		Key: aws.String(config.S3Key + "/" + file.S3Path),
+		Key:    aws.String(config.S3Key + "/" + file.S3Path),
 	})
 
 	url, err := req.Presign(15 * time.Minute)
@@ -79,7 +80,7 @@ func (self *FileService) GetFile(fileDisplay *display.FileDisplay) (error) {
 	return nil
 }
 
-func (self *FileService) AddFile(fileDisplay *display.FileDisplay) (error) {
+func (self *FileService) AddFile(fileDisplay *display.FileDisplay) error {
 
 	// generate random uuid
 	s3u, err := uuid.NewV4()
@@ -93,8 +94,8 @@ func (self *FileService) AddFile(fileDisplay *display.FileDisplay) (error) {
 
 	// create put request on s3
 	req, _ := GetS3Service().PutObjectRequest(&s3.PutObjectInput{
-		Bucket: aws.String(config.S3Bucket),
-		Key: aws.String(config.S3Key + "/" + s3u.String()),
+		Bucket:      aws.String(config.S3Bucket),
+		Key:         aws.String(config.S3Key + "/" + s3u.String()),
 		ContentType: aws.String("text/plain;charset=UTF-8"),
 	})
 	url, err := req.Presign(15 * time.Minute)
@@ -105,12 +106,12 @@ func (self *FileService) AddFile(fileDisplay *display.FileDisplay) (error) {
 
 	// create domain model from display
 	file := models.File{
-		S3Path: s3u.String(),
-		ShortUrl: shortUrl.String(),
-		TTL: (1 * 60 * 60 * 24), // 24h in seconds
-		IV: fileDisplay.IV,
-		Salt: fileDisplay.Salt,
-		AData: fileDisplay.AData,
+		S3Path:    s3u.String(),
+		ShortUrl:  shortUrl.String(),
+		TTL:       (1 * 60 * 60 * 24), // 24h in seconds
+		IV:        fileDisplay.IV,
+		Salt:      fileDisplay.Salt,
+		AData:     fileDisplay.AData,
 		UploadUrl: url,
 	}
 
@@ -123,6 +124,8 @@ func (self *FileService) AddFile(fileDisplay *display.FileDisplay) (error) {
 	if err != nil {
 		return err
 	}
+
+	self.basicAnalyticsRepository.IncrementFileCount()
 
 	return nil
 }

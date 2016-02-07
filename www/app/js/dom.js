@@ -24,7 +24,14 @@ function domInit() {
         unsupported: document.getElementById("unsupported"),
         badPass: document.getElementById("badPass"),
         error: document.getElementById("error"),
-        errMsg: document.getElementById("errMsg")
+        errMsg: document.getElementById("errMsg"),
+        paymentForm: document.getElementById("payment-form"),
+        checkout_loading: document.getElementById("checkout_loading"),
+        checkout_error: document.getElementById("checkout_error"),
+        amount: document.getElementById("amount"),
+        donate: document.getElementById("donate"),
+        thanks: document.getElementById("thanks")
+
     };
 }
 

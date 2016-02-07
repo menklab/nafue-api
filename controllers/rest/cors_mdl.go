@@ -3,16 +3,16 @@ package rest
 import (
 	"github.com/gin-gonic/gin"
 	"log"
-"nafue/config"
+	"nafue/config"
 )
 
-type CORSController struct{}
+type CORSMiddleware struct{}
 
-func (self *CORSController) Init(r *gin.Engine) {
+func (self *CORSMiddleware) Init(r *gin.Engine) {
 	r.Use(self.corsMiddleware)
 }
 
-func (self *CORSController) corsMiddleware(c *gin.Context) {
+func (self *CORSMiddleware) corsMiddleware(c *gin.Context) {
 	c.Writer.Header().Set("Access-Control-Allow-Origin", config.CorsHost)
 	c.Writer.Header().Set("Access-Control-Max-Age", "86400")
 	c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")

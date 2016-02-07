@@ -1,4 +1,5 @@
 package display
+
 import "fmt"
 
 type FileDisplay struct {

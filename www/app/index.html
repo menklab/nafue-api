@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head itemscope itemtype="http://schema.org/WebSite">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link rel="canonical" href="http://www.menklab.com" itemprop="url">
+    <title>Nafue</title>
+    <meta name="description" content="Create an encrypted file for sharing, that self destructs after 24 hours.">
+    <meta name="keywords"
+          content="Self Destructing File, Share Secure File, Secure File Drop, Encrypted File Transfer, Secure File Transfer, Secure File Sharing, Encrypted File Sharing">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <meta property="og:description" content="Create an encrypted file for sharing, that self destructs after 24 hours.">
+    <meta property="og:site_name" content="Nafue">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://www.nafue.com/img/logo.jpg">
+    <meta property="og:image:width" content="524">
+    <meta property="og:image:height" content="150">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@justinmenkveld">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/img/favicon/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/img/favicon/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/img/favicon/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/img/favicon/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/img/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/img/favicon/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/img/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/img/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/img/favicon/manifest.json">
+    <link rel="mask-icon" href="/img/favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="/img/favicon/favicon.ico">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-TileImage" content="/img/favicon/mstile-144x144.png">
+    <meta name="msapplication-config" content="/img/favicon/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <link rel="stylesheet" type="text/css" href="/style.min.css">
+
+</head>
+<header>
+    <div class="row">
+        <div class="col-xs-3 pull-left">
+            <p id="homeLink"><a class="no-underline" href="/">&lt;&nbsp;</a><a href="/">Home</a></p>
+        </div>
+        <div class="col-xs-9 pull-right">
+            <p class="text-right"><a href="/how-it-works.html">How It Works</a>
+                | <a href="/mobile.html">Mobile App</a>
+            </p>
+        </div>
+    </div>
+</header>
+<body>
+<div class="container">
+    <br>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-8 col-md-push-2">
+            <div class="text-center">
+                <a href="/"><img src="img/logo.jpg" alt="Nafue.com" align="center" height="100px"></a>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <br>
+    <div class="row">
+        <div class="col-md-8 col-md-push-2">
+            <div id="dropZone" class="dropZone no-select">
+                <div class="dropSelect">
+                    <input class="inputfile" type="file" id="file" name="files[]"/>
+                    <label for="file">Choose a file...</label>
+                </div>
+                <h2>Drop file here</h2>
+            </div>
+
+            <div id="showLink" hidden>
+                <p class="no-select text-center">Link and file will be destroyed after first use or after 24 hours,
+                    whichever comes first.</p>
+                <h3 id="linkToShare"></h3>
+            </div>
+            <div id="passCont" class="text-center no-select" hidden>
+                <p id="badPass" class="text-center text-red" hidden>Bad Password, Try Again.</p>
+                <input id="password" type="password" class="input-text" placeholder="Enter Password">
+                <p class="passwordReqs" id="passwordReqs">
+                    <span class="bold">Length 8+ and (3 of 4):</span>
+                    <span id="len" class="missing">Length</span>
+                    <span id="low" class="missing">Lowercase</span>,
+                    <span id="upp" class="missing">Uppercase</span>,
+                    <span id="num" class="missing">Number</span>,
+                    <span id="spc" class="missing">Special</span></p>
+                <button class="btn full-width" id="share" onclick="shareFile()" disabled>Share File</button>
+                <button class="btn full-width" id="downloadBtn" onclick="decryptFile()" hidden>Unlock File</button>
+            </div>
+            <div id="doneDownloading" class="text-center" hidden>
+                <h2>Download will begin shortly...</h2>
+                <p>You will be redirected in a few moments back to the homepage.</p>
+            </div>
+            <div id="busy" class="no-select" hidden>
+                <br><br>
+                <div class="loading">
+                    <span id="busyMessage"></span>
+                </div>
+            </div>
+            <div id="unsupported" class="text-center" hidden>
+                <h1>Unsupported Browser.</h1>
+                <p class="text-red">It looks like your browser isn't supported. Try something from this decade or go <a
+                        href="/mobile.html">mobile</a>.</p>
+            </div>
+            <div id="error" class="text-center" hidden>
+                <h1>There Was An Error</h1>
+                <p id="errMsg" class="text-red">This is the message</p>
+                <p><a href="/">(try again)</a></p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="text-center grey">Help keep Nafue free; <a href="#" class="bold" onclick="modal.show()">Donate</a></p>
+        </div>
+    </div>
+</div>
+<div id="modal" hidden>
+    <div id="modal-background">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-md-push-3 col-xs-12">
+                    <div id="modal-wrapper">
+                        <form id="checkout" method="post" action="/checkout" >
+                            <div class="row modal-header">
+                                <div class="col-xs-4 col-xs-push-4">
+                                    <h2 class="text-center grey">Donate</h2>
+                                </div>
+                                <div class="col-xs-2 pull-right text-right">
+                                    <button class="btn btn-light" onclick="modal.hide()">X</button>
+                                </div>
+                            </div>
+                            <div class="row modal-body">
+                                <div class="col-xs-12">
+                                    <div id="checkout_loading" class="no-select">
+                                        <br><br>
+                                        <br><br>
+                                        <div class="loading">
+                                            <span>Loading</span>
+                                        </div>
+                                    </div>
+                                    <div id="checkout_error" hidden>
+                                        <h3 class="text-center text-red">There was an error accessing the payment
+                                            gateway.</h3>
+                                        <p class="text-center">Please try back later.</p>
+                                    </div>
+                                    <div id="payment-form">
+                                    </div>
+                                    <input id="amount" class="" type="number" placeholder="Donation Amount" hidden/>
+                                    <div id="thanks" hidden>
+                                        <h3 class="text-center green">Thank You!</h3>
+                                        <p class="text-center">Your donation has been received.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row modal-footer">
+                                <div class="col-xs-12 pull-right text-right">
+                                    <button class="btn btn-light" onclick="modal.hide()">Close</button>
+                                    &nbsp;
+                                    <input id="donate" type="submit" value="Donate" class="btn btn-donate" onclick="" hidden/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<footer>
+    <p class="text-center">
+        &copy;&nbsp;2016 Nafue.com | View on <a href="https://github.com/menkveldj/nafue">Github</a> | <a href="/docs">Api
+        Docs</a>
+        <img id="canary" src="/img/canary.png" alt="canary" height="15px">
+    </p>
+</footer>
+<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+<script type="text/javascript" src="/vendor.min.js"></script>
+<script type="text/javascript" src="/app.min.js"></script>
+
+<script>
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-72989200-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+</html>

@@ -1,0 +1,1 @@
+DROP TABLE basic_analytics;

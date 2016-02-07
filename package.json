@@ -1,8 +1,8 @@
 {
-    "name": "Sparticus",
+    "name": "Nafue",
     "repository": {
         "type": "git",
-        "url": ""
+        "url": "https://github.com/menkveldj/nafue"
     },
     "version": "0.0.1",
     "description": "Nafue",
@@ -11,9 +11,8 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "Menklab LLC",
-    "license": "?",
+    "license": "GNU2",
     "dependencies": {
-
     },
     "devDependencies": {
         "bower": "~1.5.3",
@@ -43,6 +42,7 @@
         "minimist": "~1.2.0",
         "mkdirp": "~0.5.1",
         "promise": "~7.0.4",
-        "run-sequence": "~1.1.2"
+        "run-sequence": "~1.1.2",
+        "gulp-apidoc": "~0.2.2"
     }
 }

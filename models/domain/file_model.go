@@ -8,8 +8,8 @@ type File struct {
 	TTL       int       `json:"ttl,omitempty"`
 	Created   time.Time `json:"created,omitempty"`
 	ShortUrl  string    `json:"shortUrl,omitempty"`
-	UploadUrl string 	`json:"uploadUrl,omitempty"`
-	IV        string 	`json:"iv" binding:"required"`
-	Salt      string 	`json:"salt" binding:"required"`
-	AData     string 	`json:"aData" binding:"required"`
+	UploadUrl string    `json:"uploadUrl,omitempty"`
+	IV        string    `json:"iv" binding:"required"`
+	Salt      string    `json:"salt" binding:"required"`
+	AData     string    `json:"aData" binding:"required"`
 }
