@@ -1,7 +1,7 @@
 package services
 
 import (
-	"braintree-go"
+	"github.com/lionelbarrow/braintree-go"
 	"log"
 	"nafue/config"
 	"nafue/models/display"
@@ -28,8 +28,8 @@ func NewPaymentService() *PaymentService {
 }
 
 func (self *PaymentService) GetClientToken(paymentTokenDisplay *display.PaymentTokenDisplay) error {
-	//token, err := self.bt.ClientToken().Generate()
-	token, err := self.bt.ClientToken().GenerateWithMerchantAccount(config.BtMerchActId)
+	log.Println("merch account: " + config.BtMerchActId)
+	token, err := self.bt.ClientToken().Generate()
 	if err != nil {
 		log.Println("ERROR getting token: ", err.Error())
 		return err
@@ -49,7 +49,7 @@ func (self *PaymentService) ProcessNonce(paymentNonceDisplay *display.PaymentNon
 	result, err := self.bt.Transaction().Create(&braintree.Transaction{
 		Type:   "sale",
 		Amount: dAmount,
-
+		MerchantAccountId: config.BtMerchActId,
 		PaymentMethodNonce: paymentNonceDisplay.Nonce,
 	})
 	if err != nil {
