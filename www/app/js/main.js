@@ -27,14 +27,19 @@ function init() {
             downloadFile(dFile);
         }
 
-        dom.dropZone.addEventListener('dragover', handleDragOver, false);
-        dom.dropZone.addEventListener('drop', handleFileSelect, false);
-        dom.file.addEventListener('change', handleFileSelect, false);
-        dom.file.focus();
-
+        if (!!dom.dropZone) {
+            dom.dropZone.addEventListener('dragover', handleDragOver, false);
+            dom.dropZone.addEventListener('drop', handleFileSelect, false);
+        }
+        if (!!dom.file) {
+            dom.file.addEventListener('change', handleFileSelect, false);
+            dom.file.focus();
+        }
         // setup password check listener
         window.onload = function () {
-            dom.password.onkeyup = checkPassword;
+            if (!! dom.password) {
+                dom.password.onkeyup = checkPassword;
+            }
         };
     }
     else {

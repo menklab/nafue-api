@@ -45,12 +45,18 @@ gulp.task('build:css', function () {
         ])
         .pipe(gulp_sourcemaps.init())
         .pipe(gulp_concat('style.min.css'))
-        //.pipe(gulp_uglifycss())
         .pipe(gulp_sourcemaps.write('../maps'))
         .pipe(gulp.dest('www/app/'))
         .pipe(livereload());
 });
-
+gulp.task('build:vendor:css', function () {
+    return gulp.src([
+            'www/bower_components/fullpage.js/dist/jquery.fullpage.min.css'
+        ])
+        .pipe(gulp_concat('vendor.min.css'))
+        .pipe(gulp.dest('www/app/'))
+        .pipe(livereload());
+});
 gulp.task('build:js', function () {
     gulp.src(['www/app/js/**/*.js'], {base: 'js'})
         .pipe(jshint(jshintOptions))
@@ -72,8 +78,11 @@ gulp.task('build:vendor:js', function () {
         .pipe(gulp_rename('sjcl_wrapped.js'))
         .pipe(gulp.dest('www/bower_components/sjcl/'));
     gulp.src([
+            'www/bower_components/jquery/dist/jquery.min.js',
             'www/bower_components/sjcl/sjcl_wrapped.js',
-            'www/bower_components/file-saver/FileSaver.js'
+            'www/bower_components/braintree-web/dist/braintree.js',
+            'www/bower_components/file-saver/FileSaver.js',
+            'www/bower_components/fullpage.js/dist/jquery.fullpage.min.js'
         ], {base: 'js'})
         .pipe(gulp_sourcemaps.init())
         .pipe(gulp_concat('vendor.min.js'))
@@ -85,6 +94,7 @@ gulp.task('build:vendor:js', function () {
 gulp.task('package', function () {
     run_sequence('apidoc');
     run_sequence('build:vendor:js');
+    run_sequence('build:vendor:css');
     run_sequence('build:js');
     run_sequence('build:css');
     gulp.src(['www/app/app.min.js'], {base: 'js'})
@@ -96,6 +106,10 @@ gulp.task('package', function () {
     gulp.src(['www/app/vendor.min.js'], {base: 'js'})
         .pipe(gulp_uglify())
         .pipe(gulp_rename("vendor.min.js"))
+        .pipe(gulp.dest('www/dist/'));
+    gulp.src(['www/app/vendor.min.css'])
+        .pipe(gulp_uglifycss())
+        .pipe(gulp_rename("vendor.min.css"))
         .pipe(gulp.dest('www/dist/'));
     gulp.src(['www/app/style.min.css'])
         .pipe(gulp_uglifycss())
@@ -121,6 +135,7 @@ gulp.task('open:dev', function () {
 
 gulp.task('dev', [], function () {
     run_sequence('build:vendor:js');
+    run_sequence('build:vendor:css');
     run_sequence('build:js');
     run_sequence('build:css');
     run_sequence('watch');
