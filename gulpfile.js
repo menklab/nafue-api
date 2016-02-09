@@ -78,8 +78,8 @@ gulp.task('build:vendor:js', function () {
         .pipe(gulp_rename('sjcl_wrapped.js'))
         .pipe(gulp.dest('www/bower_components/sjcl/'));
     gulp.src([
-            'www/bower_components/jquery/dist/jquery.min.js',
             'www/bower_components/sjcl/sjcl_wrapped.js',
+            'www/bower_components/jquery/dist/jquery.min.js',
             'www/bower_components/braintree-web/dist/braintree.js',
             'www/bower_components/file-saver/FileSaver.js',
             'www/bower_components/fullpage.js/dist/jquery.fullpage.min.js'
@@ -120,12 +120,12 @@ gulp.task('package', function () {
 
 });
 
-gulp.task('apidoc',function(done){
+gulp.task('apidoc', function (done) {
     gulp_apidoc({
         src: "controllers/",
         dest: "www/dist/docs",
-        includeFilters: [ ".*\\.go$" ]
-    },done);
+        includeFilters: [".*\\.go$"]
+    }, done);
 });
 
 gulp.task('open:dev', function () {

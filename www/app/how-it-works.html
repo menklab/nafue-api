@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <link rel="canonical" href="http://www.menklab.com" itemprop="url">
     <title>Nafue - How It Works</title>
-    <meta name="description" content="Create an encrypted file for sharing, that self destructs after 24 hours.">
-    <meta name="keywords"
-          content="Self Destructing File, Share Secure File, Secure File Drop, Encrypted File Transfer, Secure File Transfer, Secure File Sharing, Encrypted File Sharing">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <meta property="og:description" content="Create an encrypted file for sharing, that self destructs after 24 hours.">
+    <meta name="description" content="Anonymous, secure file transfers that self destruct after first use or 24 hours using client side encryption.">
+    <meta name="keywords"
+          content="Anonymous File Sharing, Secure File Sharing, Encrypted File Sharing">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta property="og:description" content="Anonymous, secure file transfers that self destruct after first use or 24 hours using client side encryption">
     <meta property="og:site_name" content="Nafue">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://www.nafue.com/img/logo.jpg">
+    <meta property="og:image" content="http://www.nafue.com/img/logo.jpg">
     <meta property="og:og:image:secure_url" content="https://www.nafue.com/img/logo.jpg">
     <meta property="og:image:width" content="524">
     <meta property="og:image:height" content="150">
@@ -52,36 +52,29 @@
             <p id="homeLink"><a class="no-underline" href="/">&lt;&nbsp;</a><a href="/">Home</a></p>
         </div>
         <div class="col-xs-9 pull-right">
-            <p class="text-right"><a href="/how-it-works.html">How It Works</a>
-                | <a href="/mobile.html">Mobile App</a>
+            <p>
+                <nav class="text-right">
+                    <a href="/how-it-works.html">How It Works</a> |
+                    <a href="/apps.html">Apps</a>
+                </nav>
             </p>
         </div>
     </div>
 </header>
 <body>
-<div class="container">
-    <br>
-    <br>
-    <br>
-    <div class="row">
-        <div class="col-md-8 col-md-push-2">
-            <div class="text-center">
-                <a href="/"><img src="img/logo.jpg" alt="Nafue.com" align="center" height="100px"></a>
+<div id="fullpage" hidden>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-center">/How <i class="icon-logo"></i>t Works/</h1>
+                </div>
             </div>
         </div>
     </div>
-    <div class="clearfix"></div>
-    <br>
-    <br>
-    <br>
-    <div class="row">
-        <div class="col-md-12">
-            <h2 class="text-center">How It Works</h2>
-            <h1 class="text-center">Coming Soon</h1>
-            <p class="text-center">for now check out the sourcecode at <a href="https://github.com/menkveldj/nafue">github.com</a>.
-            </p>
-        </div>
-    </div>
+    <div class="section">Some section</div>
+    <div class="section">Some section</div>
+    <div class="section">Some section</div>
 </div>
 </body>
 <footer>
@@ -111,5 +104,15 @@
     ga('create', 'UA-72989200-1', 'auto');
     ga('send', 'pageview');
 
+</script>
+<script>
+    $(document).ready(function () {
+        $('#fullpage').fullpage({
+            sectionsColor: ['#ffffff', '#dedada', '#777777', '#ffffff'],
+            navigation: true,
+            fixedElements: 'header, footer'
+        });
+        $('#fullpage').show();
+    });
 </script>
 </html>

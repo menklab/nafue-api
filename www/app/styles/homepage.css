@@ -1,0 +1,29 @@
+.dropZone {
+    width: 100%;
+    border: 2px dashed #999;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 25px;
+    text-align: center;
+    color: #999;
+}
+
+.dropZone h2 {
+    padding: 50px 0;
+    clear: both;
+}
+
+.dropSelect {
+    float: left;
+}
+#linkToShare {
+    width: 100%;
+    border: 2px dashed #999;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 25px;
+    text-align: center;
+    color: #999;
+}

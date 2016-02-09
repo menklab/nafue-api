@@ -1,0 +1,30 @@
+.footer {
+    background-color: #5cc279;
+}
+header {
+    top: 0;
+    height: 100px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}
+
+footer {
+    bottom: 0;
+    height: 40px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    background-color: #dbd5d5;
+}
+
+footer p {
+    color: #535353;
+    font-size: 14px;
+}
+
+#canary {
+    display: inline;
+    float: right;
+    padding-right: 10px
+}

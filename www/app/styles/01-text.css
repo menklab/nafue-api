@@ -1,0 +1,109 @@
+html {
+    font-family: Verdana, sans-serif;
+    color: #777;
+}
+
+h6 {
+    font: 18px bold;
+}
+
+h5 {
+    font: 21px bold;
+}
+
+h4 {
+    font: 24px bold;
+}
+
+h3 {
+    font: 36px bold;
+}
+
+h2 {
+    font: 48px bold;
+}
+
+h1 {
+    font: 60px bold;
+}
+
+p {
+    font: 14px regular;
+}
+
+a {
+    color: #777;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #999;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, input, textarea, select, button {
+    font-family: Verdana, sans-serif;
+}
+
+.no-underline {
+    text-decoration: none;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-large {
+    font-size: 24px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.pad-sides {
+    padding: 0 10px;
+}
+
+.text-red {
+    color: #c27979;
+}
+
+.text-red-dark {
+    color: #756767;
+}
+
+.text-green {
+    color: #5cc279;
+}
+
+.text-green-dark {
+    color: #67756b;
+}
+
+.text-gray {
+    color: #777777;
+}
+
+.text-offwhite {
+    color: #f2f2f2;
+}
+
+.text-gray-light {
+    color: #5cc279;
+}
+
+.text-gray-extra-light {
+    color: #e5e5e5;
+}
+
+.text-gray-dark {
+    color: #5e5e5e;
+}
+
+.text-gray-extra-dark {
+    color: #6b6b6b;
+}
