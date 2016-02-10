@@ -3,10 +3,11 @@
 }
 header {
     top: 0;
-    height: 100px;
+    height: 48px;
     left: 0;
     position: absolute;
     width: 100%;
+    background-color: #fff;
 }
 
 footer {
@@ -19,6 +20,16 @@ footer {
 }
 
 footer p {
+    color: #535353;
+    font-size: 14px;
+}
+.header-floating {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.footer-floating {
+    height: 25px;
     color: #535353;
     font-size: 14px;
 }

@@ -68,6 +68,10 @@ h1, h2, h3, h4, h5, h6, p, a, input, textarea, select, button {
     padding: 0 10px;
 }
 
+.text-white {
+    color: #ffffff;
+}
+
 .text-red {
     color: #c27979;
 }

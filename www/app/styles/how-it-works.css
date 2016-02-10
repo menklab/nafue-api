@@ -1,0 +1,48 @@
+.step i {
+    padding: 0;
+    margin: 0;
+    font-size: 200px;
+    text-align: center;
+}
+.step h2 {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+.step p {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+.slide-bg-protect {
+    background: url("img/bg-lock.gif") no-repeat;
+    background-size: auto 100%;
+
+}
+.slide-bg-share {
+    background: url("img/bg-share.gif") no-repeat right;
+    background-size: auto 100%;
+
+}
+.slide-bg-download {
+    background: url("img/bg-cloud.gif") no-repeat center center;
+    background-size: auto 100%;
+
+}
+.read-more-container h1 {
+    padding: 0 0 4px 0;
+    margin: 0;
+}
+.read-more-container-gray-dark-border {
+    border-bottom: solid 2px #333333;
+}
+.read-more-container-white-border {
+    border-bottom: solid 2px #ffffff;
+}
+.read-more-container-gray-border {
+    border-bottom: solid 2px #777777;
+}
+.read-more-container p {
+    margin: 7px 0;
+    padding: 0;
+}
