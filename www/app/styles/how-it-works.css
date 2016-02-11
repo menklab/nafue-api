@@ -34,6 +34,10 @@
     margin: 0;
     border-bottom: solid 4px #5cc279;
 }
+.read-more-container h4 {
+    margin: 15px 0 0 0;
+    padding: 0;
+}
 .read-more-container p {
     margin: 7px 0;
     padding: 0;
