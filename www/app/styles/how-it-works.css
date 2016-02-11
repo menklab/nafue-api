@@ -32,15 +32,7 @@
 .read-more-container h1 {
     padding: 0 0 4px 0;
     margin: 0;
-}
-.read-more-container-gray-dark-border {
-    border-bottom: solid 2px #333333;
-}
-.read-more-container-white-border {
-    border-bottom: solid 2px #ffffff;
-}
-.read-more-container-gray-border {
-    border-bottom: solid 2px #777777;
+    border-bottom: solid 4px #5cc279;
 }
 .read-more-container p {
     margin: 7px 0;
