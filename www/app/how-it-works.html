@@ -128,7 +128,7 @@
                             key generated from a password entered at the time of upload that exists only, client side,
                             during entry; it is never transmitted, or saved. <a
                                 href="https://en.wikipedia.org/wiki/Salt_(cryptography)">Salt</a> and <a
-                                href="https://en.wikipedia.org/wiki/Initialization_vector">IV's</a> (Initialization
+                                href="https://en.wikipedia.org/wiki/Initialization_vector">IV</a> (Initialization
                             Vectors) are
                             stored separately from the encrypted file in a secured database that is cleared upon file
                             retrieval.
@@ -158,7 +158,8 @@
                             purged from the Nafue private cloud. Thus, guaranteeing that only a single person has access
                             to the encrypted file.</p>
                         <p class="text-white">It is mathematically improbable that the one-time link could be discovered
-                            or intercepted by an attacker. Regardless, the Nafue system protects against this in a couple
+                            or intercepted by an attacker. Regardless, the Nafue system protects against this in a
+                            couple
                             ways. First, the file
                             is still encrypted which would take the attacker a minimum of 30 years to break; so it's
                             useless to them. Second, the intended receiver will receive an error when accessing the file
@@ -167,17 +168,22 @@
                         <h4 class="text-white">
                             Tech Details:
                         </h4>
-                        <p class="text-white">To provide secure and high performing access to the encrypted data Nafue services utilize a
+                        <p class="text-white">To provide secure and high performing access to the encrypted data Nafue
+                            services utilize a
                             Decoupled Double PUT Process to store the secure data. First the <a class="text-white"
-                                    href="https://en.wikipedia.org/wiki/Salt_(cryptography)">Salt</a>, <a class="text-white"
-                                    href="https://en.wikipedia.org/wiki/Initialization_vector">IV's</a>, and MVD (<a class="text-white"
+                                                                                                href="https://en.wikipedia.org/wiki/Salt_(cryptography)">Salt</a>,
+                            <a class="text-white"
+                               href="https://en.wikipedia.org/wiki/Initialization_vector">IV</a>, and MVD (<a
+                                    class="text-white"
                                     href="https://en.wikipedia.org/wiki/Encryption">Message
                                 Verification Data</a>) are sent to the NAPI (Nafue <a class="text-white"
-                                    href="https://en.wikipedia.org/wiki/Application_programming_interface">API</a>). NAPI generates the one-time access link
+                                                                                      href="https://en.wikipedia.org/wiki/Application_programming_interface">API</a>).
+                            NAPI generates the one-time access link
                             and stores that in a secured database with the IV, Salt and MVD. NAPI then generates a
                             pre-authorized upload request to Nafue's private <a class="text-white"
-                                    href="https://aws.amazon.com/s3/">Amazon S3 Vault</a>. The NAPI returns both the
-                            on-time access link and pre-authorized upload request to the client. The client uploads the
+                                                                                href="https://aws.amazon.com/s3/">Amazon
+                                S3 Vault</a>. The NAPI returns both the
+                            one-time access link and pre-authorized upload request to the client. The client uploads the
                             encrypted data directly to the S3 Vault using the pre-authorized request. Finally, the
                             one-time access link is displayed to the user for sharing.</p>
                     </div>
@@ -191,26 +197,42 @@
                 <div class="col-xs-11 col-md-8 col-md-push-2">
                     <div class="read-more-container">
                         <h1 class="text-gray text-center read-more-container-gray-border">Download</h1>
-                        <p class="text-gray">Duis est vitae lectus aliquet urna, parturient ad leo vivamus leo porta,
-                            eros dui purus eget
-                            leo
-                            hendrerit,
-                            nascetur sit vitae luctus odio. Velit pellentesque elit sed tellus erat vestibulum, amet nec
-                            vel
-                            pellentesque egestas nec enim. Suspendisse diam. Lorem neque est justo mauris consectetur
-                            dis,
-                            sodales dui,
-                            semper mi at. Vulputate ultricies nisl praesent, quis wisi diam donec metus ac dui, a
-                            pulvinar
-                            malesuada
-                            curabitur tristique, rutrum viverra consequat egestas. Aliquam consequat sed malesuada a sem
-                            consequat,
-                            dolor nam purus consectetuer ipsum. Nonummy sed velit, donec a ad cras, blandit integer,
-                            eget
-                            pede nec
-                            hendrerit risus, libero mauris molestie hendrerit cras. Ut a at senectus rutrum, netus
-                            vestibulum ac erat
-                            blandit pede ut. Placerat urna et morbi reiciendis ac.</p>
+                        <h4 class="text-gray">Overview:</h4>
+                        <p class="text-gray">The one-time download link is used to obtain the encrypted data; provided
+                            the link hasn't expired. At the time of download, the encrypted data is deleted and purged
+                            from the private Nafue Cloud. The downloader is then prompted for the original password used
+                            to encrypt the data during "protection". If the correct password is entered the file is
+                            decrypted and made available for use.</p>
+                        <p class="text-gray">This entire process was designed to protect the anonymity of both the
+                            uploader and downloader. Because encryption and decryption happen client side Nafue
+                            services, like any potential attacker, have no way of viewing the actual file contents.
+                            Thus, providing plausible deniability to all parties involved.</p>
+                        <br>
+                        <br>
+                        <h4 class="text-gray">Tech Details:</h4>
+                        <p class="text-gray">The download process utilizes a Decoupled Double GET Process to acquire the
+                            secured data. Navigating to the one-time link initiates a request to the NAPI (Nafue <a
+                                    class="text-gray"
+                                    href="https://en.wikipedia.org/wiki/Application_programming_interface">API</a>).
+                            NAPI verifies the one-time link and file. Provided the link and file haven't expired, the
+                            NAPI then generates a pre-authorized download request to Nafue's private <a
+                                    class="text-gray"
+                                    href="https://aws.amazon.com/s3/">Amazon
+                                S3 Vault</a>.
+                            The pre-authorized download request, <a class="text-gray"
+                                                                    href="https://en.wikipedia.org/wiki/Salt_(cryptography)">Salt</a>, <a
+                                    class="text-gray"
+                                    href="https://en.wikipedia.org/wiki/Initialization_vector">IV</a> and MVD (<a
+                                    class="text-gray"
+                                    href="https://en.wikipedia.org/wiki/Encryption">Message
+                                Verification Data</a>) is then
+                            returned to the client.</p>
+                        <p class="text-gray">The client uses the pre-authorized download request to acquire the
+                            encrypted data before prompting the user for a password. Provided the user enters the same
+                            password used for encryption the Salt and IV are used with the password to generate a <a
+                                    class="text-gray" href="https://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>
+                            derived key to decrypt the data. The MVD is verified, and the file is decrypted. Upon
+                            decryption, the user is presented with the original file for use.</p>
                     </div>
                 </div>
             </div>
