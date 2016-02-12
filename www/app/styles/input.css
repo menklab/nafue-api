@@ -30,7 +30,7 @@ input[placeholder] {
 
 .inputfile + label {
     font-size: 1em;
-    font-weight: 700;
+    font-weight: 400;
     color: white;
     background-color: #777;
     display: inline-block;

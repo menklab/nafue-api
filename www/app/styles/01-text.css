@@ -1,34 +1,87 @@
+@font-face {
+    font-family: 'Work Sans';
+    font-weight: 300;
+    font-style: normal;
+    src: url('/fonts/Work-Sans-300/Work-Sans-300.eot');
+    src: url('/fonts/Work-Sans-300/Work-Sans-300.eot?#iefix') format('embedded-opentype'),
+    local('Work Sans Light'),
+    local('Work-Sans-300'),
+    url('/fonts/Work-Sans-300/Work-Sans-300.woff2') format('woff2'),
+    url('/fonts/Work-Sans-300/Work-Sans-300.woff') format('woff'),
+    url('/fonts/Work-Sans-300/Work-Sans-300.ttf') format('truetype'),
+    url('/fonts/Work-Sans-300/Work-Sans-300.svg#WorkSans') format('svg');
+}
+
+@font-face {
+    font-family: 'Work Sans';
+    font-weight: 400;
+    font-style: normal;
+    src: url('/fonts/Work-Sans-regular/Work-Sans-regular.eot');
+    src: url('/fonts/Work-Sans-regular/Work-Sans-regular.eot?#iefix') format('embedded-opentype'),
+    local('Work Sans'),
+    local('Work-Sans-regular'),
+    url('/fonts/Work-Sans-regular/Work-Sans-regular.woff2') format('woff2'),
+    url('/fonts/Work-Sans-regular/Work-Sans-regular.woff') format('woff'),
+    url('/fonts/Work-Sans-regular/Work-Sans-regular.ttf') format('truetype'),
+    url('/fonts/Work-Sans-regular/Work-Sans-regular.svg#WorkSans') format('svg');
+}
+
+@font-face {
+    font-family: 'Work Sans';
+    font-weight: 700;
+    font-style: normal;
+    src: url('/fonts/Work-Sans-700/Work-Sans-700.eot');
+    src: url('/fonts/Work-Sans-700/Work-Sans-700.eot?#iefix') format('embedded-opentype'),
+    local('Work Sans Bold'),
+    local('Work-Sans-700'),
+    url('/fonts/Work-Sans-700/Work-Sans-700.woff2') format('woff2'),
+    url('/fonts/Work-Sans-700/Work-Sans-700.woff') format('woff'),
+    url('/fonts/Work-Sans-700/Work-Sans-700.ttf') format('truetype'),
+    url('/fonts/Work-Sans-700/Work-Sans-700.svg#WorkSans') format('svg');
+}
+
+
+
+
 html {
-    font-family: Verdana, sans-serif;
+    font-family: "Work Sans", sans-serif;
     color: #777;
 }
 
 h6 {
-    font: 18px bold;
+    font-size: 18px;
+    font-weight: 700;
 }
 
 h5 {
-    font: 21px bold;
+    font-size: 21px;
+    font-weight: 700;
 }
 
 h4 {
-    font: 24px bold;
+    font-size: 24px;
+    font-weight: 700;
 }
 
 h3 {
-    font: 36px bold;
+    font-size: 36px;
+    font-weight: 700;
 }
 
 h2 {
-    font: 48px bold;
+    font-size: 48px;
+    font-weight: 700;
 }
 
 h1 {
-    font: 60px bold;
+    font-size: 60px;
+    font-weight: 700;
 }
 
 p {
-    font: 14px regular;
+    font-size: 15px;
+    line-height: 23px;
+    font-weight: 300;
 }
 
 a {
@@ -41,7 +94,7 @@ a:hover {
 }
 
 h1, h2, h3, h4, h5, h6, p, a, input, textarea, select, button {
-    font-family: Verdana, sans-serif;
+    font-family: "Work Sans", sans-serif;
 }
 
 .no-underline {
