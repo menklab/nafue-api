@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <link rel="canonical" href="http://www.menklab.com" itemprop="url">
-    <title>Nafue</title>
+    <title>Nafue - Apps</title>
 
     <meta name="description"
           content="Anonymous, secure file transfers that self destruct after first use or 24 hours using client side encryption.">
@@ -66,131 +66,39 @@
     </div>
 </header>
 <body>
-<div class="for-site-indexing no-select">
-    <h1>Nafue</h1>
-    <p>Anonymous, secure file transfers that self destruct after first use or 24 hours using client side encryption.</p>
-</div>
 <div class="container">
     <br>
     <br>
     <br>
     <div class="row">
-        <div class="col-md-8 col-md-push-2">
-            <div class="text-center">
-                <a href="/"><img src="/img/logo.jpg" alt="Nafue.com" align="center" height="100px"></a>
-            </div>
+        <div class="col-md-12">
+            <h1 class="text-center">/Apps/</h1>
         </div>
     </div>
     <div class="clearfix"></div>
     <br>
     <div class="row">
-        <div class="col-md-8 col-md-push-2 center-block">
-            <div id="dropZone" class="dropZone no-select">
-                <div class="dropSelect">
-                    <input class="inputfile" type="file" id="file" name="files[]"/>
-                    <label for="file">Choose a file...</label>
-                </div>
-                <h3>Drop file here</h3>
-            </div>
-
-            <div id="showLink" hidden>
-                <p class="no-select text-center">Link and file will be destroyed after first use or after 24 hours,
-                    whichever comes first.</p>
-                <h6 id="linkToShare"></h6>
-            </div>
-            <div id="passCont" class="text-center no-select" hidden>
-                <p id="badPass" class="text-center text-red" hidden>Bad Password, Try Again.</p>
-                <input id="password" type="password" class="input-text" placeholder="Enter Password">
-                <p class="passwordReqs" id="passwordReqs">
-                    <span class="bold">Length 8+ and (3 of 4):</span>
-                    <span id="len" class="text-gray">Length</span>
-                    <span id="low" class="text-gray">Lowercase</span>,
-                    <span id="upp" class="text-gray">Uppercase</span>,
-                    <span id="num" class="text-gray">Number</span>,
-                    <span id="spc" class="text-gray">Special</span></p>
-                <button class="btn full-width" id="share" onclick="shareFile()" disabled>Share File</button>
-                <button class="btn full-width" id="downloadBtn" onclick="decryptFile()" hidden>Unlock File</button>
-            </div>
-            <div id="doneDownloading" class="text-center" hidden>
-                <h2>Download will begin shortly...</h2>
-                <p>You will be redirected in a few moments back to the homepage.</p>
-            </div>
-            <div id="busy" class="no-select" hidden>
-                <br><br>
-                <div class="loading">
-                    <span id="busyMessage"></span>
-                </div>
-            </div>
-            <div id="unsupported" class="text-center" hidden>
-                <h1>Unsupported Browser.</h1>
-                <p class="text-red">It looks like your browser isn't supported. Try something from this decade or go <a
-                        href="/apps.html">mobile</a>.</p>
-            </div>
-            <div id="error" class="text-center" hidden>
-                <h1>There Was An Error</h1>
-                <p id="errMsg" class="text-red">This is the message</p>
-                <p><a href="/">(try again)</a></p>
+        <div class="col-md-3 col-md-push-1">
+            <div class="apps-icons text-gray">
+                <p><i class="icon-ios"></i>&nbsp;&nbsp;&nbsp;<i class="icon-android"></i></p>
+                <h3>Mobile</h3>
+                <p>(Coming Soon)</p>
             </div>
         </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-xs-12">
-            <p class="text-center text-gray-extra-dark">Help keep Nafue free; <a href="#" class="bold text-green"
-                                                                                 onclick="modal.show()">Donate</a>
-            </p>
+        <br>
+        <div class="col-md-2 col-md-push-2">
+            <div class="apps-icons text-green">
+                <p><i class="icon-www"></i></p>
+                <h3>Web</h3>
+                <p>(Beta)</p>
+            </div>
         </div>
-    </div>
-</div>
-<div id="modal" hidden>
-    <div id="modal-background">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6 col-md-push-3 col-xs-12">
-                    <div id="modal-wrapper">
-                        <form id="checkout" method="post" action="#">
-                            <div class="row modal-header">
-                                <div class="col-xs-4 col-xs-push-4">
-                                    <h2 class="text-center">Donate</h2>
-                                </div>
-                                <div class="col-xs-2 pull-right text-right">
-                                    <button class="btn btn-light" onclick="modal.hide()">X</button>
-                                </div>
-                            </div>
-                            <div class="row modal-body">
-                                <div class="col-xs-12">
-                                    <div id="checkout_loading" class="no-select">
-                                        <br><br>
-                                        <br><br>
-                                        <div class="loading">
-                                            <span>Loading</span>
-                                        </div>
-                                    </div>
-                                    <div id="checkout_error" hidden>
-                                        <h3 class="text-center text-red">There was an error accessing the payment
-                                            gateway.</h3>
-                                        <p class="text-center">Please try back later.</p>
-                                    </div>
-                                    <div id="payment-form">
-                                    </div>
-                                    <input id="amount" class="" type="number" placeholder="Donation Amount" hidden/>
-                                    <div id="thanks" hidden>
-                                        <h3 class="text-center text-green">Thank You!</h3>
-                                        <p class="text-center">Your donation has been received.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row modal-footer">
-                                <div class="col-xs-12 pull-right text-right">
-                                    <button class="btn btn-light" onclick="modal.hide()">Close</button>
-                                    &nbsp;
-                                    <input id="donate" type="submit" value="Donate" class="btn btn-donate" onclick=""
-                                           hidden/>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+        <br>
+        <div class="col-md-3 col-md-push-3">
+            <div class="apps-icons text-gray">
+                <p><i class="icon-windows"></i>&nbsp;&nbsp;&nbsp;<i class="icon-osx"></i></p>
+                <h3>Desktop</h3>
+                <p>(Coming Later)</p>
             </div>
         </div>
     </div>

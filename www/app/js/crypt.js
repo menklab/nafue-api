@@ -75,47 +75,47 @@ function checkPassword(e) {
 
     if (pass.length > 7) {
         p.length = true;
-        dom.len.className = "present";
+        dom.len.className = "text-green";
     }
     else {
         p.length = false;
-        dom.len.className = "missing";
+        dom.len.className = "text-gray";
     }
 
     if (!!pass.match(/[0-9]/)) {
         p.num = true;
-        dom.num.className = "present";
+        dom.num.className = "text-green";
     }
     else {
         p.num = false;
-        dom.num.className = "missing";
+        dom.num.className = "text-gray";
     }
 
     if (!!pass.match("[a-z]")) {
         p.lower = true;
-        dom.low.className = "present";
+        dom.low.className = "text-green";
     }
     else {
         p.lower = false;
-        dom.low.className = "missing";
+        dom.low.className = "text-gray";
     }
 
     if (!!pass.match("[A-Z]")) {
         p.upper = true;
-        dom.upp.className = "present";
+        dom.upp.className = "text-green";
     }
     else {
         p.upper = false;
-        dom.upp.className = "missing";
+        dom.upp.className = "text-gray";
     }
 
     if (!!pass.match(/[!,@,#,$,%,^,&,*,?,_,~,-,(,),\s]/)) {
         p.special = true;
-        dom.spc.className = "present";
+        dom.spc.className = "text-green";
     }
     else {
         p.special = false;
-        dom.spc.className = "missing";
+        dom.spc.className = "text-gray";
     }
 
 
@@ -135,10 +135,10 @@ function checkPassword(e) {
 
 function resetPassword() {
     dom.password.value = "";
-    dom.spc.className = "missing";
-    dom.upp.className = "missing";
-    dom.low.className = "missing";
-    dom.num.className = "missing";
-    dom.len.className = "missing";
+    dom.spc.className = "text-gray";
+    dom.upp.className = "text-gray";
+    dom.low.className = "text-gray";
+    dom.num.className = "text-gray";
+    dom.len.className = "text-gray";
 
 }

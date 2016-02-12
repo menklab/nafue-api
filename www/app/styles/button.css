@@ -1,0 +1,38 @@
+.btn {
+    color: #fff;
+    font-size: 1em;
+    padding: 8px 8px;
+    border: none;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    outline: none !important;
+    background: #777;
+}
+
+.btn:hover {
+    background-color: #999;
+}
+
+.btn-light {
+    background: #fff;
+    color: #999;
+    border: 1px #eee solid;
+}
+
+.btn-light:hover {
+    background: #ddd;
+    color: #777;
+}
+
+.btn-donate {
+    background: #009CDE;
+    color: #fff;
+}
+
+.btn[disabled] {
+    background: #ccc;
+}
+.btn[disabled]:hover {
+    background: #ccc;
+}

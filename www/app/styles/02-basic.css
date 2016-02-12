@@ -1,0 +1,46 @@
+.container {
+    /*max-width: 1000px;*/
+}
+.no-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.for-site-indexing {
+    height: 0;
+    width: 0;
+    opacity: 0;
+}
+
+.full-width {
+    width: 100%;
+}
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.inline {
+    display: inline;
+}
+
+.clearfix {
+    clear: both;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.pull-left {
+    float: left !important;
+}
+.background-light-gray {
+    background-color: #dedada;
+}

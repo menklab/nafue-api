@@ -20,21 +20,30 @@ function init() {
         // handle history
 
         // check for decryption file
-        var dFile = getParameterByName("file");
+        var dFile;
+        var parse = parseURL(window.location.href);
+        if (parse.pathname[1] == "file") {
+            dFile = parse.pathname[2];
+        }
         if (!!dFile) {
             show(dom.homeLink);
             window.history.pushState('', '', '/');
             downloadFile(dFile);
         }
 
-        dom.dropZone.addEventListener('dragover', handleDragOver, false);
-        dom.dropZone.addEventListener('drop', handleFileSelect, false);
-        dom.file.addEventListener('change', handleFileSelect, false);
-        dom.file.focus();
-
+        if (!!dom.dropZone) {
+            dom.dropZone.addEventListener('dragover', handleDragOver, false);
+            dom.dropZone.addEventListener('drop', handleFileSelect, false);
+        }
+        if (!!dom.file) {
+            dom.file.addEventListener('change', handleFileSelect, false);
+            dom.file.focus();
+        }
         // setup password check listener
         window.onload = function () {
-            dom.password.onkeyup = checkPassword;
+            if (!!dom.password) {
+                dom.password.onkeyup = checkPassword;
+            }
         };
     }
     else {

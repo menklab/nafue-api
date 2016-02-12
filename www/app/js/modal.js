@@ -70,11 +70,13 @@ function modalInit() {
     }
 
     // register onClick of background
-    background.addEventListener("click", function (e) {
-        if (e.target.id === 'modal-background' && !document.getElementById('modal-background').hidden) {
-            hide_modal();
-        }
-    });
+    if (!!background) {
+        background.addEventListener("click", function (e) {
+            if (e.target.id === 'modal-background' && !document.getElementById('modal-background').hidden) {
+                hide_modal();
+            }
+        });
+    }
 
     // register escape key
     window.addEventListener("keyup", function (e) {
@@ -100,24 +102,26 @@ function modalInit() {
             });
     }
 
-    dom.amount.addEventListener('blur', function () {
-        if (this.value === '') {
-            return;
-        }
-        this.setAttribute('type', 'text');
-        if (this.value.indexOf('.') === -1) {
-            this.value = this.value + '.00';
-        }
-        if (this.value.indexOf('.') === 0) {
-            this.value = '1.00';
-        }
-        while (this.value.indexOf('.') > this.value.length - 3) {
-            this.value = this.value + '0';
-        }
-    });
-    dom.amount.addEventListener('focus', function () {
-        this.setAttribute('type', 'number');
-    });
+    if (!!dom.amount) {
+        dom.amount.addEventListener('blur', function () {
+            if (this.value === '') {
+                return;
+            }
+            this.setAttribute('type', 'text');
+            if (this.value.indexOf('.') === -1) {
+                this.value = this.value + '.00';
+            }
+            if (this.value.indexOf('.') === 0) {
+                this.value = '1.00';
+            }
+            while (this.value.indexOf('.') > this.value.length - 3) {
+                this.value = this.value + '0';
+            }
+        });
+        dom.amount.addEventListener('focus', function () {
+            this.setAttribute('type', 'number');
+        });
+    }
 
     return {
         show: show_modal,

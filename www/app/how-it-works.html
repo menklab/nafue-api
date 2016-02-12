@@ -5,15 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <link rel="canonical" href="http://www.menklab.com" itemprop="url">
     <title>Nafue - How It Works</title>
-    <meta name="description" content="Create an encrypted file for sharing, that self destructs after 24 hours.">
-    <meta name="keywords"
-          content="Self Destructing File, Share Secure File, Secure File Drop, Encrypted File Transfer, Secure File Transfer, Secure File Sharing, Encrypted File Sharing">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <meta property="og:description" content="Create an encrypted file for sharing, that self destructs after 24 hours.">
+    <meta name="description"
+          content="Anonymous, secure file transfers that self destruct after first use or 24 hours using client side encryption.">
+    <meta name="keywords"
+          content="Anonymous File Sharing, Secure File Sharing, Encrypted File Sharing">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta property="og:description"
+          content="Anonymous, secure file transfers that self destruct after first use or 24 hours using client side encryption">
     <meta property="og:site_name" content="Nafue">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://www.nafue.com/img/logo.jpg">
+    <meta property="og:image" content="http://www.nafue.com/img/logo.jpg">
+    <meta property="og:og:image:secure_url" content="https://www.nafue.com/img/logo.jpg">
     <meta property="og:image:width" content="524">
     <meta property="og:image:height" content="150">
     <meta property="og:image:type" content="image/jpeg">
@@ -41,55 +44,249 @@
     <meta name="msapplication-config" content="/img/favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
+    <link rel="stylesheet" type="text/css" href="/vendor.min.css">
     <link rel="stylesheet" type="text/css" href="/style.min.css">
 
 </head>
-<header>
-    <div class="row">
-        <div class="col-xs-3 pull-left">
-            <p id="homeLink"><a class="no-underline" href="/">&lt;&nbsp;</a><a href="/">Home</a></p>
+<body>
+<div id="fullpage" hidden>
+    <div class="section">
+        <div class="header-floating">
+            <div class="row">
+                <div class="col-xs-3 pull-left">
+                    <p id="homeLink"><a class="no-underline" href="/">&lt;&nbsp;</a><a href="/">Home</a></p>
+                </div>
+                <div class="col-xs-9 pull-right">
+                    <p>
+                        <nav class="text-right">
+                            <a href="/how-it-works.html">How It Works</a> |
+                            <a href="/apps.html">Apps</a> |
+                            <a href="http://us12.campaign-archive2.com/home/?u=4845ba4aa1bc87b9521dd68e2&id=21c1ef62bd"
+                               title="View previous campaigns" target="_blank">Updates</a>
+                        </nav>
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="col-xs-9 pull-right">
-            <p class="text-right"><a href="/how-it-works.html">How It Works</a>
-                | <a href="/mobile.html">Mobile App</a>
-            </p>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6 col-xs-push-3">
+                    <h1 class="text-center">/How It Works/</h1>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-3">
+                    <div class="step">
+                        <p><img src="img/protect.svg" alt="protect" height="190"></p>
+                        <h2>Protect</h2>
+                        <p><a href="#protect">(read more)</a></p>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-xs-push-1">
+                    <div class="step">
+                        <p><img src="img/share.svg" alt="protect" height="190"></p>
+                        <h2>Share</h2>
+                        <p><a href="#share">(read more)</a></p>
+                    </div>
+                </div>
+                <div class="col-xs-3 col-xs-push-2">
+                    <div class="step">
+                        <p><img src="img/download.svg" alt="protect" height="190"></p>
+                        <h2>Download</h2>
+                        <p><a href="#download">(read more)</a></p>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
         </div>
     </div>
-</header>
-<body>
-<div class="container">
-    <br>
-    <br>
-    <br>
-    <div class="row">
-        <div class="col-md-8 col-md-push-2">
-            <div class="text-center">
-                <a href="/"><img src="img/logo.jpg" alt="Nafue.com" align="center" height="100px"></a>
+    <div class="section slide-bg-protect">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-11 col-lg-8 col-lg-push-4">
+                    <div class="read-more-container">
+                        <h1 class="text-gray-dark text-right read-more-container-gray-dark-border">Protect</h1>
+                        <h4 class="text-gray-dark">Overview:</h4>
+                        <p class="text-gray-dark">
+                            Files are encrypted on your device before being uploaded to Nafue's secure cloud thus
+                            guaranteeing complete security and anonymity. Only the uploader knows the real contents of
+                            the encrypted document. The encryption used is the same authorized for securing US
+                            Government "Top Secret" Documents. It is estimated to take 30 years to break each file
+                            secured with this encryption.
+                        </p>
+                        <br>
+                        <br>
+                        <h4 class="text-gray-dark">
+                            Tech Details:
+                        </h4>
+                        <p class="text-gray-dark">
+                            Files are encrypted with a <a
+                                href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">256bit AES
+                            Encryption</a>. The encryption cipher uses a <a href="https://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>
+                            derived
+                            key generated from a password entered at the time of upload that exists only, client side,
+                            during entry; it is never transmitted, or saved. <a
+                                href="https://en.wikipedia.org/wiki/Salt_(cryptography)">Salt</a> and <a
+                                href="https://en.wikipedia.org/wiki/Initialization_vector">IV</a> (Initialization
+                            Vectors) are
+                            stored separately from the encrypted file in a secured database that is cleared upon file
+                            retrieval.
+                        </p>
+                        <p class="text-gray-dark">
+                            Due to encryption happening client side using The <a
+                                href="https://crypto.stanford.edu/sjcl/">Stanford Javascript Encryption Library</a> the
+                            encryption process can be audited anytime; before each use if desired. The entire project is
+                            also Open Source and can be viewed on <a href="https://github.com/menkveldj/nafue">Github.com</a>.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="clearfix"></div>
-    <br>
-    <br>
-    <br>
-    <div class="row">
-        <div class="col-md-12">
-            <h2 class="text-center">How It Works</h2>
-            <h1 class="text-center">Coming Soon</h1>
-            <p class="text-center">for now check out the sourcecode at <a href="https://github.com/menkveldj/nafue">github.com</a>.
-            </p>
+    <div class="section slide-bg-share">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-11 col-lg-8">
+                    <div class="read-more-container">
+                        <h1 class="text-white text-left read-more-container-white-border">Share</h1>
+                        <h4 class="text-white">Overview:</h4>
+                        <p class="text-white">The encrypted data is uploaded to Nafue's private cloud where it is
+                            further anonymized through a randomly generated link and given a lifespan of 24 hours. The
+                            link can be shared with anyone but, like the file, it only lasts 24 hours. Furthermore,
+                            after the first time the link is accessed both the file and link are complete deleted and
+                            purged from the Nafue private cloud. Thus, guaranteeing that only a single person has access
+                            to the encrypted file.</p>
+                        <p class="text-white">It is mathematically improbable that the one-time link could be discovered
+                            or intercepted by an attacker. Regardless, the Nafue system protects against this in a
+                            couple
+                            ways. First, the file
+                            is still encrypted which would take the attacker a minimum of 30 years to break; so it's
+                            useless to them. Second, the intended receiver will receive an error when accessing the file
+                            so they can take appropriate actions to secure themselves, or sender, if needed.</p>
+                        <br><br>
+                        <h4 class="text-white">
+                            Tech Details:
+                        </h4>
+                        <p class="text-white">To provide secure and high performing access to the encrypted data Nafue
+                            services utilize a
+                            Decoupled Double PUT Process to store the secure data. First the <a class="text-white"
+                                                                                                href="https://en.wikipedia.org/wiki/Salt_(cryptography)">Salt</a>,
+                            <a class="text-white"
+                               href="https://en.wikipedia.org/wiki/Initialization_vector">IV</a>, and MVD (<a
+                                    class="text-white"
+                                    href="https://en.wikipedia.org/wiki/Encryption">Message
+                                Verification Data</a>) are sent to the NAPI (Nafue <a class="text-white"
+                                                                                      href="https://en.wikipedia.org/wiki/Application_programming_interface">API</a>).
+                            NAPI generates the one-time access link
+                            and stores that in a secured database with the IV, Salt and MVD. NAPI then generates a
+                            pre-authorized upload request to Nafue's private <a class="text-white"
+                                                                                href="https://aws.amazon.com/s3/">Amazon
+                                S3 Vault</a>. The NAPI returns both the
+                            one-time access link and pre-authorized upload request to the client. The client uploads the
+                            encrypted data directly to the S3 Vault using the pre-authorized request. Finally, the
+                            one-time access link is displayed to the user for sharing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section slide-bg-download">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-11 col-md-8 col-md-push-2">
+                    <div class="read-more-container">
+                        <h1 class="text-gray text-center read-more-container-gray-border">Download</h1>
+                        <h4 class="text-gray">Overview:</h4>
+                        <p class="text-gray">The one-time download link is used to obtain the encrypted data; provided
+                            the link hasn't expired. At the time of download, the encrypted data is deleted and purged
+                            from the private Nafue Cloud. The downloader is then prompted for the original password used
+                            to encrypt the data during "protection". If the correct password is entered the file is
+                            decrypted and made available for use.</p>
+                        <p class="text-gray">This entire process was designed to protect the anonymity of both the
+                            uploader and downloader. Because encryption and decryption happen client side Nafue
+                            services, like any potential attacker, have no way of viewing the actual file contents.
+                            Thus, providing plausible deniability to all parties involved.</p>
+                        <br>
+                        <br>
+                        <h4 class="text-gray">Tech Details:</h4>
+                        <p class="text-gray">The download process utilizes a Decoupled Double GET Process to acquire the
+                            secured data. Navigating to the one-time link initiates a request to the NAPI (Nafue <a
+                                    class="text-gray"
+                                    href="https://en.wikipedia.org/wiki/Application_programming_interface">API</a>).
+                            NAPI verifies the one-time link and file. Provided the link and file haven't expired, the
+                            NAPI then generates a pre-authorized download request to Nafue's private <a
+                                    class="text-gray"
+                                    href="https://aws.amazon.com/s3/">Amazon
+                                S3 Vault</a>.
+                            The pre-authorized download request, <a class="text-gray"
+                                                                    href="https://en.wikipedia.org/wiki/Salt_(cryptography)">Salt</a>,
+                            <a
+                                    class="text-gray"
+                                    href="https://en.wikipedia.org/wiki/Initialization_vector">IV</a> and MVD (<a
+                                    class="text-gray"
+                                    href="https://en.wikipedia.org/wiki/Encryption">Message
+                                Verification Data</a>) is then
+                            returned to the client.</p>
+                        <p class="text-gray">The client uses the pre-authorized download request to acquire the
+                            encrypted data before prompting the user for a password. Provided the user enters the same
+                            password used for encryption the Salt and IV are used with the password to generate a <a
+                                    class="text-gray" href="https://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>
+                            derived key to decrypt the data. The MVD is verified, and the file is decrypted. Upon
+                            decryption, the user is presented with the original file for use.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section fp-auto-height">
+        <div class="footer-floating">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <!-- Begin MailChimp Signup Form -->
+                        <form action="//Nafue.us12.list-manage.com/subscribe/post?u=4845ba4aa1bc87b9521dd68e2&amp;id=21c1ef62bd"
+                              method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form"
+                              class="validate" target="_blank" novalidate>
+
+                            <div id="footer-signup">
+                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL"
+                                       size="25"
+                                       placeholder="email address">
+                                <input type="submit" value="Subscribe" name="subscribe"
+                                       id="mc-embedded-subscribe" class="button">
+                            </div>
+                            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                            <div style="position: absolute; left: -5000px; top: 0px" aria-hidden="true"><input
+                                    type="text"
+                                    name="b_4845ba4aa1bc87b9521dd68e2_21c1ef62bd"
+                                    tabindex="-1"
+                                    value=""></div>
+                        </form>
+                        <!--End mc_embed_signup-->
+                    </div>
+
+                    <div class="col-md-4">
+                        <p class="text-center">
+                            &copy;&nbsp;2016 Nafue.com | View on <a href="https://github.com/menkveldj/nafue">Github</a>
+                            | <a
+                                href="/docs">Api
+                            Docs</a>
+                        </p>
+                    </div>
+                    <div class="col-md-1 col-md-push-3">
+                        <p class="text-right text-gray-dark"><i
+                                class="icon-canary float-right text-large pad-sides"></i></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 </body>
-<footer>
-    <p class="text-center">
-        &copy;&nbsp;2016 Nafue.com | View on <a href="https://github.com/menkveldj/nafue">Github</a> | <a href="/docs">Api
-        Docs</a> | <a href="#" onclick="modal.show()">Donate</a>
-        <img id="canary" src="/img/canary.png" alt="canary" height="15px">
-    </p>
-</footer>
-<script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+
 <script type="text/javascript" src="/vendor.min.js"></script>
 <script type="text/javascript" src="/app.min.js"></script>
 
@@ -109,5 +306,16 @@
     ga('create', 'UA-72989200-1', 'auto');
     ga('send', 'pageview');
 
+</script>
+<script>
+    $(document).ready(function () {
+        $('#fullpage').fullpage({
+            sectionsColor: ['#ffffff', '#dedada', '#777777', '#ffffff', '#dbd5d5'],
+            anchors: ['summery', 'protect', 'share', 'download', 'footer'],
+            navigation: true,
+            fitToSection: false
+        });
+        $('#fullpage').show();
+    });
 </script>
 </html>

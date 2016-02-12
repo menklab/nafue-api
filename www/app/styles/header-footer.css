@@ -1,0 +1,37 @@
+.footer {
+    background-color: #5cc279;
+}
+header {
+    top: 0;
+    height: 48px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    background-color: #fff;
+}
+
+footer {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    background-color: #dbd5d5;
+}
+
+footer p {
+    margin-top: 16px;
+    color: #535353;
+}
+.header-floating {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.footer-floating {
+    height: 25px;
+    color: #535353;
+    font-size: 14px;
+}
+#footer-signup {
+ margin-top: 15px;
+}
