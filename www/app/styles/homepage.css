@@ -9,9 +9,10 @@
     color: #999;
 }
 
-.dropZone h2 {
+.dropZone h3 {
     padding: 50px 0;
     clear: both;
+    font-weight: 400;
 }
 
 .dropSelect {
