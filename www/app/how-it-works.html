@@ -121,15 +121,21 @@
                             Tech Details:
                         </h4>
                         <p class="text-gray-dark">
-                            Files are encrypted with a <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">256bit AES Encryption</a>. The encryption cipher uses a <a href="https://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>
+                            Files are encrypted with a <a
+                                href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">256bit AES
+                            Encryption</a>. The encryption cipher uses a <a href="https://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>
                             derived
                             key generated from a password entered at the time of upload that exists only, client side,
-                            during entry; it is never transmitted, or saved. <a href="https://en.wikipedia.org/wiki/Salt_(cryptography)">Salt</a> and <a href="https://en.wikipedia.org/wiki/Initialization_vector">IV's</a> (Initialization Vectors) are
+                            during entry; it is never transmitted, or saved. <a
+                                href="https://en.wikipedia.org/wiki/Salt_(cryptography)">Salt</a> and <a
+                                href="https://en.wikipedia.org/wiki/Initialization_vector">IV's</a> (Initialization
+                            Vectors) are
                             stored separately from the encrypted file in a secured database that is cleared upon file
                             retrieval.
                         </p>
                         <p class="text-gray-dark">
-                            Due to encryption happening client side using The <a href="https://crypto.stanford.edu/sjcl/">Stanford Javascript Encryption Library</a> the
+                            Due to encryption happening client side using The <a
+                                href="https://crypto.stanford.edu/sjcl/">Stanford Javascript Encryption Library</a> the
                             encryption process can be audited anytime; before each use if desired. The entire project is
                             also Open Source and can be viewed on <a href="https://github.com/menkveldj/nafue">Github.com</a>.
                         </p>
@@ -144,26 +150,36 @@
                 <div class="col-xs-11 col-lg-8">
                     <div class="read-more-container">
                         <h1 class="text-white text-left read-more-container-white-border">Share</h1>
-                        <p class="text-white">Duis est vitae lectus aliquet urna, parturient ad leo vivamus leo porta,
-                            eros dui purus eget
-                            leo
-                            hendrerit,
-                            nascetur sit vitae luctus odio. Velit pellentesque elit sed tellus erat vestibulum, amet nec
-                            vel
-                            pellentesque egestas nec enim. Suspendisse diam. Lorem neque est justo mauris consectetur
-                            dis,
-                            sodales dui,
-                            semper mi at. Vulputate ultricies nisl praesent, quis wisi diam donec metus ac dui, a
-                            pulvinar
-                            malesuada
-                            curabitur tristique, rutrum viverra consequat egestas. Aliquam consequat sed malesuada a sem
-                            consequat,
-                            dolor nam purus consectetuer ipsum. Nonummy sed velit, donec a ad cras, blandit integer,
-                            eget
-                            pede nec
-                            hendrerit risus, libero mauris molestie hendrerit cras. Ut a at senectus rutrum, netus
-                            vestibulum ac erat
-                            blandit pede ut. Placerat urna et morbi reiciendis ac.</p>
+                        <h4 class="text-white">Overview:</h4>
+                        <p class="text-white">The encrypted data is uploaded to Nafue's private cloud where it is
+                            further anonymized through a randomly generated link and given a lifespan of 24 hours. The
+                            link can be shared with anyone but, like the file, it only lasts 24 hours. Furthermore,
+                            after the first time the link is accessed both the file and link are complete deleted and
+                            purged from the Nafue private cloud. Thus, guaranteeing that only a single person has access
+                            to the encrypted file.</p>
+                        <p class="text-white">It is mathematically improbable that the one-time link could be discovered
+                            or intercepted by an attacker. Regardless, the Nafue system protects against this in a couple
+                            ways. First, the file
+                            is still encrypted which would take the attacker a minimum of 30 years to break; so it's
+                            useless to them. Second, the intended receiver will receive an error when accessing the file
+                            so they can take appropriate actions to secure themselves, or sender, if needed.</p>
+                        <br><br>
+                        <h4 class="text-white">
+                            Tech Details:
+                        </h4>
+                        <p class="text-white">To provide secure and high performing access to the encrypted data Nafue services utilize a
+                            Decoupled Double PUT Process to store the secure data. First the <a class="text-white"
+                                    href="https://en.wikipedia.org/wiki/Salt_(cryptography)">Salt</a>, <a class="text-white"
+                                    href="https://en.wikipedia.org/wiki/Initialization_vector">IV's</a>, and MVD (<a class="text-white"
+                                    href="https://en.wikipedia.org/wiki/Encryption">Message
+                                Verification Data</a>) are sent to the NAPI (Nafue <a class="text-white"
+                                    href="https://en.wikipedia.org/wiki/Application_programming_interface">API</a>). NAPI generates the one-time access link
+                            and stores that in a secured database with the IV, Salt and MVD. NAPI then generates a
+                            pre-authorized upload request to Nafue's private <a class="text-white"
+                                    href="https://aws.amazon.com/s3/">Amazon S3 Vault</a>. The NAPI returns both the
+                            on-time access link and pre-authorized upload request to the client. The client uploads the
+                            encrypted data directly to the S3 Vault using the pre-authorized request. Finally, the
+                            one-time access link is displayed to the user for sharing.</p>
                     </div>
                 </div>
             </div>
