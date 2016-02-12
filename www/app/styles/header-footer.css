@@ -12,7 +12,6 @@ header {
 
 footer {
     bottom: 0;
-    height: 40px;
     left: 0;
     position: absolute;
     width: 100%;
@@ -20,8 +19,8 @@ footer {
 }
 
 footer p {
+    margin-top: 16px;
     color: #535353;
-    font-size: 14px;
 }
 .header-floating {
     position: absolute;
@@ -33,9 +32,6 @@ footer p {
     color: #535353;
     font-size: 14px;
 }
-
-#canary {
-    display: inline;
-    float: right;
-    padding-right: 10px
+#footer-signup {
+ margin-top: 15px;
 }
