@@ -126,7 +126,7 @@ function shareFile() {
                     .success(function (res) {
                         hide(dom.busy);
                         show(dom.showLink);
-                        setContent(dom.linkToShare, www_services + "?file=" + fileData.shortUrl);
+                        setContent(dom.linkToShare, www_services + "/file/" + fileData.shortUrl);
                     })
                     .error(function (err) {
                        error(err.message);

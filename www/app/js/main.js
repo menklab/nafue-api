@@ -20,7 +20,11 @@ function init() {
         // handle history
 
         // check for decryption file
-        var dFile = getParameterByName("file");
+        var dFile;
+        var parse = parseURL(window.location.href);
+        if (parse.pathname[1] == "file") {
+            dFile = parse.pathname[2];
+        }
         if (!!dFile) {
             show(dom.homeLink);
             window.history.pushState('', '', '/');
@@ -37,7 +41,7 @@ function init() {
         }
         // setup password check listener
         window.onload = function () {
-            if (!! dom.password) {
+            if (!!dom.password) {
                 dom.password.onkeyup = checkPassword;
             }
         };
