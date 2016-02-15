@@ -26,7 +26,6 @@ function init() {
             dFile = parse.pathname[2];
         }
         if (!!dFile) {
-            show(dom.homeLink);
             window.history.pushState('', '', '/');
             downloadFile(dFile);
         }

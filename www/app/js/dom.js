@@ -1,6 +1,5 @@
 function domInit() {
     return {
-        homeLink: document.getElementById('homeLink'),
         preview: document.getElementById('preview'),
         dropZone: document.getElementById('dropZone'),
         list: document.getElementById('list'),
@@ -38,7 +37,6 @@ function domInit() {
 function error(errMsg) {
     reset_ui();
     hide(dom.dropZone);
-    show(dom.homeLink);
     show(dom.error);
     resetPassword();
     g.binData = null;
@@ -57,7 +55,6 @@ function reset_ui() {
     show(dom.dropZone);
     hide(dom.showLink);
     hide(dom.passCont);
-    hide(dom.homeLink);
     show(dom.passwordReqs);
     hide(dom.doneDownloading);
     hide(dom.busy);

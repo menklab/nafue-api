@@ -1,7 +1,7 @@
 .btn {
     color: #fff;
-    font-size: 1em;
-    padding: 8px 8px;
+    font-size: 14px;
+    padding: 7px 8px 8px 8px;
     border: none;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -35,4 +35,16 @@
 }
 .btn[disabled]:hover {
     background: #ccc;
+}
+.btn-small {
+    color: #fff;
+    font-size: 14px;
+    padding: 4px 4px;
+    margin: 4px 0;
+    border: none;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    outline: none !important;
+    background: #777;
 }

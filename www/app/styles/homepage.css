@@ -18,6 +18,7 @@
 .dropSelect {
     float: left;
 }
+
 #linkToShare {
     width: 100%;
     border: 2px dashed #999;
@@ -27,4 +28,16 @@
     padding: 25px;
     text-align: center;
     color: #999;
+}
+
+@media (max-width: 767px) {
+    .dropSelect {
+        float: none;
+    }
+    .dropZone {
+        padding: 10px 0;
+    }
+    #linkToShare {
+        font-size: 12px;
+    }
 }
