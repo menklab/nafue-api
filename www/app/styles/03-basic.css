@@ -44,3 +44,8 @@
 .margin-bottom-0 {
     margin-bottom: 0px !important;
 }
+.full-width-mobile {
+    margin: 0 !important;
+    padding: 0 2px !important;
+    width: 100%;
+}

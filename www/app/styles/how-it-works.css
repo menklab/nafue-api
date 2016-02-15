@@ -3,6 +3,7 @@
     margin: 0;
     font-size: 200px;
     text-align: center;
+    height: 190px;
 }
 .step h2 {
     padding: 0;
@@ -13,6 +14,24 @@
     padding: 0;
     margin: 0;
     text-align: center;
+}
+.mobile-title {
+    margin-top: 60px;
+    margin-bottom: 0px;
+}
+.mobile-break {
+    margin: 5px 0px;
+}
+@media (max-width: 767px) {
+    #fp-nav {
+        display: none;
+    }
+    .step img {
+        height: 70px;
+    }
+    h2 {
+        font-size: 18px;
+    }
 }
 .slide-bg-protect {
     background: url("img/bg-lock.gif") no-repeat;
@@ -41,4 +60,27 @@
 .read-more-container p {
     margin: 7px 0;
     padding: 0;
+}
+.how-it-works-mobile-container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+@media (max-width: 767px) {
+    .fp-tableCell {
+        padding: 0 !important;
+    }
+    .read-more-container h1 {
+        font-size: 18px;
+    }
+    .read-more-container h4 {
+        font-size: 14px;
+    }
+    .read-more-container p {
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
+        line-height: 14px;
+    }
 }
