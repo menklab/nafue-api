@@ -76,6 +76,11 @@ header {
     color: #535353;
     font-size: 14px;
 }
+@media (max-width: 767px) {
+    .footer-floating {
+        height: 210px;
+    }
+}
 
 .footer-signup {
     margin-top: 6px;
