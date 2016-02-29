@@ -1,6 +1,3 @@
-.container {
-    /*max-width: 1000px;*/
-}
 .no-select {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -43,4 +40,12 @@
 }
 .background-light-gray {
     background-color: #dedada;
+}
+.margin-bottom-0 {
+    margin-bottom: 0px !important;
+}
+.full-width-mobile {
+    margin: 0 !important;
+    padding: 0 2px !important;
+    width: 100%;
 }

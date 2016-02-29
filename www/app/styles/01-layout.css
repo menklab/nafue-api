@@ -1,0 +1,91 @@
+html, header, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+body {
+}
+header {
+    top: 0;
+    height: 55px;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    background-color: #fff;
+    z-index: 900;
+}
+
+.header-floating {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+#wrapper {
+    margin: 0;
+    padding: 50px 0 0 0;
+    overflow: hidden;
+    min-height: 100%;
+    position: absolute;
+    width: 100%;
+    top:0;
+}
+
+#content {
+    margin: 0;
+    padding-bottom: 48px;
+}
+
+@media (max-width: 767px) {
+    #content {
+        padding-bottom: 210px;
+    }
+}
+
+.footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    background-color: #dbd5d5;
+}
+
+.footer p {
+    margin: 16px 0 0 0;
+    color: #535353;
+}
+
+.footer-mobile {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    /*height: 149px;*/
+    background-color: #dbd5d5;
+}
+
+.footer-mobile h6 {
+    /*margin: 8px 0 0 0;*/
+    padding: 0;
+}
+
+.footer-floating {
+    height: 25px;
+    color: #535353;
+    font-size: 14px;
+}
+@media (max-width: 767px) {
+    .footer-floating {
+        height: 210px;
+    }
+}
+
+.footer-signup {
+    margin-top: 6px;
+}
+
+.footer-signup input {
+    /*margin-bottom: 6px;*/
+}

@@ -52,9 +52,26 @@
 <div id="fullpage" hidden>
     <div class="section">
         <div class="header-floating">
-            <div class="row">
+            <!-- mobile header-->
+            <div class="row visible-xs">
+                <div class="col-xs-12">
+                    <p>
+                        <nav class="text-center">
+                            <a href="/">Home</a> |
+                            <a href="/how-it-works.html">How It Works</a> |
+                            <a href="/apps.html">Apps</a> |
+                            <a href="http://us12.campaign-archive2.com/home/?u=4845ba4aa1bc87b9521dd68e2&id=21c1ef62bd"
+                               target="_blank"
+                               title="View previous campaigns">Updates</a>
+                        </nav>
+                    </p>
+                </div>
+            </div>
+            <!-- end mobile header -->
+            <!-- header -->
+            <div class="row hidden-xs">
                 <div class="col-xs-3 pull-left">
-                    <p id="homeLink"><a class="no-underline" href="/">&lt;&nbsp;</a><a href="/">Home</a></p>
+                    <p><a class="no-underline" href="/">&lt;&nbsp;</a><a href="/">Home</a></p>
                 </div>
                 <div class="col-xs-9 pull-right">
                     <p>
@@ -62,53 +79,59 @@
                             <a href="/how-it-works.html">How It Works</a> |
                             <a href="/apps.html">Apps</a> |
                             <a href="http://us12.campaign-archive2.com/home/?u=4845ba4aa1bc87b9521dd68e2&id=21c1ef62bd"
-                               title="View previous campaigns" target="_blank">Updates</a>
+                               target="_blank"
+                               title="View previous campaigns">Updates</a>
                         </nav>
                     </p>
                 </div>
             </div>
+            <!-- end header -->
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-xs-6 col-xs-push-3">
-                    <h1 class="text-center">/How It Works/</h1>
+                <div class="col-xs-10 col-xs-push-1">
+                    <h1 class="text-center hidden-xs">/How It Works/</h1>
+                    <h4 class="text-center visible-xs mobile-title">/How It Works/</h4>
                 </div>
             </div>
-            <br>
+
             <div class="row">
-                <div class="col-xs-3">
+                <div class="col-sm-3">
                     <div class="step">
-                        <p><img src="img/protect.svg" alt="protect" height="190"></p>
-                        <h2>Protect</h2>
+                        <p><a href="#protect"><img src="img/protect.svg" alt="protect" height="190"></a></p>
+                        <h2><a href="#protect" class="no-underline">Protect</a></h2>
                         <p><a href="#protect">(read more)</a></p>
                     </div>
                 </div>
-                <div class="col-xs-3 col-xs-push-1">
+                <hr class="visible-xs mobile-break">
+                <div class="col-sm-3 col-sm-push-1">
                     <div class="step">
-                        <p><img src="img/share.svg" alt="protect" height="190"></p>
-                        <h2>Share</h2>
+                        <p><a href="#share"><img src="img/share.svg" alt="protect" height="190"></a></p>
+                        <h2><a href="#share" class="no-underline">Share</a></h2>
                         <p><a href="#share">(read more)</a></p>
                     </div>
                 </div>
-                <div class="col-xs-3 col-xs-push-2">
+                <hr class="visible-xs mobile-break">
+                <div class="col-sm-3 col-sm-push-2">
                     <div class="step">
-                        <p><img src="img/download.svg" alt="protect" height="190"></p>
-                        <h2>Download</h2>
+                        <p><a href="#download"><img src="img/download.svg" alt="protect" height="190"></a></p>
+                        <h2><a href="#download" class="no-underline">Download</a></h2>
                         <p><a href="#download">(read more)</a></p>
                     </div>
                 </div>
             </div>
-            <br>
-            <br>
-            <br>
+            <br class="hidden-xs">
+            <br class="hidden-xs">
+            <br class="hidden-xs">
         </div>
     </div>
     <div class="section slide-bg-protect">
-        <div class="container">
+        <div class="container how-it-works-mobile-container">
             <div class="row">
-                <div class="col-xs-11 col-lg-8 col-lg-push-4">
+                <div class="col-xs-12 col-lg-8 col-lg-push-4 full-width-mobile">
                     <div class="read-more-container">
-                        <h1 class="text-gray-dark text-right read-more-container-gray-dark-border">Protect</h1>
+                        <h1 class="text-gray-dark text-right read-more-container-gray-dark-border hidden-xs">Protect</h1>
+                        <h1 class="text-white text-center read-more-container-white-border visible-xs text-gray-dark">Protect</h1>
                         <h4 class="text-gray-dark">Overview:</h4>
                         <p class="text-gray-dark">
                             Files are encrypted on your device before being uploaded to Nafue's secure cloud thus
@@ -117,8 +140,8 @@
                             Government "Top Secret" Documents. It is estimated to take 30 years to break each file
                             secured with this encryption.
                         </p>
-                        <br>
-                        <br>
+                        <br class="hidden-xs">
+                        <br class="hidden-xs">
                         <h4 class="text-gray-dark">
                             Tech Details:
                         </h4>
@@ -147,11 +170,12 @@
         </div>
     </div>
     <div class="section slide-bg-share">
-        <div class="container">
+        <div class="container how-it-works-mobile-container">
             <div class="row">
-                <div class="col-xs-11 col-lg-8">
+                <div class="col-xs-11 col-lg-8 full-width-mobile">
                     <div class="read-more-container">
-                        <h1 class="text-white text-left read-more-container-white-border">Share</h1>
+                        <h1 class="text-white text-left read-more-container-white-border hidden-xs">Share</h1>
+                        <h1 class="text-white text-center read-more-container-white-border visible-xs">Share</h1>
                         <h4 class="text-white">Overview:</h4>
                         <p class="text-white">The encrypted data is uploaded to Nafue's private cloud where it is
                             further anonymized through a randomly generated link and given a lifespan of 24 hours. The
@@ -166,7 +190,8 @@
                             is still encrypted which would take the attacker a minimum of 30 years to break; so it's
                             useless to them. Second, the intended receiver will receive an error when accessing the file
                             so they can take appropriate actions to secure themselves, or sender, if needed.</p>
-                        <br><br>
+                        <br class="hidden-xs">
+                        <br class="hidden-xs">
                         <h4 class="text-white">
                             Tech Details:
                         </h4>
@@ -194,9 +219,9 @@
         </div>
     </div>
     <div class="section slide-bg-download">
-        <div class="container">
+        <div class="container how-it-works-mobile-container">
             <div class="row">
-                <div class="col-xs-11 col-md-8 col-md-push-2">
+                <div class="col-xs-11 col-md-8 col-md-push-2 full-width-mobile">
                     <div class="read-more-container">
                         <h1 class="text-gray text-center read-more-container-gray-border">Download</h1>
                         <h4 class="text-gray">Overview:</h4>
@@ -209,8 +234,8 @@
                             uploader and downloader. Because encryption and decryption happen client side Nafue
                             services, like any potential attacker, have no way of viewing the actual file contents.
                             Thus, providing plausible deniability to all parties involved.</p>
-                        <br>
-                        <br>
+                        <br class="hidden-xs">
+                        <br class="hidden-xs">
                         <h4 class="text-gray">Tech Details:</h4>
                         <p class="text-gray">The download process utilizes a Decoupled Double GET Process to acquire the
                             secured data. Navigating to the one-time link initiates a request to the NAPI (Nafue <a
@@ -243,46 +268,83 @@
     </div>
     <div class="section fp-auto-height">
         <div class="footer-floating">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-4">
+            <!-- footer -->
+            <div class="footer hidden-xs">
+                <div class="container-fluid">
+                    <div class="row">
                         <!-- Begin MailChimp Signup Form -->
                         <form action="//Nafue.us12.list-manage.com/subscribe/post?u=4845ba4aa1bc87b9521dd68e2&amp;id=21c1ef62bd"
-                              method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form"
+                              method="post" name="mc-embedded-subscribe-form"
                               class="validate" target="_blank" novalidate>
 
-                            <div id="footer-signup">
-                                <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL"
-                                       size="25"
-                                       placeholder="email address">
-                                <input type="submit" value="Subscribe" name="subscribe"
-                                       id="mc-embedded-subscribe" class="button">
+                            <div class="col-lg-2 col-md-3 hidden-sm">
+                                <div class="footer-signup">
+                                    <input type="email" value="" name="EMAIL" class="required email full-width"
+                                           placeholder="email address">
+                                </div>
+                                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                                <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                                    <input type="text"
+                                           name="b_4845ba4aa1bc87b9521dd68e2_21c1ef62bd"
+                                           tabindex="-1"
+                                           value="">
+                                </div>
                             </div>
-                            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                            <div style="position: absolute; left: -5000px; top: 0px" aria-hidden="true"><input
-                                    type="text"
-                                    name="b_4845ba4aa1bc87b9521dd68e2_21c1ef62bd"
-                                    tabindex="-1"
-                                    value=""></div>
+                            <div class="col-sm-3 visible-sm">
+                                <p>
+                                    <a href="http://us12.campaign-archive2.com/home/?u=4845ba4aa1bc87b9521dd68e2&id=21c1ef62bd"
+                                       target="_blank"
+                                       title="View previous campaigns">Newsletter Signup</a>
+                                </p>
+                            </div>
+                            <div class="col-lg-2 col-md-2 hidden-sm">
+                                <div class="footer-signup">
+                                    <input type="submit" value="Sign Up" name="subscribe"
+                                           class="btn full-width">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-5 col-sm-6">
+                                <p class="text-center">
+                                    &copy;&nbsp;2016 Nafue.com | View on <a href="https://github.com/menkveldj/nafue">Github</a>
+                                    |
+                                    <a
+                                            href="/docs">Api
+                                        Docs</a>
+                                </p>
+                            </div>
+                            <div class="col-lg-1 col-lg-push-3 col-md-1 col-sm-1 col-sm-push-1">
+                                <p class="text-center text-gray-dark"><i class="icon-canary text-large pad-sides"></i></p>
+                            </div>
                         </form>
                         <!--End mc_embed_signup-->
                     </div>
-
-                    <div class="col-md-4">
+                </div>
+            </div>
+            <!-- end footer -->
+            <!-- mobile footer -->
+            <div class="footer-mobile visible-xs">
+                <div class="container-fluid">
+                    <div class="row">
+                        <h6 class="text-center">
+                            <a href="http://us12.campaign-archive2.com/home/?u=4845ba4aa1bc87b9521dd68e2&id=21c1ef62bd"
+                               target="_blank"
+                               title="View previous campaigns">Sign Up For Newsletter</a>
+                        </h6>
                         <p class="text-center">
-                            &copy;&nbsp;2016 Nafue.com | View on <a href="https://github.com/menkveldj/nafue">Github</a>
-                            | <a
-                                href="/docs">Api
-                            Docs</a>
+                            View on <a href="https://github.com/menkveldj/nafue">Github</a> |
+                            <a
+                                    href="/docs">Api
+                                Docs</a>
                         </p>
-                    </div>
-                    <div class="col-md-1 col-md-push-3">
-                        <p class="text-right text-gray-dark"><i
-                                class="icon-canary float-right text-large pad-sides"></i></p>
+
+                        <p class="text-center">&copy;&nbsp;2016 Nafue.com </p>
+                        <p class="text-center text-gray-dark margin-bottom-0"><i class="icon-canary text-large pad-sides"></i>
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
+            <!-- end mobile footer -->
     </div>
 </div>
 </body>

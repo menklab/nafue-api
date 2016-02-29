@@ -1,6 +1,5 @@
 function handleFileSelect(e) {
     setContent(dom.busyMessage, "Processing");
-    show(dom.homeLink);
 
     show(dom.busy);
     hide(dom.dropZone);
