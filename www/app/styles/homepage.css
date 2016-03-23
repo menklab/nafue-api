@@ -41,3 +41,37 @@
         font-size: 12px;
     }
 }
+.passwordStrength {
+    margin: 5px 0 10px 0;
+    min-height: 60px;
+}
+.passwordStrengthIndicator {
+    width: 100%;
+    color: #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+@media (max-width: 767px) {
+    .passwordStrengthIndicator {
+        width: 18.3%;
+        height: 10px;
+    }
+    .passwordStrengthIndicator p {
+        opacity: 0;
+    }
+    .passwordStrength {
+        min-height: 10px;
+    }
+    #passwordSuggestions {
+        display: none;
+    }
+}
+.passwordStrengthIndicator p {
+    margin: 0;
+    padding: 0;
+}
+#passwordSuggestions {
+    text-align: left;
+    margin-top: 4px;
+}

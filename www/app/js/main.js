@@ -41,7 +41,9 @@ function init() {
         // setup password check listener
         window.onload = function () {
             if (!!dom.password) {
-                dom.password.onkeyup = checkPassword;
+                dom.password.onkeyup = function () {
+                    updatePasswordStrength(zxcvbn(dom.password.value));
+                };
             }
         };
     }

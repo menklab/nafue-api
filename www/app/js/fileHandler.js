@@ -48,6 +48,7 @@ function handleFileSelect(e) {
                 g.binData = btoa(JSON.stringify(data));
                 hide(dom.busy);
                 show(dom.passCont);
+                show(dom.passwordStrength);
                 dom.password.focus();
             }
             else {
@@ -142,7 +143,6 @@ function decryptScreen() {
     g.mode = "download";
     hide(dom.busy);
     show(dom.passCont);
-    hide(dom.passwordReqs);
     hide(dom.share);
     show(dom.downloadBtn);
     dom.password.focus();

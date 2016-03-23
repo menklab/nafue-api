@@ -82,7 +82,8 @@ gulp.task('build:vendor:js', function () {
             'www/bower_components/jquery/dist/jquery.min.js',
             'www/bower_components/braintree-web/dist/braintree.js',
             'www/bower_components/file-saver/FileSaver.js',
-            'www/bower_components/fullpage.js/dist/jquery.fullpage.min.js'
+            'www/bower_components/fullpage.js/dist/jquery.fullpage.min.js',
+            'www/bower_components/zxcvbn/dist/zxcvbn.js'
         ], {base: 'js'})
         .pipe(gulp_sourcemaps.init())
         .pipe(gulp_concat('vendor.min.js'))
