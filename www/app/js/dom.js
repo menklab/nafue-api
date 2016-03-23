@@ -5,7 +5,6 @@ function domInit() {
         list: document.getElementById('list'),
         file: document.getElementById('file'),
         password: document.getElementById('password'),
-        passwordReqs: document.getElementById('passwordReqs'),
         passCont: document.getElementById('passCont'),
         busy: document.getElementById('busy'),
         showLink: document.getElementById('showLink'),
@@ -58,7 +57,6 @@ function reset_ui() {
     show(dom.dropZone);
     hide(dom.showLink);
     hide(dom.passCont);
-    show(dom.passwordReqs);
     hide(dom.doneDownloading);
     hide(dom.busy);
     hide(dom.unsupported);
@@ -86,7 +84,10 @@ function updatePasswordStrength(results) {
     var s = 0;
     if (!!results && !!results.score) {
         s = results.score; // score
-        // enable button if password has value
+    }
+
+    // enable button if password has value
+    if (!!dom.password.value) {
         dom.share.disabled = false;
     }
     else {

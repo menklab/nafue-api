@@ -40,7 +40,6 @@ function init() {
         }
         // setup password check listener
         window.onload = function () {
-            updatePasswordStrength();
             if (!!dom.password) {
                 dom.password.onkeyup = function () {
                     updatePasswordStrength(zxcvbn(dom.password.value));

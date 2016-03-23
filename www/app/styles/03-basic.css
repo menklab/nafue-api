@@ -53,11 +53,6 @@
 .margin-bottom-0 {
     margin-bottom: 0px !important;
 }
-.full-width-mobile {
-    margin: 0 !important;
-    padding: 0 2px !important;
-    width: 100%;
-}
 .background-red {
     background-color: #c27979;
 }
@@ -72,4 +67,12 @@
 }
 .background-dark-green {
     background-color: #67756b;
+}
+
+@media (max-width: 767px) {
+    .full-width-mobile {
+        margin: 0 !important;
+        padding: 0 2px !important;
+        width: 100%;
+    }
 }

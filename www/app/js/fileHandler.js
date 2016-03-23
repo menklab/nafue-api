@@ -143,7 +143,6 @@ function decryptScreen() {
     g.mode = "download";
     hide(dom.busy);
     show(dom.passCont);
-    hide(dom.passwordReqs);
     hide(dom.share);
     show(dom.downloadBtn);
     dom.password.focus();
