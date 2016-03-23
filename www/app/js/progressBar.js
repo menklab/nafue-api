@@ -5,7 +5,6 @@ $(window).resize(function () {
 
 // SIGNATURE PROGRESS
 function moveProgressBar() {
-    console.log("moveProgressBar");
     var getPercent = ($('.progress-wrap').data('progress-percent') / 100);
     var getProgressWrapWidth = $('.progress-wrap').width();
     var progressTotal = getPercent * getProgressWrapWidth;
@@ -19,7 +18,6 @@ function moveProgressBar() {
 }
 
 function setBarPercent(obj, percent) {
-    console.log("Set percent: ", percent);
     $('#passwordStrengthBar').data('progress-percent', percent);
     moveProgressBar();
 }

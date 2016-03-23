@@ -86,6 +86,11 @@ function updatePasswordStrength(results) {
     var s = 0;
     if (!!results && !!results.score) {
         s = results.score; // score
+        // enable button if password has value
+        dom.share.disabled = false;
+    }
+    else {
+        dom.share.disabled = true;
     }
 
     // calculate percent
