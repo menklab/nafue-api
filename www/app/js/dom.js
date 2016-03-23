@@ -13,11 +13,6 @@ function domInit() {
         busyMessage: document.getElementById('busyMessage'),
         share: document.getElementById("share"),
         downloadBtn: document.getElementById("downloadBtn"),
-        len: document.getElementById("len"),
-        low: document.getElementById("low"),
-        upp: document.getElementById("upp"),
-        num: document.getElementById("num"),
-        spc: document.getElementById("spc"),
         reset: document.getElementById("reset"),
         doneDownloading: document.getElementById("doneDownloading"),
         unsupported: document.getElementById("unsupported"),
@@ -29,7 +24,15 @@ function domInit() {
         checkout_error: document.getElementById("checkout_error"),
         amount: document.getElementById("amount"),
         donate: document.getElementById("donate"),
-        thanks: document.getElementById("thanks")
+        passwordStrength: document.getElementById("passwordStrength"),
+        passwordSuggestions: document.getElementById("passwordSuggestions"),
+        terrible: document.getElementById("terrible"),
+        weak: document.getElementById("weak"),
+        mediocre: document.getElementById("mediocre"),
+        strong: document.getElementById("strong"),
+        excellent: document.getElementById("excellent"),
+        thanks: document.getElementById("thanks"),
+        passwordStrengthBar: document.getElementById("passwordStrengthBar")
 
     };
 }
@@ -61,6 +64,7 @@ function reset_ui() {
     hide(dom.unsupported);
     hide(dom.error);
     hide(dom.badPass);
+    hide(dom.passwordStrength);
     dom.share.disabled = true;
     resetPassword();
     g.binData = null;
@@ -76,4 +80,19 @@ function show(e) {
 }
 function setContent(e, c) {
     e.innerHTML = c;
+}
+
+function updatePasswordStrength(results) {
+    var s = 0;
+    if (!!results && !!results.score) {
+        s = results.score; // score
+    }
+
+    // calculate percent
+    var perc = ((s + 1)/5) * 100;
+    if (!dom.password.value || dom.password.value == '') {
+        perc = 0;
+    }
+
+    setBarPercent(dom.passwordStrengthBar, perc);
 }

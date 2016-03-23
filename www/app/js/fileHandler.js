@@ -48,6 +48,7 @@ function handleFileSelect(e) {
                 g.binData = btoa(JSON.stringify(data));
                 hide(dom.busy);
                 show(dom.passCont);
+                show(dom.passwordStrength);
                 dom.password.focus();
             }
             else {

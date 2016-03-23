@@ -6,6 +6,15 @@
     -ms-user-select: none;
     user-select: none;
 }
+.no-padding {
+    padding: 0;
+}
+.no-margin {
+    margin: 0;
+}
+.slim-top-margin {
+    margin-top: 5px;
+}
 .for-site-indexing {
     height: 0;
     width: 0;
@@ -48,4 +57,19 @@
     margin: 0 !important;
     padding: 0 2px !important;
     width: 100%;
+}
+.background-red {
+    background-color: #c27979;
+}
+.background-dark-red {
+    background-color: #756767;
+}
+.background-gray {
+    background-color: #777777;
+}
+.background-green {
+    background-color: #5cc279;
+}
+.background-dark-green {
+    background-color: #67756b;
 }
