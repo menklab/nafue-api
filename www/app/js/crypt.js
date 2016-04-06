@@ -1,5 +1,6 @@
-function loaded() {
+function makeSecure() {
     sjcl.random.startCollectors();
+    console.log('secure %: ', sjcl.random.getProgress(100));
 }
 
 /* Encrypt a message */
@@ -55,7 +56,8 @@ function doDecrypt(password, ct) {
 }
 
 function makeIv() {
-    return sjcl.random.randomWords(4, 0);
+    return sjcl.random.randomWords(8,0);
+    //return sjcl.random.randomWords(8,100);
 }
 
 

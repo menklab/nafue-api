@@ -22,7 +22,6 @@ function handleFileSelect(e) {
     }
 
     var file = files[0];
-    var type = file.type;
     var name = file.name;
     var reader = new FileReader();
 
@@ -38,12 +37,8 @@ function handleFileSelect(e) {
             if (file.size/1024/1024 <= 50) {
                 var data = {
                     content: encodeAb(e.target.result),
-                    type: type,
                     name: name
                 };
-
-                //var blob = new Blob([decodeAb(data.content)]); //new Blob([btoa(data.content)], {type: data.type});
-                //saveAs(blob, data.name);
 
                 g.binData = btoa(JSON.stringify(data));
                 hide(dom.busy);
@@ -114,6 +109,12 @@ function shareFile() {
         salt: sjcl.codec.base64.fromBits(ct.p.salt),
         aData: sjcl.codec.base64.fromBits(ct.p.adata)
     };
+    console.log("salt: ", ct.p.salt);
+    console.log("salt b64: ", sjcl.codec.base64.fromBits(ct.p.salt));
+    console.log("iv: ", ct.p.iv);
+    console.log("iv b64: ", sjcl.codec.base64.fromBits(ct.p.iv));
+
+
     // make upload request
     request = JSON.stringify(payload);
     http.post(api_services + "/api/files", request)
@@ -150,7 +151,7 @@ function decryptScreen() {
 
 function decryptFile() {
     var data = JSON.parse(atob(sjcl.codec.base64.fromBits(doDecrypt(dom.password.value, g.ct))));
-    var blob = new Blob([decodeAb(data.content)], {type: data.type});
+    var blob = new Blob([decodeAb(data.content)], {type: "application/json"});
 
     saveAs(blob, data.name);
 

@@ -1,12 +1,12 @@
 package main
 
 import (
-	_ "nafue/Godeps/_workspace/src/github.com/joho/godotenv/autoload"
-	"nafue/config"
-	"nafue/controllers/rest"
-	"nafue/database"
-	"nafue/repositories"
-	"nafue/services"
+	_ "nafue-api/Godeps/_workspace/src/github.com/joho/godotenv/autoload"
+	"nafue-api/config"
+	"nafue-api/controllers/rest"
+	"nafue-api/database"
+	"nafue-api/repositories"
+	"nafue-api/services"
 )
 
 func main() {

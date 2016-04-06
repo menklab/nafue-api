@@ -14,8 +14,9 @@ type FileDisplay struct {
 
 func (self *FileDisplay) ToString() string {
 	return fmt.Sprintf(
-		"{Id: %v, UploadUrl: %v, TTL: %v, ShortURL: %v, IV: %v, Salt: %v, AData: %v}",
+		"{UploadUrl: %v, DownloadUrl: %v, TTL: %v, ShortURL: %v, IV: %v, Salt: %v, AData: %v}",
 		self.UploadUrl,
+		self.DownloadUrl,
 		self.TTL,
 		self.ShortUrl,
 		self.IV,

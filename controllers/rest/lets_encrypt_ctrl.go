@@ -2,7 +2,7 @@ package rest
 
 import (
 	"github.com/gin-gonic/gin"
-	"nafue/config"
+	"nafue-api/config"
 	"net/http"
 )
 

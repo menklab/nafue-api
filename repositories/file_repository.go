@@ -3,7 +3,7 @@ package repositories
 import (
 	"database/sql"
 	"log"
-	"nafue/models/domain"
+	"nafue-api/models/domain"
 	"time"
 )
 

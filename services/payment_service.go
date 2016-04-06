@@ -3,8 +3,8 @@ package services
 import (
 	"github.com/lionelbarrow/braintree-go"
 	"log"
-	"nafue/config"
-	"nafue/models/display"
+	"nafue-api/config"
+	"nafue-api/models/display"
 )
 
 type IPaymentService interface {

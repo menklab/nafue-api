@@ -2,9 +2,9 @@ package services
 
 import (
 	"log"
-	"nafue/models/display"
-	"nafue/models/domain"
-	"nafue/repositories"
+	"nafue-api/models/display"
+	"nafue-api/models/domain"
+	"nafue-api/repositories"
 )
 
 type IBasicAnalyticsService interface {

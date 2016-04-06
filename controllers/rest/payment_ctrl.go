@@ -3,8 +3,8 @@ package rest
 import (
 	"github.com/gin-gonic/gin"
 	"log"
-	"nafue/models/display"
-	"nafue/services"
+	"nafue-api/models/display"
+	"nafue-api/services"
 	"net/http"
 )
 

@@ -3,8 +3,8 @@ package rest
 import (
 	"github.com/gin-gonic/gin"
 	"log"
-	"nafue/models/display"
-	"nafue/services"
+	"nafue-api/models/display"
+	"nafue-api/services"
 	"net/http"
 )
 
@@ -19,7 +19,7 @@ func (self *FileController) Init(r *gin.Engine) {
 }
 
 /**
- * @api {get} /api/file/:shortUrl Get File
+ * @api {get} /api/files/:shortUrl Get File
  * @apiName getFile
  * @apiGroup Files
  *
@@ -68,7 +68,7 @@ func (self *FileController) getFile(c *gin.Context) {
 }
 
 /**
- * @api {post} /api/file/ Add File
+ * @api {post} /api/files/ Add File
  * @apiName addFile
  * @apiGroup Files
  *
