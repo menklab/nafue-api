@@ -53,7 +53,7 @@ func (self *FileController) getFile(c *gin.Context) {
 
 	fileKey := c.Param("file")
 
-	fileDisplay := display.FileDisplay{
+	fileDisplay := display.FileHeaderDisplay{
 		ShortUrl: fileKey,
 	}
 
@@ -102,7 +102,7 @@ func (self *FileController) getFile(c *gin.Context) {
  */
 func (self *FileController) addFile(c *gin.Context) {
 	// read req body
-	var fileDisplay display.FileDisplay
+	var fileDisplay display.FileHeaderDisplay
 	err := c.BindJSON(&fileDisplay)
 	if err != nil {
 		log.Println(err.Error())

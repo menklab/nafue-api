@@ -8,9 +8,9 @@ import (
 )
 
 type IFileRepository interface {
-	GetFile(*models.File) error
-	AddFile(*models.File) error
-	DeleteFile(*models.File) error
+	GetFile(*models.FileHeader) error
+	AddFile(*models.FileHeader) error
+	DeleteFile(*models.FileHeader) error
 }
 
 type FileRepository struct {
@@ -21,7 +21,7 @@ func NewFileRepository(d *sql.DB) *FileRepository {
 	return &FileRepository{d}
 }
 
-func (self *FileRepository) GetFile(file *models.File) error {
+func (self *FileRepository) GetFile(file *models.FileHeader) error {
 	err := self.database.QueryRow(`
 	SELECT id, _salt, iv, aData, s3Path, ttl, created FROM files WHERE shortUrl = ?
 	`, file.ShortUrl).Scan(&file.Id, &file.Salt, &file.IV, &file.AData, &file.S3Path, &file.TTL, &file.Created)
@@ -33,7 +33,7 @@ func (self *FileRepository) GetFile(file *models.File) error {
 	return nil
 }
 
-func (self *FileRepository) AddFile(file *models.File) error {
+func (self *FileRepository) AddFile(file *models.FileHeader) error {
 	now := time.Now()
 	result, err := self.database.Exec(`
 	INSERT INTO files
@@ -53,7 +53,7 @@ func (self *FileRepository) AddFile(file *models.File) error {
 	return nil
 }
 
-func (self *FileRepository) DeleteFile(file *models.File) error {
+func (self *FileRepository) DeleteFile(file *models.FileHeader) error {
 	_, err := self.database.Exec(`
 	DELETE FROM files WHERE id = ?
 	`, file.Id)

@@ -15,8 +15,8 @@ import (
 )
 
 type IFileService interface {
-	GetFile(*display.FileDisplay) error
-	AddFile(*display.FileDisplay) error
+	GetFile(*display.FileHeaderDisplay) error
+	AddFile(*display.FileHeaderDisplay) error
 }
 
 type FileService struct {
@@ -28,10 +28,10 @@ func NewFileService(fileRepository repositories.IFileRepository, basicAnalyticsR
 	return &FileService{fileRepository, basicAnalyticsRepository}
 }
 
-func (self *FileService) GetFile(fileDisplay *display.FileDisplay) error {
+func (self *FileService) GetFile(fileDisplay *display.FileHeaderDisplay) error {
 
 	// make model from display
-	file := models.File{
+	file := models.FileHeader{
 		ShortUrl: fileDisplay.ShortUrl,
 	}
 
@@ -80,7 +80,7 @@ func (self *FileService) GetFile(fileDisplay *display.FileDisplay) error {
 	return nil
 }
 
-func (self *FileService) AddFile(fileDisplay *display.FileDisplay) error {
+func (self *FileService) AddFile(fileDisplay *display.FileHeaderDisplay) error {
 
 	// generate random uuid
 	s3u, err := uuid.NewV4()
@@ -105,7 +105,7 @@ func (self *FileService) AddFile(fileDisplay *display.FileDisplay) error {
 	}
 
 	// create domain model from display
-	file := models.File{
+	file := models.FileHeader{
 		S3Path:    s3u.String(),
 		ShortUrl:  shortUrl.String(),
 		TTL:       (1 * 60 * 60 * 24), // 24h in seconds
