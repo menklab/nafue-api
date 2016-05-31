@@ -14,8 +14,8 @@ function deps() {
  if [ "$COMMAND" = "run" ];
         then
                 echo "run"
-                docker build -t moja-portal .
-                docker run --publish 9090:8080  --name moja-portal --env-file .env --rm moja-portal
+                docker build -t nafue-api .
+                docker run --publish 9090:8080  --name nafue-api --env-file .env --rm nafue-api
 
 fi
 if [ "$COMMAND" = "build" ]; then

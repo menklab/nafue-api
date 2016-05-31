@@ -19,7 +19,6 @@ func Init() {
 
 	//rest API controllers
 	new(HealthyController).Init(r)
-	new(LetsEncryptController).Init(r)
 	new(FileController).Init(r)
 	new(PaymentController).Init(r)
 	new(BasicAnalyticsController).Init(r)
