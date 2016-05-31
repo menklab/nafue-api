@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "nafue-api/Godeps/_workspace/src/github.com/joho/godotenv/autoload"
+	_ "github.com/joho/godotenv/autoload"
 	"nafue-api/config"
 	"nafue-api/controllers/rest"
 	"nafue-api/database"

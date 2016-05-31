@@ -36,3 +36,5 @@ nafue
 .env
 www/dist
 bower_components
+vendor
+npm-debug.log
