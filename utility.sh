@@ -3,12 +3,10 @@
 COMMAND="$1"
 
 function deps() {
-         rm -rf Godeps vendor
-         go get -u github.com/aws/aws-sdk-go
+         rm -rf vendor
          go get ./...
-         export GO15VENDOREXPERIMENT=1
-         godep save ./...
-         export GO15VENDOREXPERIMENT=0
+         govendor init
+         govendor add +external
 }
 
  if [ "$COMMAND" = "run" ];

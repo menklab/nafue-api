@@ -10,8 +10,8 @@
 ## Setep Env
 1. Clone this repository.
 2. add .env to root of project directory (contents at bottom)
-3. Install Reflex: go get github.com/cespare/reflex
-4. Install Go Deps: go get github.com/tools/godep
+3. Install Reflex: go get -u github.com/cespare/reflex
+4. Install GoVendor: go get -u github.com/kardianos/govendor
 5. Install Deps: ./utility.sh deps
 
 
