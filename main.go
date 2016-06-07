@@ -3,7 +3,7 @@ package main
 import (
 	_ "github.com/joho/godotenv/autoload"
 	"nafue-api/config"
-	"nafue-api/controllers/rest"
+	"nafue-api/api/controllers"
 	"nafue-api/database"
 	"nafue-api/repositories"
 	"nafue-api/services"

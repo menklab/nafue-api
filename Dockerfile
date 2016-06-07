@@ -1,13 +1,13 @@
-FROM golang:1.5.3
+FROM golang:1.6.2
 
-WORKDIR /go/src/nafue
-Add . /go/src/nafue
+WORKDIR /go/src/nafue-api
+Add . /go/src/nafue-api
 
-RUN go get github.com/tools/godep
+RUN go get -u github.com/kardianos/govendor
 
-RUN godep restore
+RUN bash utility.sh deps
 
-RUN go install nafue
+RUN go install nafue-api
 
 EXPOSE 8080
-ENTRYPOINT ["/go/bin/nafue"]
+ENTRYPOINT ["/go/bin/nafue-api"]
