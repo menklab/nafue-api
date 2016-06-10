@@ -7,10 +7,10 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/nu7hatch/gouuid"
 	"log"
-	"nafue-api/config"
-	"nafue-api/models/display"
-	"nafue-api/models/domain"
-	"nafue-api/repositories"
+	"github.com/menkveldj/nafue-api/config"
+	"github.com/menkveldj/nafue-api/models/display"
+	"github.com/menkveldj/nafue-api/models/domain"
+	"github.com/menkveldj/nafue-api/repositories"
 	"time"
 )
 

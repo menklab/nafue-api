@@ -3,9 +3,9 @@ package rest
 import (
 	"github.com/gin-gonic/gin"
 	"log"
-	"nafue-api/models/display"
-	"nafue-api/services"
 	"net/http"
+	"github.com/menkveldj/nafue-api/models/display"
+	"github.com/menkveldj/nafue-api/services"
 )
 
 type PaymentController struct {

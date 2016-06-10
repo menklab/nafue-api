@@ -3,9 +3,9 @@ package rest
 import (
 	"github.com/gin-gonic/gin"
 	"log"
-	"nafue-api/models/display"
-	"nafue-api/services"
 	"net/http"
+	"github.com/menkveldj/nafue-api/services"
+	"github.com/menkveldj/nafue-api/models/display"
 )
 
 type FileController struct {

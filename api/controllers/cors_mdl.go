@@ -3,7 +3,7 @@ package rest
 import (
 	"github.com/gin-gonic/gin"
 	"log"
-	"nafue-api/config"
+	"github.com/menkveldj/nafue-api/config"
 )
 
 type CORSMiddleware struct{}

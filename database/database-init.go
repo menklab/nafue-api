@@ -5,7 +5,7 @@ import (
 	"github.com/DavidHuie/gomigrate"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
-	"nafue-api/config"
+	"github.com/menkveldj/nafue-api/config"
 )
 
 var (

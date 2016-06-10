@@ -3,7 +3,7 @@ package repositories
 import (
 	"database/sql"
 	"log"
-	"nafue-api/models/domain"
+	"github.com/menkveldj/nafue-api/models/domain"
 )
 
 type IBasicAnalyticsRepository interface {

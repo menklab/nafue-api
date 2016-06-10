@@ -4,8 +4,8 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
-	"nafue-api/config"
-	"nafue-api/repositories"
+	"github.com/menkveldj/nafue-api/config"
+	"github.com/menkveldj/nafue-api/repositories"
 )
 
 var (
