@@ -47,11 +47,11 @@ func Migrate() error {
 		log.Println("Error migrating: ", err.Error())
 		log.Println("Rolling back...")
 		err = migrator.Rollback()
-		return err
 		if err != nil {
 			log.Println("Error rolling back changes: ", err.Error())
 			return err
 		}
+		return err
 	}
 	log.Println("Migrations finished.")
 	return nil

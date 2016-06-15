@@ -74,8 +74,6 @@ func (self *FileService) GetFile(fileDisplay *display.FileHeaderDisplay) error {
 	// add needed data to display
 	fileDisplay.DownloadUrl = url
 	fileDisplay.Salt = file.Salt
-	fileDisplay.IV = file.IV
-	fileDisplay.AData = file.AData
 
 	return nil
 }
@@ -98,6 +96,9 @@ func (self *FileService) AddFile(fileDisplay *display.FileHeaderDisplay) error {
 		Key:         aws.String(config.S3Key + "/" + s3u.String()),
 		ContentType: aws.String("text/plain;charset=UTF-8"),
 	})
+	//checksum := base64.StdEncoding.EncodeToString(fileDisplay.MD5Checksum)
+	//req.HTTPRequest.Header.Set("Content-MD5", checksum)
+	//fmt.Println("Checksum: ", checksum)
 	url, err := req.Presign(15 * time.Minute)
 	if err != nil {
 		log.Println("--ERROR---", err.Error())
@@ -109,9 +110,7 @@ func (self *FileService) AddFile(fileDisplay *display.FileHeaderDisplay) error {
 		S3Path:    s3u.String(),
 		ShortUrl:  shortUrl.String(),
 		TTL:       (1 * 60 * 60 * 24), // 24h in seconds
-		IV:        fileDisplay.IV,
 		Salt:      fileDisplay.Salt,
-		AData:     fileDisplay.AData,
 		UploadUrl: url,
 	}
 
