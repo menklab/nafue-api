@@ -9,7 +9,6 @@ type FileHeader struct {
 	Created   time.Time `json:"created,omitempty"`
 	ShortUrl  string    `json:"shortUrl,omitempty"`
 	UploadUrl string    `json:"uploadUrl,omitempty"`
-	IV        []byte    `json:"iv" binding:"required"`
 	Salt      []byte    `json:"salt" binding:"required"`
-	AData     []byte    `json:"aData" binding:"required"`
+	FileSize  int    `json:"fileSize" binding:"required"`
 }
