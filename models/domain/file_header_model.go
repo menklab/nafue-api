@@ -10,5 +10,5 @@ type FileHeader struct {
 	ShortUrl  string    `json:"shortUrl,omitempty"`
 	UploadUrl string    `json:"uploadUrl,omitempty"`
 	Salt      []byte    `json:"salt" binding:"required"`
-	FileSize  int    `json:"fileSize" binding:"required"`
+	Hmac      []byte    `json:"hmac" binding:"required"`
 }

@@ -23,8 +23,8 @@ func NewFileRepository(d *sql.DB) *FileRepository {
 
 func (self *FileRepository) GetFile(file *models.FileHeader) error {
 	err := self.database.QueryRow(`
-	SELECT id, _salt, s3Path, ttl, created FROM files WHERE shortUrl = ?
-	`, file.ShortUrl).Scan(&file.Id, &file.Salt, &file.S3Path, &file.TTL, &file.Created)
+	SELECT id, _salt, hmac, s3Path, ttl, created FROM files WHERE shortUrl = ?
+	`, file.ShortUrl).Scan(&file.Id, &file.Salt, &file.Hmac, &file.S3Path, &file.TTL, &file.Created)
 	if err != nil {
 		log.Println("---ERROR---", err.Error())
 		return err
@@ -37,8 +37,8 @@ func (self *FileRepository) AddFile(file *models.FileHeader) error {
 	now := time.Now()
 	result, err := self.database.Exec(`
 	INSERT INTO files
-	(s3Path, ttl, shortURL, created, uploadUrl, _salt) VALUES (?,?,?,?,?,?)
-	`, file.S3Path, file.TTL, file.ShortUrl, now, file.UploadUrl, file.Salt)
+	(s3Path, ttl, shortURL, created, uploadUrl, _salt, hmac) VALUES (?,?,?,?,?,?,?)
+	`, file.S3Path, file.TTL, file.ShortUrl, now, file.UploadUrl, file.Salt, file.Hmac)
 	if err != nil {
 		log.Println("---ERROR---", err.Error())
 		return err

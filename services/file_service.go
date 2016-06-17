@@ -74,6 +74,7 @@ func (self *FileService) GetFile(fileDisplay *display.FileHeaderDisplay) error {
 	// add needed data to display
 	fileDisplay.DownloadUrl = url
 	fileDisplay.Salt = file.Salt
+	fileDisplay.Hmac = file.Hmac
 
 	return nil
 }
@@ -111,6 +112,7 @@ func (self *FileService) AddFile(fileDisplay *display.FileHeaderDisplay) error {
 		ShortUrl:  shortUrl.String(),
 		TTL:       (1 * 60 * 60 * 24), // 24h in seconds
 		Salt:      fileDisplay.Salt,
+		Hmac:      fileDisplay.Hmac,
 		UploadUrl: url,
 	}
 
