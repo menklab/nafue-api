@@ -12,17 +12,17 @@ function deps() {
  if [ "$COMMAND" = "run" ];
         then
                 echo "run"
+                govendor fetch +outside
                 docker build -t nafue-api .
                 docker run --publish 9090:8080  --name nafue-api --env-file .env --rm nafue-api
 
 fi
 if [ "$COMMAND" = "build" ]; then
-            echo "manage deps"
+            govendor fetch +outside
             rm -rf dist/
-            deps
             echo "build"
             mkdir dist
-            zip -r dist/build.zip api config database models repositories utility services .dockerignore Dockerfile Dockerrun.aws.json main.go utility.sh
+            zip -r dist/build.zip ./ -x \*node_modules/* \*www/* \*.git/* \.env \\\.idea/* *\bower_components/* \*dist/*
 fi
 
 if [ "$COMMAND" = "deps" ]; then

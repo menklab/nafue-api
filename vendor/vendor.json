@@ -3,6 +3,14 @@
 	"ignore": "test",
 	"package": [
 		{
+			"path": "appengine/cloudsql",
+			"revision": ""
+		},
+		{
+			"path": "context",
+			"revision": ""
+		},
+		{
 			"checksumSHA1": "21P4H3RI7HJ8AfDfXrCuWzUyrSg=",
 			"path": "github.com/DavidHuie/gomigrate",
 			"revision": "1b90a570dc6b7aaaefa233eacf304be363a89603",
