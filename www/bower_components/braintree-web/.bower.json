@@ -1,0 +1,37 @@
+{
+  "name": "braintree-web",
+  "version": "2.19.0",
+  "authors": [
+    "braintree <code@getbraintree.com>"
+  ],
+  "description": "A suite of tools for integrating Braintree in the browser",
+  "main": "dist/braintree.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:braintree/braintree-web"
+  },
+  "keywords": [
+    "braintree",
+    "payments"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/braintree/braintree-web",
+  "ignore": [
+    "*",
+    "!dist/braintree.js"
+  ],
+  "_release": "2.19.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.19.0",
+    "commit": "2aadb5d5fda8d08ebcce4a14c7f52d040466835f"
+  },
+  "_source": "git://github.com/braintree/braintree-web.git",
+  "_target": "~2.19.0",
+  "_originalSource": "braintree-web"
+}
