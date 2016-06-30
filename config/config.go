@@ -5,6 +5,10 @@ import (
 )
 
 var (
+	// Debug
+	Debug          = os.Getenv("DEBUG")
+	SecurityOutput = os.Getenv("SECURITY_OUTPUT")
+
 	// S3
 	S3Key      = os.Getenv("S3_KEY")
 	S3PutTTL   = os.Getenv("S3_PUT_TTL")

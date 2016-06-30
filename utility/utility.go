@@ -5,10 +5,9 @@ import (
 	"encoding/base64"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"stash.cqlcorp.net/mp/moja-portal/config"
-	"stash.cqlcorp.net/mp/moja-portal/models"
 	"strconv"
 	"time"
+	"github.com/menkveldj/nafue-api/config"
 )
 
 func Debug(message string) {
