@@ -1,20 +1,21 @@
-package rest
+package controllers
 
 import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"github.com/menkveldj/nafue-api/services"
-	"github.com/menkveldj/nafue-api/models/display"
+	"github.com/menkveldj/nafue-api/models"
+	"github.com/menkveldj/nafue-api/config"
 )
 
 type BasicAnalyticsController struct {
 	basicAnalyticsService services.IBasicAnalyticsService
 }
 
-func (self *BasicAnalyticsController) Init(r *gin.Engine) {
+func (self *BasicAnalyticsController) Init(routes *config.Routes) {
 	self.basicAnalyticsService = services.GetBasicAnalyticsService()
-	r.GET("/api/basicAnalytics", self.getBasicAnalytics)
+	routes.Public.GET("/api/basicAnalytics", self.getBasicAnalytics)
 }
 
 /**
@@ -40,7 +41,7 @@ func (self *BasicAnalyticsController) Init(r *gin.Engine) {
  */
 func (self *BasicAnalyticsController) getBasicAnalytics(c *gin.Context) {
 
-	var basicAnalyticsDisplay display.BasicAnalyticsDisplay
+	var basicAnalyticsDisplay models.BasicAnalytics
 
 	err := self.basicAnalyticsService.GetFileCount(&basicAnalyticsDisplay)
 	if err != nil {
@@ -48,6 +49,5 @@ func (self *BasicAnalyticsController) getBasicAnalytics(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"message": "Couldn't get basic analytics."})
 		return
 	}
-	log.Println("FileCount: ", basicAnalyticsDisplay.ToString())
 	c.JSON(http.StatusOK, basicAnalyticsDisplay)
 }

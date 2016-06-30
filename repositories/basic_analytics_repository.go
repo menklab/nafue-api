@@ -1,9 +1,9 @@
 package repositories
 
 import (
-	"database/sql"
 	"log"
-	"github.com/menkveldj/nafue-api/models/domain"
+	"github.com/menkveldj/nafue-api/models"
+	"github.com/jmoiron/sqlx"
 )
 
 type IBasicAnalyticsRepository interface {
@@ -12,11 +12,11 @@ type IBasicAnalyticsRepository interface {
 }
 
 type BasicAnalyticsRepository struct {
-	database    *sql.DB
+	database    *sqlx.DB
 	fileCountId int
 }
 
-func NewBasicAnalyticsRepository(d *sql.DB) *BasicAnalyticsRepository {
+func NewBasicAnalyticsRepository(d *sqlx.DB) *BasicAnalyticsRepository {
 	// verify file count exists and cache value for later
 	var fileCountId int
 	err := d.QueryRow(`SELECT id FROM basic_analytics WHERE field_name='uploadedFile'`).Scan(&fileCountId)

@@ -78,8 +78,7 @@ function downloadFile(file) {
                     g.ct = {
                         ct: sjcl.codec.base64.toBits(eData),
                         p: {
-                            adata: sjcl.codec.base64.toBits(res.aData),
-                            iv: sjcl.codec.base64.toBits(res.iv),
+                            hmac: sjcl.codec.base64.toBits(res.hmac),
                             salt: sjcl.codec.base64.toBits(res.salt)
                         }
                     };

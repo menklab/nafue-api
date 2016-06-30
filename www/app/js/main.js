@@ -9,6 +9,7 @@ var dom, modal, g, s = {
 
 
 function init() {
+
     dom = domInit();
     modal = modalInit();
     g = {
@@ -16,8 +17,10 @@ function init() {
         binData: null
     };
 
-    if (window.File && window.FileReader && window.FileList && window.Blob) {
-        // handle history
+    if (window.File && window.FileReader && window.FileList && window.Blob && window.indexedDB) {
+
+        // indexDbInit
+        indexDb = dbInit();
 
         // check for decryption file
         var dFile;

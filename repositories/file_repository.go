@@ -1,10 +1,10 @@
 package repositories
 
 import (
-	"database/sql"
 	"log"
-	"github.com/menkveldj/nafue-api/models/domain"
+	"github.com/menkveldj/nafue-api/models"
 	"time"
+	"github.com/jmoiron/sqlx"
 )
 
 type IFileRepository interface {
@@ -14,10 +14,10 @@ type IFileRepository interface {
 }
 
 type FileRepository struct {
-	database *sql.DB
+	database *sqlx.DB
 }
 
-func NewFileRepository(d *sql.DB) *FileRepository {
+func NewFileRepository(d *sqlx.DB) *FileRepository {
 	return &FileRepository{d}
 }
 

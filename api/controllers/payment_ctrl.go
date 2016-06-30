@@ -1,21 +1,22 @@
-package rest
+package controllers
 
 import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
-	"github.com/menkveldj/nafue-api/models/display"
+	"github.com/menkveldj/nafue-api/models"
 	"github.com/menkveldj/nafue-api/services"
+	"github.com/menkveldj/nafue-api/config"
 )
 
 type PaymentController struct {
 	paymentService services.IPaymentService
 }
 
-func (self *PaymentController) Init(r *gin.Engine) {
+func (self *PaymentController) Init(routes *config.Routes) {
 	self.paymentService = services.GetPaymentService()
-	r.GET("/api/payment", self.getClientToken)
-	r.POST("/api/payment", self.processNonce)
+	routes.Public.GET("/api/payment", self.getClientToken)
+	routes.Public.POST("/api/payment", self.processNonce)
 }
 
 /**
@@ -31,7 +32,7 @@ func (self *PaymentController) Init(r *gin.Engine) {
  *     	}
  */
 func (self *PaymentController) getClientToken(c *gin.Context) {
-	paymentTokenDisplay := display.PaymentTokenDisplay{}
+	paymentTokenDisplay := models.Payment{}
 
 	err := self.paymentService.GetClientToken(&paymentTokenDisplay)
 	if err != nil {
@@ -55,7 +56,7 @@ func (self *PaymentController) getClientToken(c *gin.Context) {
  *     	HTTP/1.1 200 OK
  */
 func (self *PaymentController) processNonce(c *gin.Context) {
-	var paymentNonceDisplay display.PaymentNonceDisplay
+	var paymentNonceDisplay models.Payment
 	err := c.BindJSON(&paymentNonceDisplay)
 	if err != nil {
 		log.Println("couldn't marshel paymentNonceDisplay: ", err.Error())

@@ -1,21 +1,22 @@
-package rest
+package controllers
 
 import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 	"github.com/menkveldj/nafue-api/services"
-	"github.com/menkveldj/nafue-api/models/display"
+	"github.com/menkveldj/nafue-api/models"
+	"github.com/menkveldj/nafue-api/config"
 )
 
 type FileController struct {
 	fileService services.IFileService
 }
 
-func (self *FileController) Init(r *gin.Engine) {
+func (self *FileController) Init(routes *config.Routes) {
 	self.fileService = services.GetFileService()
-	r.GET("/api/files/:file", self.getFile)
-	r.POST("/api/files", self.addFile)
+	routes.Public.GET("/api/files/:file", self.getFile)
+	routes.Public.POST("/api/files", self.addFile)
 }
 
 /**
@@ -53,7 +54,7 @@ func (self *FileController) getFile(c *gin.Context) {
 
 	fileKey := c.Param("file")
 
-	fileDisplay := display.FileHeaderDisplay{
+	fileDisplay := models.FileHeader{
 		ShortUrl: fileKey,
 	}
 
@@ -102,7 +103,7 @@ func (self *FileController) getFile(c *gin.Context) {
  */
 func (self *FileController) addFile(c *gin.Context) {
 	// read req body
-	var fileDisplay display.FileHeaderDisplay
+	var fileDisplay models.FileHeader
 	err := c.BindJSON(&fileDisplay)
 	if err != nil {
 		log.Println(err.Error())

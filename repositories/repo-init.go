@@ -1,8 +1,9 @@
 package repositories
 
 import (
-	"database/sql"
+	"github.com/jmoiron/sqlx"
 	"errors"
+	"database/sql"
 )
 
 var (
@@ -10,7 +11,7 @@ var (
 	basicAnalyticsRepository IBasicAnalyticsRepository
 )
 
-func Init(database *sql.DB) {
+func Init(database *sqlx.DB) {
 	fileRepository = NewFileRepository(database)
 	basicAnalyticsRepository = NewBasicAnalyticsRepository(database)
 }

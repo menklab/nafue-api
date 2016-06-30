@@ -8,15 +8,14 @@ import (
 	"github.com/nu7hatch/gouuid"
 	"log"
 	"github.com/menkveldj/nafue-api/config"
-	"github.com/menkveldj/nafue-api/models/display"
-	"github.com/menkveldj/nafue-api/models/domain"
+	"github.com/menkveldj/nafue-api/models"
 	"github.com/menkveldj/nafue-api/repositories"
 	"time"
 )
 
 type IFileService interface {
-	GetFile(*display.FileHeaderDisplay) error
-	AddFile(*display.FileHeaderDisplay) error
+	GetFile(*models.FileHeader) error
+	AddFile(*models.FileHeader) error
 }
 
 type FileService struct {
@@ -28,7 +27,7 @@ func NewFileService(fileRepository repositories.IFileRepository, basicAnalyticsR
 	return &FileService{fileRepository, basicAnalyticsRepository}
 }
 
-func (self *FileService) GetFile(fileDisplay *display.FileHeaderDisplay) error {
+func (self *FileService) GetFile(fileDisplay *models.FileHeader) error {
 
 	// make model from display
 	file := models.FileHeader{
@@ -79,7 +78,7 @@ func (self *FileService) GetFile(fileDisplay *display.FileHeaderDisplay) error {
 	return nil
 }
 
-func (self *FileService) AddFile(fileDisplay *display.FileHeaderDisplay) error {
+func (self *FileService) AddFile(fileDisplay *models.FileHeader) error {
 
 	// generate random uuid
 	s3u, err := uuid.NewV4()

@@ -4,12 +4,12 @@ import (
 	"github.com/lionelbarrow/braintree-go"
 	"log"
 	"github.com/menkveldj/nafue-api/config"
-	"github.com/menkveldj/nafue-api/models/display"
+	"github.com/menkveldj/nafue-api/models"
 )
 
 type IPaymentService interface {
-	GetClientToken(*display.PaymentTokenDisplay) error
-	ProcessNonce(*display.PaymentNonceDisplay) error
+	GetClientToken(*models.Payment) error
+	ProcessNonce(*models.Payment) error
 }
 
 type PaymentService struct {
@@ -27,7 +27,7 @@ func NewPaymentService() *PaymentService {
 	return &PaymentService{bt}
 }
 
-func (self *PaymentService) GetClientToken(paymentTokenDisplay *display.PaymentTokenDisplay) error {
+func (self *PaymentService) GetClientToken(paymentTokenDisplay *models.Payment) error {
 	log.Println("merch account: " + config.BtMerchActId)
 	token, err := self.bt.ClientToken().Generate()
 	if err != nil {
@@ -38,7 +38,7 @@ func (self *PaymentService) GetClientToken(paymentTokenDisplay *display.PaymentT
 	return nil
 }
 
-func (self *PaymentService) ProcessNonce(paymentNonceDisplay *display.PaymentNonceDisplay) error {
+func (self *PaymentService) ProcessNonce(paymentNonceDisplay *models.Payment) error {
 	// marshal decimal
 	dAmount := &braintree.Decimal{}
 	err := dAmount.UnmarshalText([]byte(paymentNonceDisplay.Amount))

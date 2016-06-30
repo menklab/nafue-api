@@ -1,14 +1,15 @@
-package rest
+package controllers
 
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"github.com/menkveldj/nafue-api/config"
 )
 
 type HealthyController struct{}
 
-func (self *HealthyController) Init(r *gin.Engine) {
-	r.GET("/api/healthy", self.healthy)
+func (self *HealthyController) Init(routes *config.Routes) {
+	routes.Public.GET("/api/healthy", self.healthy)
 }
 
 /**

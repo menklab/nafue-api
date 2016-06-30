@@ -3,10 +3,10 @@ package main
 import (
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/menkveldj/nafue-api/config"
-	"github.com/menkveldj/nafue-api/api/controllers"
 	"github.com/menkveldj/nafue-api/database"
 	"github.com/menkveldj/nafue-api/repositories"
 	"github.com/menkveldj/nafue-api/services"
+	"github.com/menkveldj/nafue-api/api"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 	services.Init()
 
 	//Initialize Server
-	rest.Init()
+	api.Init()
 
 	port := config.Port
 
@@ -25,5 +25,5 @@ func main() {
 	}
 
 	// Start Server
-	rest.Listen(":" + port)
+	api.Listen(":" + port)
 }

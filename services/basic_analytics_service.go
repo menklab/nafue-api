@@ -2,14 +2,13 @@ package services
 
 import (
 	"log"
-	"github.com/menkveldj/nafue-api/models/display"
-	"github.com/menkveldj/nafue-api/models/domain"
+	"github.com/menkveldj/nafue-api/models"
 	"github.com/menkveldj/nafue-api/repositories"
 )
 
 type IBasicAnalyticsService interface {
-	GetFileCount(*display.BasicAnalyticsDisplay) error
-	IncrementFileCount(*display.BasicAnalyticsDisplay) error
+	GetFileCount(*models.BasicAnalytics) error
+	IncrementFileCount(*models.BasicAnalytics) error
 }
 
 type BasicAnalyticsService struct {
@@ -20,7 +19,7 @@ func NewBasicAnalyticsService(basicAnalyticsRepository repositories.IBasicAnalyt
 	return &BasicAnalyticsService{basicAnalyticsRepository}
 }
 
-func (self *BasicAnalyticsService) GetFileCount(basicAnalyticsDisplay *display.BasicAnalyticsDisplay) error {
+func (self *BasicAnalyticsService) GetFileCount(basicAnalyticsDisplay *models.BasicAnalytics) error {
 
 	var basicAnalytics models.BasicAnalytics
 
@@ -34,7 +33,7 @@ func (self *BasicAnalyticsService) GetFileCount(basicAnalyticsDisplay *display.B
 	return nil
 }
 
-func (self *BasicAnalyticsService) IncrementFileCount(basicAnalyticsDisplay *display.BasicAnalyticsDisplay) error {
+func (self *BasicAnalyticsService) IncrementFileCount(basicAnalyticsDisplay *models.BasicAnalytics) error {
 
 	err := self.basicAnalyticsRepository.IncrementFileCount()
 	if err != nil {
