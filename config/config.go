@@ -2,52 +2,108 @@ package config
 
 import (
 	"os"
+	"strconv"
+	"fmt"
 )
 
 var (
 	// Debug
-	Debug          = os.Getenv("DEBUG")
-	SecurityOutput = os.Getenv("SECURITY_OUTPUT")
+	Debug bool
+	SecurityOutput bool
 
 	// S3
-	S3Key      = os.Getenv("S3_KEY")
-	S3PutTTL   = os.Getenv("S3_PUT_TTL")
-	S3Bucket   = os.Getenv("S3_BUCKET")
-	S3Location = os.Getenv("S3_LOCATION")
+	S3Key string
+	S3PutTTL int64
+	S3Bucket string
+	S3Location string
 
 	// DB
-	DbName     = os.Getenv("DB_NAME")
-	DbUser     = os.Getenv("DB_USER")
-	DbPassword = os.Getenv("DB_PASSWORD")
-	DbServer   = os.Getenv("DB_SERVER")
+	DbName string
+	DbUser string
+	DbPassword string
+	DbServer string
 
 	// App Config
-	Port     = os.Getenv("PORT")
-	CorsHost = os.Getenv("CORS_HOST")
-
-	// Lets Encrypt
-	LetsEncryptPath    = os.Getenv("LETS_ENCRYPT_PATH")
-	LetsEncryptContent = os.Getenv("LETS_ENCRYPT_CONTENT")
+	Port string
+	CorsHost string
+	ChunkSize int64
+	PresignLimit int64
 
 	// Braintree
-	BtEnv        = os.Getenv("BT_ENV")
-	BtMerchId    = os.Getenv("BT_MERCH_ID")
-	BtMerchActId = os.Getenv("BT_MERCH_ACT_ID")
-	BtPubKey     = os.Getenv("BT_PUB_KEY")
-	BtPrivKey    = os.Getenv("BT_PRIV_KEY")
+	BtEnv string
+	BtMerchId string
+	BtMerchActId string
+	BtPubKey string
+	BtPrivKey string
 )
 
-const (
-	PathSeperator string = string(os.PathSeparator)
+func init() {
 
-	//path to customer facing views to be compiled at app start
-	ViewPath string = "" + PathSeperator + "" + PathSeperator
+	// Debug
+	Debug = getBoolOrFail("DEBUG")
+	SecurityOutput= getBoolOrFail("SECURITY_OUTPUT")
 
-	//directory containing css, js, and img files for public site
-	PublicDir string = "" + PathSeperator
+	// S3
+	S3Key= getStringOrFail("S3_KEY")
+	S3Bucket= getStringOrFail("S3_BUCKET")
+	S3Location= getStringOrFail("S3_LOCATION")
+	S3PutTTL= getIntOrFail("S3_PUT_TTL")
 
-	AdminPath string = "" + PathSeperator + "" + PathSeperator
 
-	//name of the site as it shows up right of the pipe in the page title
-	SiteName string = ""
-)
+	// DB
+	DbName= getStringOrFail("DB_NAME")
+	DbUser= getStringOrFail("DB_USER")
+	DbPassword= getStringOrFail("DB_PASSWORD")
+	DbServer= getStringOrFail("DB_SERVER")
+
+	// App Config
+	Port= getStringOrFail("PORT")
+	CorsHost= getStringOrFail("CORS_HOST")
+	ChunkSize= getIntOrFail("CHUNK_SIZE")
+	PresignLimit= getIntOrFail("PRESIGN_LIMIT")
+
+
+	// Braintree
+	BtEnv= getStringOrFail("BT_ENV")
+	BtMerchId= getStringOrFail("BT_MERCH_ID")
+	BtMerchActId= getStringOrFail("BT_MERCH_ACT_ID")
+	BtPubKey= getStringOrFail("BT_PUB_KEY")
+	BtPrivKey= getStringOrFail("BT_PRIV_KEY")
+
+}
+
+func getIntOrFail(envVar string) int64 {
+	is := os.Getenv(envVar)
+	if is == "" {
+		fmt.Println("Error retrieving envVar: " + envVar)
+		os.Exit(1)
+	}
+	i, err := strconv.ParseInt(is, 10, 10)
+	if err != nil {
+		fmt.Println("Error parsing envVar: " + envVar + " into int: " + err.Error())
+		os.Exit(0)
+	}
+	return i
+}
+
+func getStringOrFail(envVar string) string {
+	s := os.Getenv(envVar)
+	if s == "" {
+		fmt.Println("Error retrieving envVar: " + envVar)
+		os.Exit(1)
+	}
+	return s
+}
+func getBoolOrFail(envVar string) bool {
+	bs := os.Getenv(envVar)
+	if bs == "" {
+		fmt.Println("Error retrieving envVar: " + envVar)
+		os.Exit(1)
+	}
+	b, err := strconv.ParseBool(os.Getenv(envVar))
+	if err != nil {
+		fmt.Println("Error parsing envVar: " + envVar + " into bool: " + err.Error())
+		os.Exit(0)
+	}
+	return b
+}

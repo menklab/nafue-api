@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/menkveldj/nafue-api/config"
 	"github.com/menkveldj/nafue-api/utility"
+	"github.com/menkveldj/nafue-api/config"
 )
 
 func CORS() gin.HandlerFunc {

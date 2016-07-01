@@ -4,19 +4,18 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"strconv"
 	"time"
 	"github.com/menkveldj/nafue-api/config"
 )
 
 func Debug(message string) {
-	if config.Debug == "true" {
+	if config.Debug {
 		fmt.Println(message)
 	}
 }
 func Security(message string) {
-	if config.SecurityOutput == "true" {
+	if config.SecurityOutput {
 		fmt.Println(message)
 	}
 }
@@ -41,15 +40,15 @@ func GenerateRandomString(s int) (string, error) {
 	return code[0:s], nil
 }
 
-func GetUserFromContext(c *gin.Context) (*models.User, bool) {
-	// get user from context
-	if userContext, ok := c.Get("user"); ok {
-		if userDisplay, ok := userContext.(models.User); ok {
-			return &userDisplay, true
-		}
-	}
-	return nil, false
-}
+//func GetUserFromContext(c *gin.Context) (*models.User, bool) {
+//	// get user from context
+//	if userContext, ok := c.Get("user"); ok {
+//		if userDisplay, ok := userContext.(models.User); ok {
+//			return &userDisplay, true
+//		}
+//	}
+//	return nil, false
+//}
 
 // getTimeout
 func GetTimeout(timeout string) time.Duration {

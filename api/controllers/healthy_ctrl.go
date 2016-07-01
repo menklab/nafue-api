@@ -9,7 +9,7 @@ import (
 type HealthyController struct{}
 
 func (self *HealthyController) Init(routes *config.Routes) {
-	routes.Public.GET("/api/healthy", self.healthy)
+	routes.Public.GET("/healthy", self.healthy)
 }
 
 /**

@@ -15,8 +15,8 @@ type PaymentController struct {
 
 func (self *PaymentController) Init(routes *config.Routes) {
 	self.paymentService = services.GetPaymentService()
-	routes.Public.GET("/api/payment", self.getClientToken)
-	routes.Public.POST("/api/payment", self.processNonce)
+	routes.Public.GET("/payment", self.getClientToken)
+	routes.Public.POST("/payment", self.processNonce)
 }
 
 /**

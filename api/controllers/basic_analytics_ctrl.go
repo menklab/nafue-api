@@ -15,7 +15,7 @@ type BasicAnalyticsController struct {
 
 func (self *BasicAnalyticsController) Init(routes *config.Routes) {
 	self.basicAnalyticsService = services.GetBasicAnalyticsService()
-	routes.Public.GET("/api/basicAnalytics", self.getBasicAnalytics)
+	routes.Public.GET("/basicAnalytics", self.getBasicAnalytics)
 }
 
 /**

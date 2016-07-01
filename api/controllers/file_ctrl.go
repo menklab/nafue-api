@@ -15,8 +15,8 @@ type FileController struct {
 
 func (self *FileController) Init(routes *config.Routes) {
 	self.fileService = services.GetFileService()
-	routes.Public.GET("/api/files/:file", self.getFile)
-	routes.Public.POST("/api/files", self.addFile)
+	routes.Public.GET("/files/:file", self.getFile)
+	routes.Public.POST("/files", self.addFile)
 }
 
 /**
