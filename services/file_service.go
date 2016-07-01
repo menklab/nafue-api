@@ -14,7 +14,7 @@ import (
 )
 
 type IFileService interface {
-	GetFile(*models.FileHeader) error
+	GetFile(string) (*models.FileDisplay, error)
 	AddFile(*models.FileHeader) (*models.FileDisplay, error)
 }
 
@@ -27,25 +27,20 @@ func NewFileService(fileRepository repositories.IFileRepository, basicAnalyticsR
 	return &FileService{fileRepository, basicAnalyticsRepository}
 }
 
-func (self *FileService) GetFile(fileDisplay *models.FileHeader) error {
-
-	// make model from display
-	file := models.FileHeader{
-		ShortUrl: fileDisplay.ShortUrl,
-	}
+func (self *FileService) GetFile(shortUrl string) (*models.FileDisplay, error) {
 
 	// get file from db
-	err := self.fileRepository.GetFile(&file)
+	fileDisplay, err := self.fileRepository.GetFile(shortUrl)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// now that we have file delete it from db
-	self.fileRepository.DeleteFile(&file)
+	self.fileRepository.DeleteFile(fileDisplay.FileHeader.Id)
 
 	// verify that file isn't to old
-	elapsed := int64(time.Now().Sub(file.Created).Seconds())
-	if elapsed > file.TTL {
+	elapsed := int64(time.Now().Sub(fileDisplay.FileHeader.Created).Nanoseconds())
+	if elapsed > fileDisplay.FileHeader.TTL {
 		// to old delete file
 		fmt.Println("file to old, delete from s3!")
 		_, err := GetS3Service().DeleteObject(&s3.DeleteObjectInput{
@@ -55,7 +50,7 @@ func (self *FileService) GetFile(fileDisplay *models.FileHeader) error {
 		if err != nil {
 			fmt.Println("Service Error: ", err.Error())
 		}
-		return errors.New("File has expired")
+		return nil, errors.New("File has expired")
 	}
 
 	// create get request
@@ -70,12 +65,7 @@ func (self *FileService) GetFile(fileDisplay *models.FileHeader) error {
 	//	return err
 	//}
 
-	// add needed data to display
-	//fileDisplay.DownloadUrl = url
-	fileDisplay.Salt = file.Salt
-	fileDisplay.Hmac = file.Hmac
-
-	return nil
+	return fileDisplay, nil
 }
 
 func (self *FileService) AddFile(fileHeader *models.FileHeader) (*models.FileDisplay, error) {
@@ -86,6 +76,8 @@ func (self *FileService) AddFile(fileHeader *models.FileHeader) (*models.FileDis
 		return nil, err
 	}
 	fileHeader.ShortUrl = shortUrl
+	//fileHeader.TTL =  (1 * 60 * 60 * 24) // 24h in seconds
+	fileHeader.TTL = int64(time.Minute) * 15
 
 	// add file to db
 	err = self.fileRepository.AddFileHeader(fileHeader)

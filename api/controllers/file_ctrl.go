@@ -52,13 +52,9 @@ func (self *FileController) Init(routes *config.Routes) {
  */
 func (self *FileController) getFile(c *gin.Context) {
 
-	fileKey := c.Param("file")
+	shortUrl := c.Param("file")
 
-	fileDisplay := models.FileHeader{
-		ShortUrl: fileKey,
-	}
-
-	err := self.fileService.GetFile(&fileDisplay)
+	fileDisplay, err := self.fileService.GetFile(shortUrl)
 	if err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusNotFound, gin.H{"message": "Files doesn't exist."})

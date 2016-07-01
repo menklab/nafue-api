@@ -7,9 +7,9 @@ import (
 )
 
 type IFileRepository interface {
-	GetFile(*models.FileHeader) error
+	GetFile(string) (*models.FileDisplay, error)
 	AddFileHeader(*models.FileHeader) error
-	DeleteFile(*models.FileHeader) error
+	DeleteFile(int64) error
 	AddFileChunk(fileChunk *models.FileChunk) error
 }
 
@@ -21,16 +21,31 @@ func NewFileRepository(d *sqlx.DB) *FileRepository {
 	return &FileRepository{d}
 }
 
-func (self *FileRepository) GetFile(file *models.FileHeader) error {
-	err := self.database.QueryRow(`
-	SELECT id, _salt, hmac, ttl, created FROM files WHERE shortUrl = ?
-	`, file.ShortUrl).Scan(&file.Id, &file.Salt, &file.Hmac, &file.TTL, &file.Created)
+func (self *FileRepository) GetFile(shortUrl string) (*models.FileDisplay, error) {
+
+	// get file header
+	var fileHeader models.FileHeader
+	err := self.database.Get(&fileHeader, `SELECT * FROM files WHERE shortUrl = ?`,
+		shortUrl)
 	if err != nil {
 		log.Println("DB ERROR", err.Error())
-		return err
+		return nil, err
 	}
 
-	return nil
+	// get file chunks
+	var fileChunks []models.FileChunk
+	err = self.database.Select(&fileChunks, `SELECT * from file_chunks WHERE fileId = ?`, fileHeader.Id)
+	if err != nil {
+		log.Println("DB ERROR", err.Error())
+		return nil, err
+	}
+
+	fileDisplay := models.FileDisplay{
+		FileHeader: fileHeader,
+		FileChunks:fileChunks,
+	}
+
+	return &fileDisplay, nil
 }
 
 func (self *FileRepository) AddFileHeader(fileHeader *models.FileHeader) error {
@@ -52,10 +67,18 @@ func (self *FileRepository) AddFileHeader(fileHeader *models.FileHeader) error {
 }
 
 
-func (self *FileRepository) DeleteFile(file *models.FileHeader) error {
+func (self *FileRepository) DeleteFile(fileId int64) error {
 	_, err := self.database.Exec(`
 	DELETE FROM files WHERE id = ?
-	`, file.Id)
+	`, fileId)
+	if err != nil {
+		log.Println("DB ERROR", err.Error())
+		return err
+	}
+
+	_, err = self.database.Exec(`
+	DELETE FROM file_chunks WHERE fildId = ?
+	`, fileId)
 	if err != nil {
 		log.Println("DB ERROR", err.Error())
 		return err
