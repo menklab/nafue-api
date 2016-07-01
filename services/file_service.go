@@ -15,7 +15,7 @@ import (
 
 type IFileService interface {
 	GetFile(*models.FileHeader) error
-	AddFile(*models.FileHeader) error
+	AddFile(*models.FileHeader) (*models.FileDisplay, error)
 }
 
 type FileService struct {
@@ -44,7 +44,7 @@ func (self *FileService) GetFile(fileDisplay *models.FileHeader) error {
 	self.fileRepository.DeleteFile(&file)
 
 	// verify that file isn't to old
-	elapsed := int(time.Now().Sub(file.Created).Seconds())
+	elapsed := int64(time.Now().Sub(file.Created).Seconds())
 	if elapsed > file.TTL {
 		// to old delete file
 		fmt.Println("file to old, delete from s3!")
@@ -53,7 +53,7 @@ func (self *FileService) GetFile(fileDisplay *models.FileHeader) error {
 			//Key:    aws.String(config.S3Key + "/" + file.S3Path),
 		})
 		if err != nil {
-			fmt.Println("---ERROR---", err.Error())
+			fmt.Println("Service Error: ", err.Error())
 		}
 		return errors.New("File has expired")
 	}
@@ -78,67 +78,64 @@ func (self *FileService) GetFile(fileDisplay *models.FileHeader) error {
 	return nil
 }
 
-func (self *FileService) AddFile(fileHeader *models.FileHeader) error {
+func (self *FileService) AddFile(fileHeader *models.FileHeader) (*models.FileDisplay, error) {
 
+	// get short url
 	shortUrl, err := utility.GenerateRandomString(32)
 	if err != nil {
-		return err
+		return nil, err
 	}
-
 	fileHeader.ShortUrl = shortUrl
 
 	// add file to db
-	//err = self.fileRepository.AddFileHeader(fileHeader)
-	//if err != nil {
-	//	return err
-	//}
-
-	chunkSize := config.ChunkSize * 1024 * 1024 // convert to mb
+	err = self.fileRepository.AddFileHeader(fileHeader)
+	if err != nil {
+		return nil, err
+	}
 
 	// calc num and chunk
-	tChunks := int64(math.Ceil(float64(fileHeader.Size / int(chunkSize))))
-	chunks := make([]models.FileHeaderChunk, int(tChunks))
-	c := make(chan models.FileHeaderChunk)
+	chunkSize := config.ChunkSize * 1024 * 1024 // convert to byte
+	tChunks := int64(math.Ceil(float64(fileHeader.Size / chunkSize)))
+	lastChunkSize := fileHeader.Size - (chunkSize * (tChunks-1))
+	chunks := make([]models.FileChunk, tChunks)
+	c := make(chan models.FileChunk)
 	e := make(chan error)
-	// fan off
+	// spin off
 	for i, chunk := range chunks {
 		chunk.Order = i
-		go chunkIt(chunk, c, e)
+		chunk.FileId = fileHeader.Id
+		if i == (len(chunks) -1) {
+			chunk.Size = lastChunkSize // last chunk is likely smaller
+		} else {
+			chunk.Size = chunkSize
+		}
+		go self.chunkIt(chunk, c, e)
 	}
-	// fan in
+	// wait till all return
 	for j := 0; j < int(tChunks); j++ {
 		select {
 		case err := <-e:
-			fmt.Println("c error: ", err)
-			return err
+			return nil, err
 		case mc := <-c:
-			fmt.Println("url: ", mc.UploadUrl)
+			chunks[mc.Order] = mc
 			break;
 		}
 	}
 
-	fmt.Println("chunks: ", chunks)
-	// create domain model from display
-	//file := models.FileHeader{
-	//	S3Path:    s3u.String(),
-	//ShortUrl:  shortUrl.String(),
-	//TTL:       (1 * 60 * 60 * 24), // 24h in seconds
-	//Salt:      fileDisplay.Salt,
-	//Hmac:      fileDisplay.Hmac,
-	//UploadUrl: url,
-	//}
-
-	// add upload url to display
-	//fileDisplay.UploadUrl = file.UploadUrl
-	//fileDisplay.ShortUrl = file.ShortUrls
+	fileDisplay := models.FileDisplay{
+		FileHeader: models.FileHeader{
+			ShortUrl: fileHeader.ShortUrl,
+		},
+		FileChunks: chunks,
+	}
 
 
-	//self.basicAnalyticsRepository.IncrementFileCount()
+	self.basicAnalyticsRepository.IncrementFileCount()
 
-	return nil
+	return &fileDisplay, nil
 }
 
-func chunkIt(chunk models.FileHeaderChunk, c chan models.FileHeaderChunk, e chan error) {
+func (self *FileService) chunkIt(chunk models.FileChunk, c chan models.FileChunk, e chan error) {
 	// get random filename
 	ranName, err := utility.GenerateRandomString(32)
 	if err != nil {
@@ -158,8 +155,14 @@ func chunkIt(chunk models.FileHeaderChunk, c chan models.FileHeaderChunk, e chan
 		return
 	}
 	chunk.UploadUrl = url
+	chunk.S3Path = ranName
 
 	// save chunk to db
+	err = self.fileRepository.AddFileChunk(&chunk)
+	if err != nil {
+		e <- err
+		return
+	}
 
 	c <- chunk
 	return

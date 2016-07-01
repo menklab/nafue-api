@@ -103,8 +103,8 @@ func (self *FileController) getFile(c *gin.Context) {
  */
 func (self *FileController) addFile(c *gin.Context) {
 	// read req body
-	var fileDisplay models.FileHeader
-	err := c.BindJSON(&fileDisplay)
+	var fileHeader models.FileHeader
+	err := c.BindJSON(&fileHeader)
 	if err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusBadRequest, gin.H{"message": "Body is poorly formated"})
@@ -112,7 +112,7 @@ func (self *FileController) addFile(c *gin.Context) {
 	}
 
 	// add file to db
-	err = self.fileService.AddFile(&fileDisplay)
+	fileDisplay, err := self.fileService.AddFile(&fileHeader)
 	if err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error saving file"})

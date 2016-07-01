@@ -22,11 +22,11 @@ func NewBasicAnalyticsRepository(d *sqlx.DB) *BasicAnalyticsRepository {
 	err := d.QueryRow(`SELECT id FROM basic_analytics WHERE field_name='uploadedFile'`).Scan(&fileCountId)
 	// if error create row
 	if err != nil {
-		log.Println("---ERROR---", err.Error())
+		log.Println("DB ERROR", err.Error())
 		// row doesn't exist so create row
 		result, err := d.Exec(`INSERT INTO basic_analytics (field_name, int_value) VALUES('uploadedFile', '0')`)
 		if err != nil {
-			log.Println("---ERROR---", err.Error())
+			log.Println("DB ERROR", err.Error())
 			return nil
 		}
 		id, err := result.LastInsertId()
@@ -38,7 +38,7 @@ func NewBasicAnalyticsRepository(d *sqlx.DB) *BasicAnalyticsRepository {
 func (self *BasicAnalyticsRepository) IncrementFileCount() error {
 	_, err := self.database.Exec(`UPDATE basic_analytics SET int_value = int_value + 1 WHERE id = ?`, self.fileCountId)
 	if err != nil {
-		log.Println("---ERROR---", err.Error())
+		log.Println("DB ERROR", err.Error())
 		return err
 	}
 	return nil
@@ -49,7 +49,7 @@ func (self *BasicAnalyticsRepository) GetFileCount(basicAnalyticsModel *models.B
 	SELECT int_value FROM basic_analytics WHERE id = ?
 	`, self.fileCountId).Scan(&basicAnalyticsModel.FileCount)
 	if err != nil {
-		log.Println("---ERROR---", err.Error())
+		log.Println("DB ERROR", err.Error())
 		return err
 	}
 
