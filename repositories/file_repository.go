@@ -4,6 +4,7 @@ import (
 	"log"
 	"github.com/menkveldj/nafue-api/models"
 	"github.com/jmoiron/sqlx"
+	"time"
 )
 
 type IFileRepository interface {
@@ -50,9 +51,11 @@ func (self *FileRepository) GetFile(shortUrl string) (*models.FileDisplay, error
 
 func (self *FileRepository) AddFileHeader(fileHeader *models.FileHeader) error {
 
+	fileHeader.Created = time.Now().UTC()
+
 	result, err := self.database.NamedExec(`
 	INSERT INTO files
-	(ttl, shortURL, _salt, hmac) VALUES (:ttl, :shortUrl, :_salt, :hmac)
+	(ttl, shortURL, _salt, hmac, created) VALUES (:ttl, :shortUrl, :_salt, :hmac, :created)
 	`, fileHeader)
 	if err != nil {
 		log.Println("DB ERROR", err.Error())
@@ -77,7 +80,7 @@ func (self *FileRepository) DeleteFile(fileId int64) error {
 	}
 
 	_, err = self.database.Exec(`
-	DELETE FROM file_chunks WHERE fildId = ?
+	DELETE FROM file_chunks WHERE fileId = ?
 	`, fileId)
 	if err != nil {
 		log.Println("DB ERROR", err.Error())
@@ -89,6 +92,8 @@ func (self *FileRepository) DeleteFile(fileId int64) error {
 
 
 func (self *FileRepository) AddFileChunk(fileChunk *models.FileChunk) error {
+
+	fileChunk.Created = time.Now().UTC()
 
 	result, err := self.database.NamedExec(`
 	INSERT INTO file_chunks

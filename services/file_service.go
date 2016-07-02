@@ -1,7 +1,6 @@
 package services
 
 import (
-	"errors"
 	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
@@ -11,6 +10,8 @@ import (
 	"time"
 	"github.com/menkveldj/nafue-api/utility"
 	"math"
+	"log"
+	"github.com/menkveldj/nafue-api/utility/errors"
 )
 
 type IFileService interface {
@@ -36,21 +37,40 @@ func (self *FileService) GetFile(shortUrl string) (*models.FileDisplay, error) {
 	}
 
 	// now that we have file delete it from db
-	self.fileRepository.DeleteFile(fileDisplay.FileHeader.Id)
+	go self.fileRepository.DeleteFile(fileDisplay.FileHeader.Id)
 
 	// verify that file isn't to old
-	elapsed := int64(time.Now().Sub(fileDisplay.FileHeader.Created).Nanoseconds())
-	if elapsed > fileDisplay.FileHeader.TTL {
-		// to old delete file
+	//elapsed := int64(time.Now().Sub(fileDisplay.FileHeader.Created).Nanoseconds())
+	elapsed := time.Since(fileDisplay.FileHeader.Created)
+	fmt.Println("created: ", fileDisplay.FileHeader.Created)
+	fmt.Println("now: ", time.Now().UTC())
+	fmt.Println("elapsed: ", elapsed)
+	if int64(elapsed) > fileDisplay.FileHeader.TTL {
 		fmt.Println("file to old, delete from s3!")
-		_, err := GetS3Service().DeleteObject(&s3.DeleteObjectInput{
-			Bucket: aws.String(config.S3Bucket),
-			//Key:    aws.String(config.S3Key + "/" + file.S3Path),
-		})
-		if err != nil {
-			fmt.Println("Service Error: ", err.Error())
+		for _, chunk := range fileDisplay.FileChunks {
+			go self.deleteChunks(chunk.S3Path)
 		}
-		return nil, errors.New("File has expired")
+		return nil, errors.New("File expired!")
+	}
+
+	// get download urls for chunk
+	c := make(chan models.FileChunk)
+	e := make(chan error)
+	// spin off
+	for _, chunk := range fileDisplay.FileChunks {
+		go self.chunkDownloadLink(chunk, c, e)
+	}
+	// spin in
+	for i := 0; i < len(fileDisplay.FileChunks); i++ {
+		select {
+		case err := <-e:
+			return nil, err
+			break
+		case mc := <-c:
+			fileDisplay.FileChunks[mc.Order].S3Path = mc.S3Path
+			fmt.Println("S3 Link: ", fileDisplay.FileChunks[mc.Order])
+			break
+		}
 	}
 
 	// create get request
@@ -76,7 +96,6 @@ func (self *FileService) AddFile(fileHeader *models.FileHeader) (*models.FileDis
 		return nil, err
 	}
 	fileHeader.ShortUrl = shortUrl
-	//fileHeader.TTL =  (1 * 60 * 60 * 24) // 24h in seconds
 	fileHeader.TTL = int64(time.Minute) * 15
 
 	// add file to db
@@ -88,7 +107,7 @@ func (self *FileService) AddFile(fileHeader *models.FileHeader) (*models.FileDis
 	// calc num and chunk
 	chunkSize := config.ChunkSize * 1024 * 1024 // convert to byte
 	tChunks := int64(math.Ceil(float64(fileHeader.Size / chunkSize)))
-	lastChunkSize := fileHeader.Size - (chunkSize * (tChunks-1))
+	lastChunkSize := fileHeader.Size - (chunkSize * (tChunks - 1))
 	chunks := make([]models.FileChunk, tChunks)
 	c := make(chan models.FileChunk)
 	e := make(chan error)
@@ -96,7 +115,7 @@ func (self *FileService) AddFile(fileHeader *models.FileHeader) (*models.FileDis
 	for i, chunk := range chunks {
 		chunk.Order = i
 		chunk.FileId = fileHeader.Id
-		if i == (len(chunks) -1) {
+		if i == (len(chunks) - 1) {
 			chunk.Size = lastChunkSize // last chunk is likely smaller
 		} else {
 			chunk.Size = chunkSize
@@ -121,10 +140,28 @@ func (self *FileService) AddFile(fileHeader *models.FileHeader) (*models.FileDis
 		FileChunks: chunks,
 	}
 
-
 	self.basicAnalyticsRepository.IncrementFileCount()
 
 	return &fileDisplay, nil
+}
+
+func (self *FileService) chunkDownloadLink(chunk models.FileChunk, c chan models.FileChunk, e chan error) {
+
+	// create get request
+	req, _ := GetS3Service().GetObjectRequest(&s3.GetObjectInput{
+		Bucket: aws.String(config.S3Bucket),
+		Key:    aws.String(config.S3Key + "/" + chunk.S3Path),
+	})
+
+	url, err := req.Presign(time.Duration(config.PresignLimit) * time.Hour)
+	if err != nil {
+		log.Println("--ERROR---", err.Error())
+		e <- err
+		return
+	}
+	chunk.DownloadUrl = url
+	c <- chunk
+	return
 }
 
 func (self *FileService) chunkIt(chunk models.FileChunk, c chan models.FileChunk, e chan error) {
@@ -158,4 +195,14 @@ func (self *FileService) chunkIt(chunk models.FileChunk, c chan models.FileChunk
 
 	c <- chunk
 	return
+}
+
+func (self *FileService) deleteChunks(s3Key string) {
+	_, err := GetS3Service().DeleteObject(&s3.DeleteObjectInput{
+		Bucket: aws.String(config.S3Bucket),
+		Key:    aws.String(config.S3Key + "/" + s3Key),
+	})
+	if err != nil {
+		log.Println("Error deleting chunk on s3: " + err.Error())
+	}
 }
