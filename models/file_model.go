@@ -25,6 +25,6 @@ type FileChunk struct {
 
 type FileDisplay struct {
 	FileHeader FileHeader `json:"fileHeader"`
-	FileChunks []FileChunk `json:"chunks"`
+	FileChunks map[string]FileChunk `json:"fileChunks"`
 }
 

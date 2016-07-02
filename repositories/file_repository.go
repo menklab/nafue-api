@@ -5,6 +5,7 @@ import (
 	"github.com/menkveldj/nafue-api/models"
 	"github.com/jmoiron/sqlx"
 	"time"
+	"fmt"
 )
 
 type IFileRepository interface {
@@ -34,11 +35,17 @@ func (self *FileRepository) GetFile(shortUrl string) (*models.FileDisplay, error
 	}
 
 	// get file chunks
-	var fileChunks []models.FileChunk
-	err = self.database.Select(&fileChunks, `SELECT * from file_chunks WHERE fileId = ?`, fileHeader.Id)
+	var chunks []models.FileChunk
+	err = self.database.Select(&chunks, `SELECT * from file_chunks WHERE fileId = ?`, fileHeader.Id)
 	if err != nil {
 		log.Println("DB ERROR", err.Error())
 		return nil, err
+	}
+
+	// put chunks into a map so order doesn't matter as much
+	fileChunks := make(map[string]models.FileChunk)
+	for _, chunk := range chunks {
+		fileChunks[fmt.Sprint(chunk.Order)] = chunk
 	}
 
 	fileDisplay := models.FileDisplay{

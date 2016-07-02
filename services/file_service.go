@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/menkveldj/nafue-api/config"
@@ -12,6 +11,7 @@ import (
 	"math"
 	"log"
 	"github.com/menkveldj/nafue-api/utility/errors"
+	"fmt"
 )
 
 type IFileService interface {
@@ -40,13 +40,8 @@ func (self *FileService) GetFile(shortUrl string) (*models.FileDisplay, error) {
 	go self.fileRepository.DeleteFile(fileDisplay.FileHeader.Id)
 
 	// verify that file isn't to old
-	//elapsed := int64(time.Now().Sub(fileDisplay.FileHeader.Created).Nanoseconds())
 	elapsed := time.Since(fileDisplay.FileHeader.Created)
-	fmt.Println("created: ", fileDisplay.FileHeader.Created)
-	fmt.Println("now: ", time.Now().UTC())
-	fmt.Println("elapsed: ", elapsed)
 	if int64(elapsed) > fileDisplay.FileHeader.TTL {
-		fmt.Println("file to old, delete from s3!")
 		for _, chunk := range fileDisplay.FileChunks {
 			go self.deleteChunks(chunk.S3Path)
 		}
@@ -67,23 +62,13 @@ func (self *FileService) GetFile(shortUrl string) (*models.FileDisplay, error) {
 			return nil, err
 			break
 		case mc := <-c:
-			fileDisplay.FileChunks[mc.Order].S3Path = mc.S3Path
-			fmt.Println("S3 Link: ", fileDisplay.FileChunks[mc.Order])
+			fileDisplay.FileChunks[fmt.Sprint(mc.Order)] = mc
 			break
 		}
 	}
 
-	// create get request
-	//req, _ := GetS3Service().GetObjectRequest(&s3.GetObjectInput{
-	//	Bucket: aws.String(config.S3Bucket),
-	//	Key:    aws.String(config.S3Key + "/" + file.S3Path),
-	//})
-
-	//url, err := req.Presign(15 * time.Minute)
-	//if err != nil {
-	//	log.Println("--ERROR---", err.Error())
-	//	return err
-	//}
+	// don't need tty so remove it
+	fileDisplay.FileHeader.TTL = 0
 
 	return fileDisplay, nil
 }
@@ -108,18 +93,26 @@ func (self *FileService) AddFile(fileHeader *models.FileHeader) (*models.FileDis
 	chunkSize := config.ChunkSize * 1024 * 1024 // convert to byte
 	tChunks := int64(math.Ceil(float64(fileHeader.Size / chunkSize)))
 	lastChunkSize := fileHeader.Size - (chunkSize * (tChunks - 1))
-	chunks := make([]models.FileChunk, tChunks)
+	chunks := make(map[string]models.FileChunk)
 	c := make(chan models.FileChunk)
 	e := make(chan error)
 	// spin off
-	for i, chunk := range chunks {
-		chunk.Order = i
-		chunk.FileId = fileHeader.Id
+	for i := 0; i < int(tChunks); i++ {
+
+		// set correct size for chunk
+		cSize := chunkSize
 		if i == (len(chunks) - 1) {
-			chunk.Size = lastChunkSize // last chunk is likely smaller
-		} else {
-			chunk.Size = chunkSize
+			cSize = lastChunkSize
 		}
+		// create chunk
+		chunk := models.FileChunk{
+			FileId: fileHeader.Id,
+			Size: cSize,
+			Order: i,
+
+		}
+		// set chunk and save it
+		chunks[fmt.Sprint(i)] = chunk
 		go self.chunkIt(chunk, c, e)
 	}
 	// wait till all return
@@ -128,14 +121,14 @@ func (self *FileService) AddFile(fileHeader *models.FileHeader) (*models.FileDis
 		case err := <-e:
 			return nil, err
 		case mc := <-c:
-			chunks[mc.Order] = mc
+			chunks[fmt.Sprint(mc.Order)] = mc
 			break;
 		}
 	}
 
 	fileDisplay := models.FileDisplay{
 		FileHeader: models.FileHeader{
-			ShortUrl: fileHeader.ShortUrl,
+			ShortUrl: shortUrl,
 		},
 		FileChunks: chunks,
 	}
