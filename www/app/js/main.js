@@ -14,44 +14,51 @@ function init() {
     modal = modalInit();
     g = {
         mode: "upload",
+        db: {},
         binData: null
     };
 
     if (window.File && window.FileReader && window.FileList && window.Blob && window.indexedDB) {
 
-        // indexDbInit
-        indexDb = dbInit();
+        // init file store
+        dbInit(function(db) {
+            // create db handles
+            g.db['headers'] = db.transaction(["fileHeaders"], "readwrite").objectStore("fileHeaders");
+            g.db['chunks'] = db.transaction(["fileChunks"], "readwrite").objectStore("fileChunks");
 
-        // check for decryption file
-        var dFile;
-        var parse = parseURL(window.location.href);
-        if (parse.pathname[1] == "file") {
-            dFile = parse.pathname[2];
-        }
-        if (!!dFile) {
-            window.history.pushState('', '', '/');
-            downloadFile(dFile);
-        }
-
-        if (!!dom.dropZone) {
-            dom.dropZone.addEventListener('dragover', handleDragOver, false);
-            dom.dropZone.addEventListener('drop', handleFileSelect, false);
-        }
-        if (!!dom.file) {
-            dom.file.addEventListener('change', handleFileSelect, false);
-            dom.file.focus();
-        }
-        // setup password check listener
-        window.onload = function () {
-            // make secure
-               makeSecure();
-
-            if (!!dom.password) {
-                dom.password.onkeyup = function () {
-                    updatePasswordStrength(zxcvbn(dom.password.value));
-                };
+            // check for decryption file
+            var dFile;
+            var parse = parseURL(window.location.href);
+            if (parse.pathname[1] == "file") {
+                dFile = parse.pathname[2];
             }
-        };
+            if (!!dFile) {
+                window.history.pushState('', '', '/');
+                downloadFile(dFile);
+            }
+
+            if (!!dom.dropZone) {
+                dom.dropZone.addEventListener('dragover', handleDragOver, false);
+                dom.dropZone.addEventListener('drop', handleFileSelect, false);
+            }
+            if (!!dom.file) {
+                dom.file.addEventListener('change', handleFileSelect, false);
+                dom.file.focus();
+            }
+            // setup password check listener
+            window.onload = function () {
+                // make secure
+                makeSecure();
+
+                if (!!dom.password) {
+                    dom.password.onkeyup = function () {
+                        updatePasswordStrength(zxcvbn(dom.password.value));
+                    };
+                }
+            };
+        });
+
+
     }
     else {
         hide(dom.dropZone);

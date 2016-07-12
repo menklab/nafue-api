@@ -31,30 +31,67 @@ function handleFileSelect(e) {
         error('The uploaded file cannot be greater than 50MB');
     }
 
-    // closure to capture file
-    reader.onload = (function (f) {
-        return function (e) {
-            if (file.size/1024/1024 <= 50) {
-                var data = {
-                    content: encodeAb(e.target.result),
-                    name: name
-                };
 
-                g.binData = btoa(JSON.stringify(data));
-                hide(dom.busy);
-                show(dom.passCont);
-                show(dom.passwordStrength);
-                dom.password.focus();
-            }
-            else {
-                e = null;
+    var chunkSize = 5 * 1024 * 1024;
+    var tChunks = Math.ceil(file.size / chunkSize);
+    console.log("num of chunks: ", tChunks);
+    console.log("filesize: ", file.size);
+    var readChunk = function(curChunk) {
+
+        reader.onprogress = function(evt) {
+            console.log("progress: ", evt);
+        };
+
+        reader.onloadend = function(evt) {
+            if (evt.target.readyState == FileReader.DONE) {
+                buffer = evt.target.result;
+                var uint8View = new Uint8Array(buffer)
+                console.log("Part: " +start + "-"+end);
+                console.log("Chunk: ", uint8View);
+
+                // if there are more chunks read the next one
+                if (curChunk < (tChunks -1)) {
+                    curChunk++;
+                    readChunk(curChunk)
+                }
             }
         };
-    })(file);
+
+        // calc chunk start/end
+        var start = chunkSize * curChunk;
+        var end = (tChunks * curChunk) + chunkSize;
+        if (curChunk == (tChunks -1)) { // if on last chunk end == last byte
+            end = file.size;
+        }
+        var chunk = file.slice(start, end);
+        reader.readAsArrayBuffer(chunk)
+    };
+    readChunk(0);
+
+    // closure to capture file
+    //reader.onload = (function (f) {
+    //    return function (e) {
+    //        if (file.size/1024/1024 <= 50) {
+    //            var data = {
+    //                content: encodeAb(e.target.result),
+    //                name: name
+    //            };
+    //
+    //            g.binData = btoa(JSON.stringify(data));
+    //            hide(dom.busy);
+    //            show(dom.passCont);
+    //            show(dom.passwordStrength);
+    //            dom.password.focus();
+    //        }
+    //        else {
+    //            e = null;
+    //        }
+    //    };
+    //})(file);
 
     // Read in the image file as a data URL.
 
-    reader.readAsArrayBuffer(file);
+    //reader.readAsArrayBuffer(file);
 
 }
 

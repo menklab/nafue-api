@@ -96,7 +96,7 @@ function updatePasswordStrength(results) {
 
     // calculate percent
     var perc = ((s + 1)/5) * 100;
-    if (!dom.password.value || dom.password.value == '') {
+    if (!dom.password.value || dom.password.value === '') {
         perc = 0;
     }
 

@@ -13,6 +13,7 @@ app.engine('html', require('ejs').renderFile);
 var serviceBase = 'http://localhost:9090';
 
 // static routes for html
+app.use("/jquery.fullpage.min.css.map", express.static("./www/bower_components/fullpage.js/dist/jquery.fullpage.min.css.map"));
 app.use("/maps", express.static("./www/maps"));
 app.use("/docs", express.static("./www/dist/docs"));
 app.use("/", express.static("./www/app/"));

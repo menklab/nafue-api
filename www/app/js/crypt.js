@@ -1,6 +1,6 @@
 function makeSecure() {
     sjcl.random.startCollectors();
-    console.log('secure %: ', sjcl.random.getProgress(100));
+    sjcl.random.getProgress(100);
 }
 
 /* Encrypt a message */
