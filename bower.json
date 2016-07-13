@@ -11,10 +11,10 @@
     "tests"
   ],
   "dependencies": {
-    "sjcl": "~1.0.3",
     "file-saver": "Teleborder/FileSaver.js#1.20150507.2",
     "fullpage.js": "~2.7.5",
     "braintree-web": "~2.19.0",
-    "zxcvbn": "~4.3.0"
+    "zxcvbn": "~4.3.0",
+    "forge": "~0.6.40"
   }
 }

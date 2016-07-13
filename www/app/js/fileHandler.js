@@ -31,23 +31,48 @@ function handleFileSelect(e) {
         error('The uploaded file cannot be greater than 50MB');
     }
 
-
     var chunkSize = 5 * 1024 * 1024;
     var tChunks = Math.ceil(file.size / chunkSize);
     console.log("num of chunks: ", tChunks);
     console.log("filesize: ", file.size);
+
+
+
     var readChunk = function(curChunk) {
 
         reader.onprogress = function(evt) {
-            console.log("progress: ", evt);
+            //console.log("progress: ", evt);
         };
 
         reader.onloadend = function(evt) {
             if (evt.target.readyState == FileReader.DONE) {
-                buffer = evt.target.result;
-                var uint8View = new Uint8Array(buffer)
-                console.log("Part: " +start + "-"+end);
-                console.log("Chunk: ", uint8View);
+                var buffer = evt.target.result;
+                var data = new Uint8Array(buffer);
+                //console.log("Part: " +start + "-"+end);
+                console.log("Chunk: ", data);
+                //console.log("Chunk size: ", uint8View.length);
+
+                // encrypt chunk and save
+                var iv = forge.random.getBytesSync(32);
+                var salt = forge.random.getBytesSync(32);
+                var key = forge.pkcs5.pbkdf2('password', salt, 1000, 32);
+                var cipher = forge.cipher.createCipher('AES-CTR', key);
+                cipher.start({iv: iv});
+                cipher.update(new forge.util.ByteBuffer(data));
+                cipher.finish();
+
+                var eBytes = cipher.output.getBytes();
+                var eData = bytesToUint8(eBytes);
+                console.log("eData: ", eData);
+
+                cipher.start({iv: iv});
+                cipher.update(new forge.util.ByteBuffer(eData));
+                cipher.finish();
+
+                var rBytes = cipher.output.getBytes();
+                var rData = bytesToUint8(rBytes);
+                console.log("rData: ", rData);
+
 
                 // if there are more chunks read the next one
                 if (curChunk < (tChunks -1)) {
@@ -68,32 +93,15 @@ function handleFileSelect(e) {
     };
     readChunk(0);
 
-    // closure to capture file
-    //reader.onload = (function (f) {
-    //    return function (e) {
-    //        if (file.size/1024/1024 <= 50) {
-    //            var data = {
-    //                content: encodeAb(e.target.result),
-    //                name: name
-    //            };
-    //
-    //            g.binData = btoa(JSON.stringify(data));
-    //            hide(dom.busy);
-    //            show(dom.passCont);
-    //            show(dom.passwordStrength);
-    //            dom.password.focus();
-    //        }
-    //        else {
-    //            e = null;
-    //        }
-    //    };
-    //})(file);
-
-    // Read in the image file as a data URL.
-
-    //reader.readAsArrayBuffer(file);
-
 }
+
+function bytesToUint8(buf) {
+    var u8 = new Uint8Array(buf.split("").map(function(c) {
+        return c.charCodeAt(0);
+    }));
+    return u8;
+}
+
 
 function handleDragOver(e) {
     e.stopPropagation();

@@ -1,5 +1,5 @@
 var dom, modal, g, s = {
-    adata: sjcl.codec.base64.toBits(btoa('Sparticus')),
+    adata: "",
     mode: 'ccm',
     cipher: 'aes',
     tagSize: 128,

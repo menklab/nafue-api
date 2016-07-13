@@ -71,14 +71,8 @@ gulp.task('build:js', function () {
 });
 
 gulp.task('build:vendor:js', function () {
-    // pre build sjcl with needed wrapper
-    gulp.src('www/bower_components/sjcl/sjcl.js', {base: 'js'})
-        .pipe(gulp_insert.prepend('var sjcl =(function() {'))
-        .pipe(gulp_insert.append('return sjcl;})();'))
-        .pipe(gulp_rename('sjcl_wrapped.js'))
-        .pipe(gulp.dest('www/bower_components/sjcl/'));
     gulp.src([
-            'www/bower_components/sjcl/sjcl_wrapped.js',
+            'www/bower_components/forge/js/forge.min.js',
             'www/bower_components/jquery/dist/jquery.min.js',
             'www/bower_components/braintree-web/dist/braintree.js',
             'www/bower_components/file-saver/FileSaver.js',
