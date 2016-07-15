@@ -23,8 +23,12 @@ function init() {
         // init file store
         dbInit(function(db) {
             // create db handles
-            g.db['headers'] = db.transaction(["fileHeaders"], "readwrite").objectStore("fileHeaders");
-            g.db['chunks'] = db.transaction(["fileChunks"], "readwrite").objectStore("fileChunks");
+            g.db['headers'] = function() {
+                return db.transaction(["fileHeaders"], "readwrite").objectStore("fileHeaders");
+            };
+            g.db['chunks'] = function() {
+                return db.transaction(["fileChunks"], "readwrite").objectStore("fileChunks");
+            };
 
             // check for decryption file
             var dFile;

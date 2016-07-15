@@ -6,10 +6,9 @@ function dbInit(cb) {
 
 // Create the schema
     req.onupgradeneeded = function (evt) {
-        evt.currentTarget.result.createObjectStore("fileHeaders");
-        evt.currentTarget.result.createObjectStore("fileChunks");
-
-        //store.createIndex('biblioid', 'biblioid', { unique: true });
+        evt.currentTarget.result.createObjectStore("fileHeaders", {autoIncrement: true});
+        var chunkStore = evt.currentTarget.result.createObjectStore("fileChunks", {autoIncrement: true});
+        chunkStore.createIndex("fileChunks", "fileHeaderId", {unique: false});
 
     };
 
