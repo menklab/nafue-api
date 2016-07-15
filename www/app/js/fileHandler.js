@@ -22,62 +22,53 @@ function handleFileSelect(e) {
     }
 
     var file = files[0];
+    var totalfileSize = file.size + 32;
     var name = file.name;
+    console.log("Name: ", name);
+    var nameAry = bytesToUint8(name);
+    totalfileSize += name.length;
+    console.log("Ary: ", nameAry);
+
     var reader = new FileReader();
 
     // only 50 MB
-    if (file.size/1024/1024 > 50) {
+    if (file.size / 1024 / 1024 > 50) {
         reader.abort();
         error('The uploaded file cannot be greater than 50MB');
     }
 
     var chunkSize = 5 * 1024 * 1024;
-    var tChunks = Math.ceil(file.size / chunkSize);
+    var tChunks = Math.ceil(totalfileSize / chunkSize); // +32 for iv
     console.log("num of chunks: ", tChunks);
-    console.log("filesize: ", file.size);
+    console.log("filesize: ", totalfileSize);
 
 
+    var readChunk = function (curChunk) {
 
-    var readChunk = function(curChunk) {
-
-        reader.onprogress = function(evt) {
+        reader.onprogress = function (evt) {
             //console.log("progress: ", evt);
         };
 
-        reader.onloadend = function(evt) {
+        reader.onloadend = function (evt) {
             if (evt.target.readyState == FileReader.DONE) {
+
+                // get data from read
                 var buffer = evt.target.result;
                 var data = new Uint8Array(buffer);
-                //console.log("Part: " +start + "-"+end);
-                console.log("Chunk: ", data);
-                //console.log("Chunk size: ", uint8View.length);
 
-                // encrypt chunk and save
-                var iv = forge.random.getBytesSync(32);
-                var salt = forge.random.getBytesSync(32);
-                var key = forge.pkcs5.pbkdf2('password', salt, 1000, 32);
-                var cipher = forge.cipher.createCipher('AES-CTR', key);
-                cipher.start({iv: iv});
+                // encrypt data from read
                 cipher.update(new forge.util.ByteBuffer(data));
-                cipher.finish();
-
-                var eBytes = cipher.output.getBytes();
-                var eData = bytesToUint8(eBytes);
-                console.log("eData: ", eData);
-
-                cipher.start({iv: iv});
-                cipher.update(new forge.util.ByteBuffer(eData));
-                cipher.finish();
-
-                var rBytes = cipher.output.getBytes();
-                var rData = bytesToUint8(rBytes);
-                console.log("rData: ", rData);
-
+                //var eData = bytesToUint8(cipher.output.getBytes());
 
                 // if there are more chunks read the next one
-                if (curChunk < (tChunks -1)) {
+                if (curChunk < (tChunks - 1)) {
                     curChunk++;
                     readChunk(curChunk)
+                }
+                // otherwise append filename and close the cipher
+                else {
+
+                    cipher.finish();
                 }
             }
         };
@@ -85,21 +76,32 @@ function handleFileSelect(e) {
         // calc chunk start/end
         var start = chunkSize * curChunk;
         var end = (tChunks * curChunk) + chunkSize;
-        if (curChunk == (tChunks -1)) { // if on last chunk end == last byte
-            end = file.size;
+        if (curChunk == (tChunks - 1)) { // if on last chunk end == last byte
+            end = totalfileSize;
         }
         var chunk = file.slice(start, end);
         reader.readAsArrayBuffer(chunk)
     };
     readChunk(0);
 
+    var iv = forge.random.getBytesSync(32);
+    var salt = forge.random.getBytesSync(32);
+    var key = forge.pkcs5.pbkdf2('password', salt, 1000, 32);
+    var cipher = forge.cipher.createCipher('AES-CTR', key);
+    cipher.start({iv: iv});
+
+
 }
 
 function bytesToUint8(buf) {
-    var u8 = new Uint8Array(buf.split("").map(function(c) {
+    var u8 = new Uint8Array(buf.split("").map(function (c) {
         return c.charCodeAt(0);
     }));
     return u8;
+}
+
+function uint8ToBytes(buf) {
+     return String.fromCharCode.apply(null, buf)
 }
 
 
@@ -174,7 +176,7 @@ function shareFile() {
                         setContent(dom.linkToShare, www_services + "/file/" + fileData.shortUrl);
                     })
                     .error(function (err) {
-                       error(err.message);
+                        error(err.message);
                     });
             }, 500);
 
