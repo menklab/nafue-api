@@ -40,7 +40,7 @@ function error(errMsg) {
     reset_ui();
     hide(dom.dropZone);
     show(dom.error);
-    resetPassword();
+    //resetPassword();
     g.binData = null;
     dom.errMsg.innerHTML = errMsg;
 }

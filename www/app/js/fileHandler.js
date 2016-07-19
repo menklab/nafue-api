@@ -22,112 +22,17 @@ function handleFileSelect(e) {
     }
 
     var file = files[0];
-    var totalfileSize = file.size + 32;
-    var name = file.name;
-    var nameAry = bytesToUint8(name);
-    totalfileSize += name.length;
+    var SecureFileChunker = new SecureFileChunker(file);
+    SecureFileChunker.checkSizeLimit();
 
-    var reader = new FileReader();
-
-    // only 50 MB
-    if (file.size / 1024 / 1024 > 50) {
-        reader.abort();
-        error('The uploaded file cannot be greater than 50MB');
+    // calc chunk start/end
+    var start = chunkSize * curChunk;
+    var end = (tChunks * curChunk) + chunkSize;
+    if (curChunk == (tChunks - 1)) { // if on last chunk end == last byte
+        end = totalfileSize;
     }
-
-    var chunkSize = 32000; // 32kb
-    var tChunks = Math.ceil(totalfileSize / chunkSize); // +32 for iv
-    console.log("num of chunks: ", tChunks);
-    console.log("filesize: ", totalfileSize);
-
-
-    var readChunk = function (curChunk, fileHeaderId) {
-
-        reader.onloadend = function (evt) {
-            if (evt.target.readyState == FileReader.DONE) {
-
-                // get data from read
-                var buffer = evt.target.result;
-                var data = new Uint8Array(buffer);
-
-                // encrypt data from read
-                cipher.update(new forge.util.ByteBuffer(data));
-                var eData = bytesToUint8(cipher.output.getBytes());
-                var addedChunkEvt = g.db.chunks().add(
-                    {
-                        fileHeaderId: fileHeaderId,
-                        data: eData
-                    }
-                );
-
-                addedChunkEvt.onsuccess = function () {
-                    // if there are more chunks read the next one
-                    if (curChunk < (tChunks - 1)) {
-                        curChunk++;
-                        readChunk(curChunk, fileHeaderId)
-                    }
-                    // otherwise finish last block with extra data and close
-                    else {
-                        var paddedFileName = new Uint8Array(255);
-                        paddedFileName.fill(0);
-                        paddedFileName.set(nameAry);
-                        cipher.update(new forge.util.ByteBuffer(paddedFileName));
-                        eData = bytesToUint8(cipher.output.getBytes());
-                        g.db.chunks().add(
-                            {
-                                fileHeaderId: fileHeaderId,
-                                data: eData
-                            }
-                        );
-                        cipher.finish();
-                    }
-                };
-            }
-        };
-
-        // calc chunk start/end
-        var start = chunkSize * curChunk;
-        var end = (tChunks * curChunk) + chunkSize;
-        if (curChunk == (tChunks - 1)) { // if on last chunk end == last byte
-            end = totalfileSize;
-        }
-        var chunk = file.slice(start, end);
-        reader.readAsArrayBuffer(chunk)
-    };
-
-    var iv = forge.random.getBytesSync(32);
-    var salt = forge.random.getBytesSync(32);
-    var key = forge.pkcs5.pbkdf2('password', salt, 1000, 32);
-    var cipher = forge.cipher.createCipher('AES-CTR', key);
-    cipher.start({iv: iv});
-
-    // create file header
-    var fileHeader = {
-        size: totalfileSize,
-        salt: salt
-    };
-
-    // add header to db
-    var req = g.db.headers().add(fileHeader);
-    req.onsuccess = function (event) {
-        var fileHeaderId = event.target.result;
-        console.log("file header: ", fileHeaderId);
-
-        readChunk(0, fileHeaderId);
-    };
-
-
-}
-
-function bytesToUint8(buf) {
-    var u8 = new Uint8Array(buf.split("").map(function (c) {
-        return c.charCodeAt(0);
-    }));
-    return u8;
-}
-
-function uint8ToBytes(buf) {
-    return String.fromCharCode.apply(null, buf)
+    var chunk = file.slice(start, end);
+    reader.readAsArrayBuffer(chunk)
 }
 
 
