@@ -26,16 +26,16 @@ class SecureFileChunker {
         req.onsuccess = function (event) {
             me.fileHeader.id = event.target.result;
             // read first chunk
-            me.readChunk(me, tChunks, 0, function () {
+            me.readChunk(me, tChunks, 0, 0, function (tSize) {
                 me.crypt.destroy();
-                cb();
+                cb(tSize);
             });
         };
 
 
     }
 
-    readChunk(me, tChunks, curChunk, cb) {
+    readChunk(me, tChunks, curChunk, tSize, cb) {
         // calc chunk start/end
         var start = SecureFileChunker.config().chunkSize * curChunk;
         var end = (SecureFileChunker.config().chunkSize * curChunk) + SecureFileChunker.config().chunkSize;
@@ -60,9 +60,12 @@ class SecureFileChunker {
                 );
 
                 addedChunkEvt.onsuccess = function () {
+                    // sum data as it's added
+                    tSize += eData.length;
+
                     // if there are more chunks read the next one
-                    if (curChunk < (tChunks - 1)) {
-                        me.readChunk(me, tChunks, (curChunk + 1), cb);
+                    if (curChunk < tChunks) {
+                        me.readChunk(me, tChunks, (curChunk + 1), tSize, cb);
                     }
                     // otherwise finish last block with extra data and close
                     else {
@@ -71,13 +74,22 @@ class SecureFileChunker {
                         paddedFileName.set(me.fileHeader.nameAry);
                         me.crypt.cipher.update(new forge.util.ByteBuffer(paddedFileName));
                         eData = Utility.bytesToUint8(me.crypt.cipher.output.getBytes());
-                        g.db.chunks().add(
+
+                        // take encrypted filename data and add the iv to it.
+                        var eiData = new Uint8Array((255 + Crypt.config().KEY_SIZE));
+                        eiData.set(eData);
+                        var iv = Utility.bytesToUint8(me.crypt.iv);
+                        eiData.set(iv, 255);
+                        var addFinalChunkEvt = g.db.chunks().add(
                             {
                                 fileHeaderId: me.fileHeader.id,
-                                data: eData
+                                data: eiData
                             }
                         );
-                        cb();
+
+                        addFinalChunkEvt.onsuccess = function() {
+                            cb(tSize + eiData.length);
+                        };
                     }
                 };
             }

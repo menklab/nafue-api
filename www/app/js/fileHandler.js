@@ -24,9 +24,9 @@ function handleFileSelect(e) {
     var file = files[0];
     var secureFileChunker = new SecureFileChunker(file);
     secureFileChunker.checkSizeLimit();
-    secureFileChunker.sealFile(function() {
-        console.log("file sealed");
-        
+    secureFileChunker.sealFile(function(tSize) {
+        console.log("file sealed. OrigSize: " + file.size + ", tSize: " + tSize);
+
     });
 }
 
