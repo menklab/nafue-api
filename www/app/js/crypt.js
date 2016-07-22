@@ -1,4 +1,4 @@
-class Cipher {
+class Crypt {
 
     static config() {
         return {
@@ -10,10 +10,10 @@ class Cipher {
     // create cipher
     constructor(prop) {
 
-        this.salt = prop.salt || Cipher.makeSalt();
-        this.iv = prop.iv || Cipher.makeIv();
-        this.key = Cipher.genPbkdf2Key(prop.password, this.salt);
-        this.cipher = forge.cipher.createCipher('AES-CTR-', this.key);
+        this.salt = prop.salt || Crypt.makeSalt();
+        this.iv = prop.iv || Crypt.makeIv();
+        this.key = Crypt.genPbkdf2Key(prop.password, this.salt);
+        this.cipher = forge.cipher.createCipher('AES-CTR', this.key);
         this.cipher.start({iv: this.iv});
     }
 
@@ -33,17 +33,17 @@ class Cipher {
 
     // make an iv
     static makeIv() {
-        return forge.random.getBytesSync(this.KEY_SIZE);
+        return forge.random.getBytesSync(Crypt.config().KEY_SIZE);
     }
 
     // make salt
     static makeSalt() {
-        return forge.random.getBytesSync(this.KEY_SIZE);
+        return forge.random.getBytesSync(Crypt.config().KEY_SIZE);
     }
 
     // gen a key
     static genPbkdf2Key(password, salt) {
-        return forge.pkcs5.pbkdf2(password, salt, this.ITERATIONS, this.KEY_SIZE);
+        return forge.pkcs5.pbkdf2(password, salt, Crypt.config().ITERATIONS, Crypt.config().KEY_SIZE);
     }
 
 }

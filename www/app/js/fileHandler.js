@@ -22,17 +22,12 @@ function handleFileSelect(e) {
     }
 
     var file = files[0];
-    var SecureFileChunker = new SecureFileChunker(file);
-    SecureFileChunker.checkSizeLimit();
-
-    // calc chunk start/end
-    var start = chunkSize * curChunk;
-    var end = (tChunks * curChunk) + chunkSize;
-    if (curChunk == (tChunks - 1)) { // if on last chunk end == last byte
-        end = totalfileSize;
-    }
-    var chunk = file.slice(start, end);
-    reader.readAsArrayBuffer(chunk)
+    var secureFileChunker = new SecureFileChunker(file);
+    secureFileChunker.checkSizeLimit();
+    secureFileChunker.sealFile(function() {
+        console.log("file sealed");
+        
+    });
 }
 
 
