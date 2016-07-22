@@ -15,6 +15,8 @@ class Crypt {
         this.key = Crypt.genPbkdf2Key(prop.password, this.salt);
         this.cipher = forge.cipher.createCipher('AES-CTR', this.key);
         this.cipher.start({iv: this.iv});
+        this.hmac = forge.hmac.create();
+        this.hmac.start('sha256', this.key);
     }
 
     // secure destroy cipher
@@ -24,6 +26,9 @@ class Crypt {
         delete this.iv;
         delete this.key;
         delete this.cipher;
+        var h = this.hmac.digest().toHex();
+        delete this.hmac;
+        return h;
     }
 
     // xor encrypt/decrypt in Uint8Array

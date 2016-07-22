@@ -13,6 +13,7 @@ class SecureFileChunker {
         this.reader = new FileReader();
         this.crypt = new Crypt({password: 'password'});
 
+
     }
 
     sealFile(cb) {
@@ -25,10 +26,11 @@ class SecureFileChunker {
         var req = g.db.headers().add(me.fileHeader);
         req.onsuccess = function (event) {
             me.fileHeader.id = event.target.result;
+
             // read first chunk
             me.readChunk(me, tChunks, 0, 0, function (tSize) {
-                me.crypt.destroy();
-                cb(tSize);
+                var hmac = me.crypt.destroy();
+                cb(tSize, hmac);
             });
         };
 
@@ -62,6 +64,7 @@ class SecureFileChunker {
                 addedChunkEvt.onsuccess = function () {
                     // sum data as it's added
                     tSize += eData.length;
+                    me.crypt.hmac.update(eData);
 
                     // if there are more chunks read the next one
                     if (curChunk < tChunks) {
@@ -88,6 +91,7 @@ class SecureFileChunker {
                         );
 
                         addFinalChunkEvt.onsuccess = function() {
+                            me.crypt.hmac.update(eiData);
                             cb(tSize + eiData.length);
                         };
                     }
