@@ -8,7 +8,6 @@ import (
 	"github.com/menkveldj/nafue-api/repositories"
 	"time"
 	"github.com/menkveldj/nafue-api/utility"
-	"math"
 	"log"
 	"github.com/menkveldj/nafue-api/utility/errors"
 	"fmt"
@@ -89,25 +88,16 @@ func (self *FileService) AddFile(fileHeader *models.FileHeader) (*models.FileDis
 		return nil, err
 	}
 
-	// calc num and chunk
-	chunkSize := config.ChunkSize * 1024 * 1024 // convert to byte
-	tChunks := int64(math.Ceil(float64(fileHeader.Size / chunkSize)))
-	lastChunkSize := fileHeader.Size - (chunkSize * (tChunks - 1))
+	tChunks := fileHeader.ChunkCount + 1
 	chunks := make(map[string]models.FileChunk)
 	c := make(chan models.FileChunk)
 	e := make(chan error)
 	// spin off
 	for i := 0; i < int(tChunks); i++ {
 
-		// set correct size for chunk
-		cSize := chunkSize
-		if i == (len(chunks) - 1) {
-			cSize = lastChunkSize
-		}
 		// create chunk
 		chunk := models.FileChunk{
 			FileId: fileHeader.Id,
-			Size: cSize,
 			Order: i,
 
 		}

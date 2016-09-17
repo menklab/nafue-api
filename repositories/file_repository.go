@@ -62,7 +62,7 @@ func (self *FileRepository) AddFileHeader(fileHeader *models.FileHeader) error {
 
 	result, err := self.database.NamedExec(`
 	INSERT INTO files
-	(ttl, shortURL, _salt, hmac, created) VALUES (:ttl, :shortUrl, :_salt, :hmac, :created)
+	(ttl, shortURL, created) VALUES (:ttl, :shortUrl, :created)
 	`, fileHeader)
 	if err != nil {
 		log.Println("DB ERROR", err.Error())
@@ -104,7 +104,7 @@ func (self *FileRepository) AddFileChunk(fileChunk *models.FileChunk) error {
 
 	result, err := self.database.NamedExec(`
 	INSERT INTO file_chunks
-	(fileId, s3Path, _size, _order) VALUES (:fileId, :s3Path, :_size, :_order)
+	(fileId, s3Path, _order) VALUES (:fileId, :s3Path, :_order)
 	`, fileChunk)
 	if err != nil {
 		log.Println("DB ERROR", err.Error())

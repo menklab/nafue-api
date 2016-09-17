@@ -35,3 +35,5 @@ nafue
 www/dist
 npm-debug.log
 dist
+.idea
+workspace.xml
