@@ -7,6 +7,7 @@ type FileHeader struct {
 	TTL        int64       `json:"ttl,omitempty" db:"ttl"`
 	Created    time.Time `json:"-" db:"created"`
 	ShortUrl   string    `json:"shortUrl,omitempty" db:"shortUrl"`
+	AsyncKey   string    `json:"asyncKey,omitempty" db:"asyncKey"`
 	ChunkCount int64    `json:"chunkCount,omitempty"`
 }
 

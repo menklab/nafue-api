@@ -14,8 +14,8 @@ import (
 )
 
 type IFileService interface {
-	GetFile(string) (*models.FileDisplay, error)
-	AddFile(*models.FileHeader) (*models.FileDisplay, error)
+	GetFileAsync(string) (*models.FileDisplay, error)
+	AddFileAsync(*models.FileHeader) (*models.FileHeader, error)
 }
 
 type FileService struct {
@@ -27,7 +27,7 @@ func NewFileService(fileRepository repositories.IFileRepository, basicAnalyticsR
 	return &FileService{fileRepository, basicAnalyticsRepository}
 }
 
-func (self *FileService) GetFile(shortUrl string) (*models.FileDisplay, error) {
+func (self *FileService) GetFileAsync(shortUrl string) (*models.FileDisplay, error) {
 
 	// get file from db
 	fileDisplay, err := self.fileRepository.GetFile(shortUrl)
@@ -72,23 +72,24 @@ func (self *FileService) GetFile(shortUrl string) (*models.FileDisplay, error) {
 	return fileDisplay, nil
 }
 
-func (self *FileService) AddFile(fileHeader *models.FileHeader) (*models.FileDisplay, error) {
+func (self *FileService) AddFileAsync(fileHeader *models.FileHeader) (*models.FileHeader, error) {
 
-	// get short url
-	shortUrl, err := utility.GenerateRandomString(32)
+	// generate sync key
+	asyncKey, err := utility.GenerateRandomString(32)
 	if err != nil {
 		return nil, err
 	}
-	fileHeader.ShortUrl = shortUrl
+
+	fileHeader.AsyncKey = asyncKey
 	fileHeader.TTL = int64(time.Minute) * 15
 
 	// add file to db
-	err = self.fileRepository.AddFileHeader(fileHeader)
+	err = self.fileRepository.AddFileHeaderAsync(fileHeader)
 	if err != nil {
 		return nil, err
 	}
 
-	tChunks := fileHeader.ChunkCount + 1
+	tChunks := fileHeader.ChunkCount
 	chunks := make(map[string]models.FileChunk)
 	c := make(chan models.FileChunk)
 	e := make(chan error)
@@ -116,16 +117,14 @@ func (self *FileService) AddFile(fileHeader *models.FileHeader) (*models.FileDis
 		}
 	}
 
-	fileDisplay := models.FileDisplay{
-		FileHeader: models.FileHeader{
-			ShortUrl: shortUrl,
-		},
-		FileChunks: chunks,
+	// return async key
+	fileHeaderDisplay := models.FileHeader{
+		AsyncKey: asyncKey,
 	}
 
 	self.basicAnalyticsRepository.IncrementFileCount()
 
-	return &fileDisplay, nil
+	return &fileHeaderDisplay, nil
 }
 
 func (self *FileService) chunkDownloadLink(chunk models.FileChunk, c chan models.FileChunk, e chan error) {
@@ -154,20 +153,22 @@ func (self *FileService) chunkIt(chunk models.FileChunk, c chan models.FileChunk
 		e <- err
 		return
 	}
-
-	// create put request on s3
-	req, _ := GetS3Service().PutObjectRequest(&s3.PutObjectInput{
-		Bucket:      aws.String(config.S3Bucket),
-		Key:         aws.String(config.S3Key + "/" + ranName),
-		ContentType: aws.String("text/plain;charset=UTF-8"),
-	})
-	url, err := req.Presign(time.Duration(config.PresignLimit) * time.Hour)
-	if err != nil {
-		e <- err
-		return
-	}
-	chunk.UploadUrl = url
 	chunk.S3Path = ranName
+
+	// ** DO THIS IF SYNC
+	// create put request on s3
+	//req, _ := GetS3Service().PutObjectRequest(&s3.PutObjectInput{
+	//	Bucket:      aws.String(config.S3Bucket),
+	//	Key:         aws.String(config.S3Key + "/" + ranName),
+	//	ContentType: aws.String("text/plain;charset=UTF-8"),
+	//})
+	//url, err := req.Presign(time.Duration(config.PresignLimit) * time.Hour)
+	//if err != nil {
+	//	e <- err
+	//	return
+	//}
+	//chunk.UploadUrl = url
+
 
 	// save chunk to db
 	err = self.fileRepository.AddFileChunk(&chunk)

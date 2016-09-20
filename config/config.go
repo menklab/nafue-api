@@ -28,6 +28,7 @@ var (
 	CorsHost string
 	ChunkSize int64
 	PresignLimit int64
+	TTL int64
 
 	// Braintree
 	BtEnv string
@@ -61,6 +62,7 @@ func init() {
 	CorsHost= getStringOrFail("CORS_HOST")
 	ChunkSize= getIntOrFail("CHUNK_SIZE")
 	PresignLimit= getIntOrFail("PRESIGN_LIMIT")
+	TTL= getIntOrFail("TTL")
 
 
 	// Braintree

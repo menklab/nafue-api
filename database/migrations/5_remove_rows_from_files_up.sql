@@ -1,2 +1,0 @@
-ALTER TABLE files DROP iV;
-ALTER TABLE files DROP aData;

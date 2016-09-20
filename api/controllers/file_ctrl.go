@@ -15,8 +15,8 @@ type FileController struct {
 
 func (self *FileController) Init(routes *config.Routes) {
 	self.fileService = services.GetFileService()
-	routes.Public.GET("/files/:file", self.getFile)
-	routes.Public.POST("/files", self.addFile)
+	routes.Public.GET("/files/async/:file", self.getFileAsync)
+	routes.Public.POST("/files/async", self.addFileAsync)
 }
 
 /**
@@ -50,11 +50,11 @@ func (self *FileController) Init(routes *config.Routes) {
  *       "message": "File not found."
  *     }
  */
-func (self *FileController) getFile(c *gin.Context) {
+func (self *FileController) getFileAsync(c *gin.Context) {
 
 	shortUrl := c.Param("file")
 
-	fileDisplay, err := self.fileService.GetFile(shortUrl)
+	fileDisplay, err := self.fileService.GetFileAsync(shortUrl)
 	if err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusNotFound, gin.H{"message": "Files doesn't exist."})
@@ -97,7 +97,7 @@ func (self *FileController) getFile(c *gin.Context) {
  *       "message": "File cannot be saved."
  *     }
  */
-func (self *FileController) addFile(c *gin.Context) {
+func (self *FileController) addFileAsync(c *gin.Context) {
 	// read req body
 	var fileHeader models.FileHeader
 	err := c.BindJSON(&fileHeader)
@@ -108,7 +108,7 @@ func (self *FileController) addFile(c *gin.Context) {
 	}
 
 	// add file to db
-	fileDisplay, err := self.fileService.AddFile(&fileHeader)
+	fileDisplay, err := self.fileService.AddFileAsync(&fileHeader)
 	if err != nil {
 		log.Println(err.Error())
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "Error saving file"})

@@ -1,2 +1,0 @@
-ALTER TABLE files DROP file_chunks;
-ALTER TABLE files ADD s3Path VARCHAR(255) NOT NULL;

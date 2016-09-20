@@ -10,7 +10,7 @@ import (
 
 type IFileRepository interface {
 	GetFile(string) (*models.FileDisplay, error)
-	AddFileHeader(*models.FileHeader) error
+	AddFileHeaderAsync(*models.FileHeader) error
 	DeleteFile(int64) error
 	AddFileChunk(fileChunk *models.FileChunk) error
 }
@@ -56,13 +56,13 @@ func (self *FileRepository) GetFile(shortUrl string) (*models.FileDisplay, error
 	return &fileDisplay, nil
 }
 
-func (self *FileRepository) AddFileHeader(fileHeader *models.FileHeader) error {
+func (self *FileRepository) AddFileHeaderAsync(fileHeader *models.FileHeader) error {
 
 	fileHeader.Created = time.Now().UTC()
 
 	result, err := self.database.NamedExec(`
 	INSERT INTO files
-	(ttl, shortURL, created) VALUES (:ttl, :shortUrl, :created)
+	(ttl, asyncKey, created) VALUES (:ttl, :asyncKey, :created)
 	`, fileHeader)
 	if err != nil {
 		log.Println("DB ERROR", err.Error())
