@@ -15,3 +15,4 @@
 * `--rm` deletes the container after it exits. No need to worry about extra processes taking up system resources when you're done!
 * The image name is the image you want to run in the container (which should be the one you built earlier).
 5. If you're on Linux and can run the container natively, the API can be accessed through `localhost:[host-port]`. Otherwise you'll have to use the VM's public IP (which you can find by running `docker-machine ip default`.
+
